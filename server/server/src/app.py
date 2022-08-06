@@ -19,5 +19,8 @@ def index():
 import auth
 app.register_blueprint(auth.bp)
 
+import reviews
+app.register_blueprint(reviews.bp)
+
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
