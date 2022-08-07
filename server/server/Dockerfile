@@ -2,7 +2,7 @@
 FROM python:3.7
 
 # 2
-RUN pip install Flask gunicorn pyrebase
+RUN pip install Flask gunicorn pyrebase flask_cors
 
 # 3
 COPY src/ /app

@@ -1,6 +1,7 @@
 import functools
 import pyrebase, json, requests
 
+from flask_cors import cross_origin
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -19,13 +20,26 @@ config = {
   "storageBucket": "bvent-seoul.appspot.com",
 }
 
+
 firebase = pyrebase.initialize_app(config)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 auth = firebase.auth()
 
+def check_userToken():
+  if (session.get("userToken") is not None):
+    userToken = session["userToken"]
+    try:
+      decoded_token = auth.get_account_info(userToken)
+      return (decoded_token["users"][0]["email"])
+    except requests.exceptions.HTTPError:
+      return "invalid request"
+  return "invalid request"
+
 @bp.route("/register", methods=("GET", "POST"))
+@cross_origin()
+
 def register():
   """
   Register a new user 
@@ -34,7 +48,6 @@ def register():
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
-
     username = request.form["username"]
     password = request.form["password"]
     try:
@@ -44,6 +57,8 @@ def register():
     return jsonify(user)
 
 @bp.route("/login", methods=("GET", "POST"))
+@cross_origin()
+
 def login():
   """
   Login a new user 
@@ -51,12 +66,20 @@ def login():
   if request.method == "POST":
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
-    print ('data from client:', request)
-
+    #print ('data from client:', request)
     username = request.form["username"]
     password = request.form["password"]
     try:
        user = auth.sign_in_with_email_and_password(username, password)
+       session['userToken'] = user["idToken"]
+       
     except requests.exceptions.HTTPError:
       return jsonify({'error': 'Incorrect username or password'}), 400
     return jsonify({'status': 'Good Copy :)'}), 200
+
+@bp.route('/logout')
+@cross_origin()
+def logout():
+  check_userToken()
+  session.pop('userToken', None)
+  return jsonify({'status': 'Logged out successfully:)'}), 200

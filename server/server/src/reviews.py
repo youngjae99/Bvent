@@ -1,6 +1,7 @@
 import functools
 import pyrebase, json, requests
 
+from flask_cors import cross_origin
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -22,6 +23,8 @@ db = firebase.database()
 bp = Blueprint("reviews", __name__, url_prefix="/reviews")
 
 @bp.route("/", methods=["GET"])
+@cross_origin()
+
 def index():
   """
   Show all the posts 
@@ -31,12 +34,22 @@ def index():
     return reviews.val(), 200
 
 @bp.route("/create", methods=("GET", "POST"))
+@cross_origin()
+
 #@login_required
 def create_reviews():
   """
   Given a user is logged in, create a new review
   """
   if request.method == "POST":
+    from auth import check_userToken
+    username = check_userToken() 
+
+    if username == "invalid request":
+        return {
+          "status": "you don't have permission :("
+      }, 403
+
     # autocreate id, if possible
     title =       request.form["title"]       # string
     description = request.form["description"] # string
@@ -59,8 +72,12 @@ def create_reviews():
       "rating" : rating,
       "timeline" : timeline
     }
-    result = db.child("reviews").push(data) #creates a unique key for the user 
 
-    print(result["name"])
+    from helper import sanitize
+    sanitized_username = sanitize(username)
 
-    return jsonify(result), 200
+    try:
+      db.child("reviews").child(sanitized_username).push(data) #creates a unique key for the user 
+      return jsonify({'status': 'Good review!'}), 200
+    except:
+      return jsonify({'status': 'error occurred while pushing reivew'}), 503

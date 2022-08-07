@@ -5,6 +5,8 @@ Code to control events
 import functools
 import pyrebase, json, requests
 
+from flask_cors import cross_origin
+
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -23,6 +25,7 @@ db = firebase.database()
 bp = Blueprint("events", __name__, url_prefix="/events")
 
 @bp.route("/", methods=["GET"])
+@cross_origin()
 def index():
   """
   Show all events 
@@ -32,6 +35,8 @@ def index():
     return reviews.val(), 200
 
 @bp.route("/<event_title>", methods=["GET"])
+@cross_origin()
+
 def event_info(event_title):
   """
   Show all the subevents of an event
@@ -42,6 +47,8 @@ def event_info(event_title):
   return subevents.val(), 200
 
 @bp.route("/create", methods=("GET", "POST"))
+@cross_origin()
+
 #@login_required
 def create_events():
   """
@@ -80,7 +87,7 @@ def create_events():
       "subevent_src" : subevent_src,
       "subevent_date" : subevent_date,
     }
-
+  
     db.child("events").child(sanitized_title).set(event_data) #creates a unique key for the user 
     db.child("subevents").child(sanitized_title).push(subevent_data) #creates a unique key for the user 
 
