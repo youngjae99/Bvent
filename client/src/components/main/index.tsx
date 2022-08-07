@@ -1,24 +1,22 @@
-import React from "react";
+import React from 'react';
+import { useRecoilState } from 'recoil';
 
-import { Button } from "@components";
+import { Button } from '@components';
+import EventCard from './Events/Card';
+import { eventState } from '@recoil/atoms/events';
 
 export const Main: React.FC = () => {
-    return (
-        <div className="text-center font-light py-5 bg-gray-700">
-            <div className="container mx-auto">
-                <h1 className="text-white text-8xl mb-2">superplate</h1>
-                <p className="text-lg text-white mb-3">
-                    The frontend boilerplate with superpowers!
-                </p>
-                <Button type="button">
-                    <a
-                        href="https://pankod.github.io/superplate/"
-                        target="_blank"
-                    >
-                        Docs
-                    </a>
-                </Button>
-            </div>
-        </div>
-    );
+  const [events, setEvents] = useRecoilState(eventState);
+
+  console.log(events);
+
+  return (
+    <div className="text-center font-light py-5">
+      <div className="container mx-auto flex flex-col gap-2">
+        {events.map((event) => (
+          <EventCard event={event} />
+        ))}
+      </div>
+    </div>
+  );
 };
