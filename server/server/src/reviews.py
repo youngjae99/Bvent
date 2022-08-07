@@ -13,15 +13,8 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 #initalize firebase
-config = {
-  "apiKey": "AIzaSyCOSjb3q8glt7sHROPtfTnQHeSXCSsxDFo",
-  "authDomain": "bvent-seoul.firebaseapp.com",
-  "databaseURL": "https://bvent-seoul-default-rtdb.asia-southeast1.firebasedatabase.app",
-  "storageBucket": "bvent-seoul.appspot.com",
-}
-
+from auth import config
 firebase = pyrebase.initialize_app(config)
-
 auth = firebase.auth()
 db = firebase.database()
 #end of firebase init

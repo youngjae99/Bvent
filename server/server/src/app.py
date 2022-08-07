@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, url_for
 import os
 import time
 
@@ -22,5 +22,12 @@ app.register_blueprint(auth.bp)
 import reviews
 app.register_blueprint(reviews.bp)
 
+import events
+app.register_blueprint(events.bp)
+
+with app.test_request_context():
+    print(url_for('events.event_info', event_title='2022 ETH Denver'))
+
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
+

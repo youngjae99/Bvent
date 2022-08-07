@@ -37,7 +37,10 @@ def register():
 
     username = request.form["username"]
     password = request.form["password"]
-    user = auth.create_user_with_email_and_password(username, password)
+    try:
+      user = auth.create_user_with_email_and_password(username, password)
+    except:
+      return jsonify({'error': 'Incorrect username or password'}), 400
     return jsonify(user)
 
 @bp.route("/login", methods=("GET", "POST"))
