@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { Container, Header, Main, Footer, Cards, Logo } from '@components';
+import { Container, Main, Footer, Cards, Logo } from '@components';
 import { GradientText } from '@components/text/GradientText';
 
 const Home: React.FC = () => {
   return (
     <Container>
-      <Header />
-      <div>
-        <h1>
-          Blockchain For All <GradientText>Hello</GradientText>
-        </h1>
-        <Logo />
-      </div>
+      <h1>
+        Check out all <GradientText>Blockchain Events</GradientText> in the
+        world
+      </h1>
       <Main />
     </Container>
   );
