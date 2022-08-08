@@ -20,7 +20,6 @@ config = {
   "storageBucket": "bvent-seoul.appspot.com",
 }
 
-
 firebase = pyrebase.initialize_app(config)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")

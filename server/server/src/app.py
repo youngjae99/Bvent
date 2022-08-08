@@ -18,8 +18,8 @@ app.register_blueprint(auth.bp)
 @app.route('/')
 def index():
     if 'userToken' in session:
-        return f'Logged in as {session["userToken"]}'
-    return 'You are not logged in'
+        return f'Logged in as {session["userToken"]}', 200
+    return 'You are not logged in', 200
 
 import reviews
 app.register_blueprint(reviews.bp)
