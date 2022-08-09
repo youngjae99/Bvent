@@ -34,8 +34,8 @@ def process_events():
       "event_img" : line[5],
     }
   
-    db.child("events").child(line[0]).set(event_data) #creates a unique key for the user 
-  rdr1.close()
+    db.child("events").child(sanitized_title).set(event_data) #creates a unique key for the user 
+  csv1.close()
 
 def process_event_review():
   from helper import sanitize
@@ -71,8 +71,14 @@ def process_event_review():
       "subevent_date": line[10],
       "subevent_time" : new_time
     }
+
+    event_title = line[1]
+
+    from helper import sanitize
+    sanitized_title = sanitize(event_title)
   
-    db.child("subevents").child(line[0]).set(subevent_data) #creates a unique key for the user 
+    db.child("subevents").child(sanitized_title).child(line[0]).set(subevent_data) #creates a unique key for the user 
+  csv2.close()
 
 def check_js2py():
   csv2 = open('event_review.csv', 'r')
@@ -98,6 +104,6 @@ def check_js2py():
       print("empty line")
 
 if __name__ == "__main__":
-  #process_events()
+  process_events()
   process_event_review()
     
