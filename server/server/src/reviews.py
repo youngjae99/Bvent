@@ -51,26 +51,18 @@ def create_reviews():
       }, 403
 
     # autocreate id, if possible
-    title =       request.form["title"]       # string
-    description = request.form["description"] # string
-    start_time =  request.form["start_time"]  # time
-    end_time =    request.form["end_time"]    # time
-    location =    request.form["location"]    # string
-    url =         request.form["url"]         # string
-    comments =    request.form["comments"]    # map of maps
-    rating =      request.form["rating"]      # int
-    timeline =    request.form["timeline"]    # map of maps
+    content =         request.form["content"]     # string
+    event_name =      request.form["event_name"] 
+    subevent_id =     request.form["subevent_id"] # time
+    timestamp =       request.form["timestamp"]           #
+    username =        username                    # time
 
     data = {
-      "title" : title,
-      "description" : description,
-      "start_time" : start_time,
-      "end_time" : end_time,
-      "location" : location,
-      "url" : url,
-      "comments" : comments,
-      "rating" : rating,
-      "timeline" : timeline
+      "content" : content,
+      "event_name" : event_name,
+      "subevent_id" : subevent_id,
+      "timestamp" : timestamp,
+      "username" : username,
     }
 
     from helper import sanitize

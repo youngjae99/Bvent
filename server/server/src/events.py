@@ -2,21 +2,12 @@
 Code to control events
 """
 
-import functools
-import pyrebase, json, requests
+import pyrebase
 
 from flask_cors import cross_origin
 
 from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
 from flask import request, jsonify
-from flask import session
-from flask import url_for
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
 
 from auth import config
 firebase = pyrebase.initialize_app(config)
@@ -44,6 +35,18 @@ def event_info(event_title):
   import re
   sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
   subevents = db.child("subevents").child(sanitized_title).get()
+  return subevents.val(), 200
+
+@bp.route("/<event_title>/<subevent_id>", methods=["GET"])
+@cross_origin()
+
+def subevent_info(event_title, subevent_id):
+  """
+  Show the specific of a subevent
+  """
+  import re
+  sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
+  subevents = db.child("subevents").child(sanitized_title).child(subevent_id).get()
   return subevents.val(), 200
 
 @bp.route("/create", methods=("GET", "POST"))

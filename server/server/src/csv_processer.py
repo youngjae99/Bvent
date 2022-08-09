@@ -63,7 +63,7 @@ def process_event_review():
         print(line[10], line[11], "not good!!! error in js2py TT")
     
     subevent_data = {
-      "event_id" : line[0],
+      "subevent_id" : line[0],
       "event_title" : line[1],
       "subevent_presenter" : line[5],
       "subevent_info" : line[6],
@@ -104,6 +104,6 @@ def check_js2py():
       print("empty line")
 
 if __name__ == "__main__":
-  process_events()
+  #process_events()
   process_event_review()
     

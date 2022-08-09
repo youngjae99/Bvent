@@ -1,0 +1,18 @@
+{
+  "name": "hackerthon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "functions-framework --target=transferCoins"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.1.2",
+    "bn.js": "^5.2.1",
+    "web3": "^1.7.5"
+  },
+  "description": ""
+  
+}

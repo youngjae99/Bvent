@@ -26,6 +26,8 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 auth = firebase.auth()
 
+default_domain = "@my.wallet"
+
 def check_userToken():
   if (session.get("userToken") is not None):
     userToken = session["userToken"]
@@ -48,8 +50,14 @@ def register():
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
     username = request.form["username"]
-    password = request.form["password"]
+    password = ""
+    loginType = request.form["loginType"]
     try:
+      if loginType == "wallet":
+        password = "wallet"
+        username += default_domain
+      elif loginType == "email":
+        password = request.form["password"]
       user = auth.create_user_with_email_and_password(username, password)
     except:
       return jsonify({'error': 'Incorrect username or password'}), 400
@@ -67,14 +75,23 @@ def login():
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
     username = request.form["username"]
-    password = request.form["password"]
+    password = ""
+    loginType = request.form["regType"]
     try:
-       user = auth.sign_in_with_email_and_password(username, password)
-       session['userToken'] = user["idToken"]
+      if loginType == "wallet":
+        password = "wallet"
+        username += default_domain
+      elif loginType == "email":
+        password = request.form["password"]
+      else:
+        return jsonify({'error': 'Invalid loginType field'}), 400
+      user = auth.sign_in_with_email_and_password(username, password)
+      session['userToken'] = user["idToken"]
        
     except requests.exceptions.HTTPError:
       return jsonify({'error': 'Incorrect username or password'}), 400
     return jsonify({'status': 'Good Copy :)'}), 200
+
 
 @bp.route('/logout')
 @cross_origin()
