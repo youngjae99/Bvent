@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { sidebarShowState } from '@recoil/atoms/sidebar';
+import { useWallet } from '@hook/useWallet';
+import { useWeb3React } from '@web3-react/core';
+import { LoginButton } from './loginButton';
 
 type Props = {};
 
@@ -22,6 +25,8 @@ const MenuItem = ({ href, selected, children }: any) => (
 );
 
 export const Sidebar = (props: Props) => {
+  const { connectMetamaskWallet } = useWallet();
+  const { active, account, connector, chainId } = useWeb3React();
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [product, setProduct] = useState(false);
   const [deliverables, setDeliverables] = useState(false);
@@ -49,6 +54,11 @@ export const Sidebar = (props: Props) => {
       ':' +
       today.getSeconds();
     setTime(date);
+  };
+
+  const onClickMetaMask = () => {
+    console.log('pressed!');
+    connectMetamaskWallet();
   };
 
   return (
@@ -98,6 +108,7 @@ export const Sidebar = (props: Props) => {
               <MenuItem href="/past">Past Events</MenuItem>
               <MenuItem href="/upcomings">Upcoming Events</MenuItem>
               <MenuItem href="/mypage">My Page</MenuItem>
+              <LoginButton />
             </ul>
           </div>
           <div className="w-full">

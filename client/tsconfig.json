@@ -54,6 +54,24 @@
       ],
       "@recoil": [
         "src/recoil"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@constants": [
+        "src/constants"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@utils": [
+        "src/utils"
+      ],
+      "@hook/*": [
+        "src/hook/*"
+      ],
+      "@hook": [
+        "src/hook"
       ]
     },
     "incremental": true
@@ -62,7 +80,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/hooks/useWallet.js", "src/recoil/atoms/auth.js"  ],
   "exclude": [
     "node_modules"
   ]

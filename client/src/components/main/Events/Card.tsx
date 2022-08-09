@@ -22,7 +22,7 @@ type Props = {
 //   );
 // `;
 
-const CardWrapper = styled.div`
+export const EventTtileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -35,11 +35,13 @@ const CardWrapper = styled.div`
     rgba(255, 255, 255, 0.2) 0%,
     rgba(255, 255, 255, 0.05) 100%
   );
+  color: white;
+  font-weight: 600;
+  font-size: 1.5rem;
   backdrop-filter: blur(30px);
   border-radius: 20px;
   cursor: pointer;
 
-  /* background: rgba(255, 255, 255, 0.2); */
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
@@ -61,12 +63,10 @@ const EventCard = (props: Props) => {
   console.log(props);
   const { event } = props;
   return (
-    <Link href={`/event/${event.event_title}`}>
-      <CardWrapper className=" bg-black text-white">
-        <p className="font-semibold text-white">{event.event_title}</p>
-        {/* <p className="">{props.event.description}</p> */}
-        <p>{}</p>
-      </CardWrapper>
+    <Link href={`/event/${event?.event_title}`}>
+      <EventTtileWrapper className=" bg-black text-white">
+        <p className="font-semibold text-white">{event?.event_title}</p>
+      </EventTtileWrapper>
     </Link>
   );
 };
