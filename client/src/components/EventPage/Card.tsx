@@ -2,55 +2,54 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import { parseTime } from '@utils/parseTime';
+
 type Props = {
   event: any;
 };
 
-export const EventTtileWrapper = styled.div`
+export const EventTitleWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  /* margin: 0 1rem; */
   padding: 0.8rem 1.4rem;
-  font-size: 1.2rem;
-  /* glass */
-  background: linear-gradient(
+  margin-bottom: 4px;
+  /* background: linear-gradient(
     97.02deg,
     rgba(255, 255, 255, 0.2) 0%,
     rgba(255, 255, 255, 0.05) 100%
-  );
+  ); */
   color: white;
   font-weight: 600;
-  font-size: 1.5rem;
-  backdrop-filter: blur(30px);
-  border-radius: 30px;
+  font-size: 1.2rem;
   cursor: pointer;
 
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(5px); */
+  /* $border: 5px; */
+  /* border-radius: 24px; */
+  border: solid 2px transparent;
+  box-sizing: border-box;
+  border-image-slice: 1;
+  background-clip: padding-box;
+  border-image-source: linear-gradient(to left, #743ad599, #d53a9d);
+
+  transition: 0.1s ease-in-out;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
   }
-  /* border-image-source: radial-gradient(
-      100% 811.94% at 0% 0%,
-      #f0194d 0%,
-      rgba(255, 255, 255, 0.1) 100%
-    ); */
-  /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */ ;
 `;
 
 const EventCard = (props: Props) => {
   console.log(props);
   const { event } = props;
+  const time = parseTime(event.event_time);
+  console.log(time);
   return (
     <Link href={`/event/${event?.event_title}`}>
-      <EventTtileWrapper>
-        {event?.event_title}
-        {/* <p className="font-semibold text-white">{event?.event_title}</p> */}
-      </EventTtileWrapper>
+      <EventTitleWrapper>{event?.event_title}</EventTitleWrapper>
     </Link>
   );
 };

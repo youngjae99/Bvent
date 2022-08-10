@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { BiChevronDown } from 'react-icons/bi';
-import { parseTime } from '@utils/parseTime';
+import { parseTime, parseDate } from '@utils/parseTime';
 
 type Props = {
   subevent: any;
@@ -37,17 +37,20 @@ const SubeventCard = (props: Props) => {
   console.log(props);
   const { subevent } = props;
   const showSpeaker = false;
+  const [userDate, setUserDate] = React.useState('');
   const [userTime, setUserTime] = React.useState('');
   const [eventTime, setEventTime] = React.useState('');
 
   useEffect(() => {
     setEventTime(parseTime(subevent.subevent_time));
     setUserTime(parseTime(subevent.subevent_time));
+    setUserDate(parseDate(subevent.subevent_time));
   }, []);
 
   return (
     <CardWrapper className="mb-3 text-white">
       <div className="flex flex-row w-24 mr-2">
+        {userDate}
         <UserTimeWrapper>{userTime}</UserTimeWrapper>
         <EventTimeWrapper>{eventTime}</EventTimeWrapper>
       </div>
