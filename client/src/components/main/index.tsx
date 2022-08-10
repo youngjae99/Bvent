@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import axios from 'axios';
 
 import { Button } from '@components';
-import EventCard from './Events/Card';
+import EventCard from '../EventPage/Card';
 import { eventState } from '@recoil/atoms/events';
 
 export const Main: React.FC = () => {

@@ -23,11 +23,12 @@ export const useTheme = () => {
     };
 };
 
-export const StyledThemeProvider: React.FC = ({ children }) => {
+export const StyledThemeProvider = ({ children }) => {
     const [theme, setTheme] = React.useState("light");
 
     const toggle = () => {
         setTheme((theme) => (theme === "light" ? "dark" : "light"));
+        return undefined;
     };
     const values = React.useMemo(
         () => ({

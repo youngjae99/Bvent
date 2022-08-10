@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import { Container, Header, Main, Footer, Cards } from '@components';
-import SubeventCard from '@components/event/SubeventCard';
-import { EventTtileWrapper } from '@components/main/Events/Card';
+import SubeventCard from '@components/EventPage/Subevent/SubeventCard';
+import { EventTtileWrapper } from '@components/EventPage/Card';
 
 const Event: React.FC = () => {
   const router = useRouter();
