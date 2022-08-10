@@ -51,25 +51,35 @@ def create_reviews():
       }, 403
 
     # autocreate id, if possible
-    content =         request.form["content"]     # string
+    review_content =  request.form["review_content"]     # string
+    review_title   =  request.form["review_title"]
     event_name =      request.form["event_name"] 
     subevent_id =     request.form["subevent_id"] # time
     timestamp =       request.form["timestamp"]           #
     username =        username                    # time
 
+    amount = 5
+    txHash = 533
+
     data = {
-      "content" : content,
+      "review_content" : review_content,
+      "review_title" : review_title,
       "event_name" : event_name,
       "subevent_id" : subevent_id,
       "timestamp" : timestamp,
       "username" : username,
+      "amount": amount,
+      "txHash" : txHash
     }
 
     from helper import sanitize
     sanitized_username = sanitize(username)
 
     try:
-      db.child("reviews").child(sanitized_username).push(data) #creates a unique key for the user 
+      res = db.child("reviews").child(subevent_id).push(data) #creates a unique key for the user 
+      reviewId = res["name"]
+      #keep track of which user wrote which comment
+      db.child("users").child(sanitized_username).child("comments").push(reviewId) 
       return jsonify({'status': 'Good review!'}), 200
     except:
       return jsonify({'status': 'error occurred while pushing reivew'}), 503

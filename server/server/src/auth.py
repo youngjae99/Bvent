@@ -76,7 +76,7 @@ def login():
     #print ('data from client:', request)
     username = request.form["username"]
     password = ""
-    loginType = request.form["regType"]
+    loginType = request.form["loginType"]
     try:
       if loginType == "wallet":
         password = "wallet"

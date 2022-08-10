@@ -2,7 +2,7 @@ const Web3 = require('web3')
 const infuraKey = '172eff2ae22a4d4096cbbd73ddcf60ef'
 const web3 = new Web3(`https://ropsten.infura.io/v3/${infuraKey}`)
 const BN = require('bn.js')
-const functions = require('firebase-functions');
+const bodyParser = require('body-parser');
 
 
 function initWeb3() {
@@ -38,17 +38,24 @@ async function main() {
   console.log(transferResult)
 }
 
+const function1 = require('@google-cloud/functions-framework');
 
-exports.transferCoins = (req, res) => {
-    const {
-      body : {amount, toAddress}
-    } = req
-    const adminAddress = initWeb3()
-    const cmtContract = getCmtTokenContract()
-    console.log (amount, toAddress)
-    // const toAddress = '0xE1ee63a6670a1AbFE06fA78100b7956EE4d00BB1' // 보상 받는 사용자 주소
-    // const amount = 5
-    const transferResult = await transfer(cmtContract, adminAddress, toAddress, amount)
-    res.status(200).send(transferResult);
+// Register an HTTP function with the Functions Framework
+//NOTE: Content-type has to be application/json!!!!!!! (NOT FORM!!!!) 
+function1.http('transferCoins', async (req, res) => {
+  if (req.method !== 'POST') {
+    // Return a "method not allowed" error
+    return res.status(405).end();
   }
-
+  const adminAddress = initWeb3()
+  const cmtContract = getCmtTokenContract()
+  const reqBody = req.body
+  //console.log ("fields", reqBody)
+  console.log (reqBody["amount"])
+  console.log (reqBody["toAddress"])
+  const toAddress = reqBody["toAddress"]//'0xE1ee63a6670a1AbFE06fA78100b7956EE4d00BB1' // 보상 받는 사용자 주소
+  const amount = reqBody["amount"]
+  const transferResult = await transfer(cmtContract, adminAddress, toAddress, amount)
+  res.status(200).send(transferResult);
+  }
+)

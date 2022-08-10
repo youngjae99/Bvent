@@ -69,6 +69,7 @@ def process_event_review():
       "subevent_info" : line[6],
       "subevent_src" : line[7],
       "subevent_date": line[10],
+      "subevent_img": line[12],
       "subevent_time" : new_time
     }
 
