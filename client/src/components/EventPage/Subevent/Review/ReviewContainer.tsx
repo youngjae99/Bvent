@@ -1,8 +1,11 @@
 import React from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
+import NewReview from './newReview';
 import Review from './Review';
 
 type Props = {
+  event_name: string;
+  subevent_id: string;
   review: any;
 };
 
@@ -18,7 +21,7 @@ const WriteReviewButton = ({ onClick }) => {
 };
 
 const ReviewContainer = (props: Props) => {
-  const { review } = props;
+  const { event_name, subevent_id, review } = props;
   console.log(review);
 
   if (review) {
@@ -37,6 +40,7 @@ const ReviewContainer = (props: Props) => {
             );
           })}
         </ul>
+        <NewReview event_name={event_name} subevent_id={subevent_id} show={false}/>
       </div>
     );
   } else {
