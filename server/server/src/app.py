@@ -27,6 +27,9 @@ app.register_blueprint(reviews.bp)
 import events
 app.register_blueprint(events.bp)
 
+import users
+app.register_blueprint(users.bp)
+
 with app.test_request_context():
     print(url_for('events.event_info', event_title='2022 ETH Denver'))
 

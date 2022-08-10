@@ -25,11 +25,21 @@ def process_events():
       current_line += 1;
       continue
     sanitized_title = sanitize(line[1])
+    start_time_func =  js2py.eval_js(
+          'function new_time(a) {new_date = new Date(a + "T" + "09:00" + ":00Z"); return new_date.getTime()}'
+    )     
+    end_time_func =  js2py.eval_js(
+          'function new_time(a) {new_date = new Date(a + "T" + "18:00" + ":00Z"); return new_date.getTime()}'
+    )     
+    event_start_time = start_time_func(re.sub(r'[.]+', '-', line[2]))
+    event_end_time = end_time_func(re.sub(r'[.]+', '-', line[3]))
     event_data = {
       "event_id" : line[0],
       "event_title" : line[1],
       "event_start" : line[2],  
+      "event_start_time": event_start_time,
       "event_end" : line[3],  
+      "event_end_time": event_end_time,
       "event_type" : line[4],
       "event_img" : line[5],
     }
@@ -105,6 +115,6 @@ def check_js2py():
       print("empty line")
 
 if __name__ == "__main__":
-  #process_events()
-  process_event_review()
+  process_events()
+  #process_event_review()
     

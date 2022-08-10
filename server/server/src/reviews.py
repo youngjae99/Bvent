@@ -1,17 +1,9 @@
-import functools
 import pyrebase, json, requests
 
 from flask_cors import cross_origin
 from flask import Blueprint
-from flask import flash
-from flask import g
-from flask import redirect
-from flask import render_template
 from flask import request, jsonify
-from flask import session
-from flask import url_for
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
+
 
 #initalize firebase
 from auth import config
@@ -32,6 +24,20 @@ def index():
   if request.method == "GET":
     reviews = db.child("reviews").get()
     return reviews.val(), 200
+
+@bp.route("/<subevent_id>", methods=["GET"])
+@cross_origin()
+
+def get_review(subevent_id):
+  """
+  Get a review for a subevent
+  """
+  all_reviews = db.child("reviews").shallow().get().val()
+  if (subevent_id not in all_reviews):
+    return jsonify({"status": "empty"}), 404
+  reviews = db.child("reviews").child(subevent_id).get()
+  return reviews.val(), 200
+  
 
 @bp.route("/create", methods=("GET", "POST"))
 @cross_origin()
