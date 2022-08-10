@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { Container, Header, Main, Footer, Cards } from '@components';
-import TitleBar from '@components/EventPage/Subevent/TitleBar';
-import { SubeventHeader } from '@components/EventPage/Subevent/SubeventHeader';
-import ReviewContainer from '@components/EventPage/Subevent/Review/ReviewContainer';
+import { Container } from '@components/container';
+import TitleBar from '@components/eventPage/subevent/TitleBar';
+import { SubeventHeader } from '@components/eventPage/subevent/SubeventHeader';
+import ReviewContainer from '@components/eventPage/subevent/review/ReviewContainer';
 
 const SubEvent: React.FC = () => {
   const router = useRouter();

@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { Container, Header, Main, Footer, Cards } from '@components';
-import SubeventCard from '@components/EventPage/Subevent/SubeventCard';
-import { EventTtileWrapper } from '@components/EventPage/Card';
+import { Container } from '@components/container';
+import SubeventCard from '@components/eventPage/subevent/SubeventCard';
+import { EventTtileWrapper } from '@components/eventPage/Card';
 
 const Event: React.FC = () => {
   const router = useRouter();
@@ -43,9 +43,6 @@ const Event: React.FC = () => {
       <div>
         {eventInfo &&
           Object.keys(eventInfo).map((key) => (
-            // <Link href={`/event/subevent/${eventInfo[key].subevent_id}`}>
-            //   <p className="text-white my-3">{eventInfo[key].subevent_info}</p>
-            // </Link>
             <SubeventCard subevent={eventInfo[key]} />
           ))}
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Container, Main, Footer, Cards, Logo } from '@components';
+import { Container } from '@components/container';
+import { Main } from '@components/main';
 import { GradientText } from '@components/text/GradientText';
 
 const Home: React.FC = () => {

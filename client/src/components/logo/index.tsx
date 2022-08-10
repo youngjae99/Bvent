@@ -7,7 +7,7 @@ type LogoType = {
   height: number;
 };
 
-export const Logo = (props: LogoType) => {
+const Logo = (props: LogoType) => {
   const { width, height } = props;
   return (
     <a href="/">
@@ -21,10 +21,4 @@ export const Logo = (props: LogoType) => {
   );
 };
 
-// export const Logo = styled.img`
-//     background-image: url('/icons/bvent_logo.png');
-//     background-repeat: no-repeat;
-//     background-size: contain;
-//     width: 200px;
-//     height: 100px;
-// `
+export default Logo;

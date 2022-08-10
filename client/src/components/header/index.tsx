@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { Logo } from '@components';
+import Logo from '@components/logo';
 import { sidebarShowState } from '@recoil/atoms/sidebar';
 
-export const Header: React.FC = () => {
+export const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [profile, setProfile] = useState(false);
   return (
@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">
-              <Logo width={100} height={50} />
+              <Logo width={100} height={42} />
             </div>
           </div>
           <div className="h-full xl:flex items-center justify-end hidden">

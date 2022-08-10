@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 
-import { Button } from '@components';
-import EventCard from '../EventPage/Card';
+import { Button } from '@components/button';
+import EventCard from '../eventPage/Card';
 import { eventState } from '@recoil/atoms/events';
 
 export const Main: React.FC = () => {

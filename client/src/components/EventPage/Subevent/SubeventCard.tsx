@@ -17,11 +17,11 @@ const CardWrapper = styled.div`
 `;
 
 const UserTimeWrapper = styled.div`
-  width: 100px;
+  width: 3rem;
 `;
 
 const EventTimeWrapper = styled.div`
-  width: 100px;
+  width: 3rem;
 `;
 
 const EventTitle = styled.p`
@@ -29,7 +29,7 @@ const EventTitle = styled.p`
   font-size: 1.2rem;
   transition: 0.2s ease-in-out;
   &:hover {
-    color: #14DE95; 
+    color: #14de95;
   }
 `;
 
@@ -47,7 +47,7 @@ const SubeventCard = (props: Props) => {
 
   return (
     <CardWrapper className="mb-3 text-white">
-      <div className="flex flex-row w-40">
+      <div className="flex flex-row w-24 mr-2">
         <UserTimeWrapper>{userTime}</UserTimeWrapper>
         <EventTimeWrapper>{eventTime}</EventTimeWrapper>
       </div>
