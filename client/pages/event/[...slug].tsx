@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Container, Header, Main, Footer, Cards } from '@components';
 import TitleBar from '@components/EventPage/Subevent/TitleBar';
 import { SubeventHeader } from '@components/EventPage/Subevent/SubeventHeader';
-import ReviewContainer from '@components/EventPage/Subevent/ReviewContainer';
+import ReviewContainer from '@components/EventPage/Subevent/Review/ReviewContainer';
 
 const SubEvent: React.FC = () => {
   const router = useRouter();
@@ -13,6 +13,7 @@ const SubEvent: React.FC = () => {
   const event_title = slug[0];
   const subevent_id = slug[1];
   const [eventInfo, setEventInfo] = useState();
+  const [eventReview, setEventReview] = useState();
 
   //   const { subevent_info, subevent_presenter, subevent_src, subevent_timme } = eventInfo;
 
@@ -21,11 +22,18 @@ const SubEvent: React.FC = () => {
       const res = await axios.get(
         `https://bvent-seoul.web.app/events/${event_title}/${subevent_id}`
       );
-      console.log(res);
       setEventInfo(res.data);
     };
+    const getEventReview = async () => {
+        const res = await axios.get(
+          `https://bvent-seoul.web.app/reviews/`
+        );
+        setEventReview(res.data[subevent_id]);
+      };
+    
     if (event_title) {
       getEventData();
+      getEventReview();
     }
   }, [event_title]);
 
@@ -34,7 +42,7 @@ const SubEvent: React.FC = () => {
       {/* <h1 className="text-white">{event_title}</h1> */}
       <TitleBar backUrl={`/event/${event_title}`} />
       <SubeventHeader eventInfo={eventInfo} />
-      <ReviewContainer eventInfo={eventInfo}/>
+      <ReviewContainer review={eventReview}/>
     </Container>
   );
 };
