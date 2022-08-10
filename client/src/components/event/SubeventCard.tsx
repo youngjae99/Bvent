@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { BiChevronDown } from 'react-icons/bi';
+import { parseTime } from '@utils/parseTime';
 
 type Props = {
   subevent: any;
@@ -23,6 +24,15 @@ const EventTimeWrapper = styled.div`
   width: 100px;
 `;
 
+const EventTitle = styled.p`
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    color: #14DE95; 
+  }
+`;
+
 const SubeventCard = (props: Props) => {
   console.log(props);
   const { subevent } = props;
@@ -31,9 +41,8 @@ const SubeventCard = (props: Props) => {
   const [eventTime, setEventTime] = React.useState('');
 
   useEffect(() => {
-    const time = new Date(subevent?.subevent_time);
-    setEventTime(time.getDate());
-    setUserTime(time.getDate());
+    setEventTime(parseTime(subevent.subevent_time));
+    setUserTime(parseTime(subevent.subevent_time));
   }, []);
 
   return (
@@ -44,7 +53,7 @@ const SubeventCard = (props: Props) => {
       </div>
       <div className="mb-3 flex-1">
         <Link href={`/event/${subevent?.event_title}/${subevent?.subevent_id}`}>
-          <p className="text-xl">{subevent?.subevent_info}</p>
+          <EventTitle>{subevent?.subevent_info}</EventTitle>
         </Link>
         <div className="flex flex-row justify-between mt-2">
           <div className="flex flex-row gap-2 leading-4">

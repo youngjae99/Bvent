@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [profile, setProfile] = useState(false);
   return (
-    <div className="text-center bg-gray-800 fixed top-0 w-full">
+    <div className="text-center bg-gray-800 fixed top-0 w-full z-10">
       <nav className="w-full mx-auto bg-gray-900 shadow">
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">

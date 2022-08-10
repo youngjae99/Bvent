@@ -73,7 +73,7 @@ export const Sidebar = (props: Props) => {
         className="bg-gray-800 opacity-50 inset-0 fixed w-full h-full"
         onClick={() => setShow(!show)}
       />
-      <div className="w-64 z-20 absolute right-0 z-40 top-0 bg-gray-900 text-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
+      <div className="w-64 z-20 absolute right-0 top-0 bg-gray-900 text-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
         <div className="flex flex-col justify-between h-full">
           <div className="px-6 pt-4">
             <div className="flex items-center justify-end">

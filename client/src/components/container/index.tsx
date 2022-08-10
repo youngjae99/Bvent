@@ -9,7 +9,7 @@ export const Container = ({ children }) => {
     >
       <Header />
       <Sidebar />
-      <div className="px-5 pt-20">{children}</div>
+      <div className="px-5 pt-16">{children}</div>
     </div>
   );
 };

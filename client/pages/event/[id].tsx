@@ -28,8 +28,17 @@ const Event: React.FC = () => {
 
   return (
     <Container>
-      {/* <h1 className="text-white"></h1> */}
-      <EventTtileWrapper>{event_title}</EventTtileWrapper>
+      <div className="flex flex-row justify-center mb-4">
+        <div className="flex flex-col justify-center items-end">
+          <p className="text-2xl font-bold text-white text-center">
+            Ongoing Conferences
+          </p>
+          <p className="text-white font-medium text-center">Timeline</p>
+        </div>
+      </div>
+      <div className="m-8">
+        <EventTtileWrapper>{event_title}</EventTtileWrapper>
+      </div>
       <p className="text-white">{}</p>
       <div>
         {eventInfo &&
