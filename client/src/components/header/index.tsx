@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
 
 import Logo from '@components/logo';
 import { sidebarShowState } from '@recoil/atoms/sidebar';
+import { timezoneState } from '@recoil/atoms/timezone';
+import { NodeNextRequest } from 'next/dist/server/base-http/node';
+
+const MenuItem = ({ _timezone }) => {
+  const [timezone, setTimezone] = useRecoilState(timezoneState);
+  console.log(_timezone);
+
+  if (_timezone === timezone) {
+    return <p className="text-red-600 cursor-pointer">{_timezone}</p>;
+  }
+  return (
+    <p
+      className="text-white cursor-pointer"
+      onClick={() => setTimezone(_timezone)}
+    >
+      {_timezone}
+    </p>
+  );
+};
 
 export const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
+  const [timezone, setTimezone] = useRecoilState(timezoneState);
   const [profile, setProfile] = useState(false);
   return (
     <div className="text-center bg-gray-800 fixed top-0 w-full z-10">
@@ -181,26 +202,60 @@ export const Header = () => {
                 <span className="ml-2">Performance</span>
               </li>
             </ul>
-            <svg
-              onClick={() => setShow(!show)}
-              aria-label="Main Menu"
+            <div
               aria-haspopup="true"
-              xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-menu"
-              width={32}
-              height={32}
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="#fff"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              cursor="pointer"
+              className="cursor-pointer w-full flex items-center justify-end relative"
+              onClick={() => setProfile(!profile)}
             >
-              <path stroke="none" d="M0 0h24v24H0z" />
-              <line x1={4} y1={8} x2={20} y2={8} />
-              <line x1={4} y1={16} x2={20} y2={16} />
-            </svg>
+              {profile ? (
+                <ul
+                  className="p-2 w-48 border-r absolute rounded z-40 right-0 shadow mt-40"
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.1)',
+                    borderRadius: '16px',
+                    // boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                    backdropFilter: 'blur(15px)',
+                    border: 0,
+                    // border: '1px solid rgba(255, 255, 255, 0.3)',
+                    // filter: 'drop-shadow(0px 8px 64px rgba(0, 0, 0, 0.1))',
+                    // backdropFilter: 'blur(80px)',
+                    // borderRadius: '12px',
+                  }}
+                >
+                  <li className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <div className="flex items-center">
+                      <img src="/icons/globe.svg" width="20" />
+                      <div className="flex flex-row gap-3 ml-4">
+                        <p>KOR</p>
+                        <p>USA</p>
+                        <p>IND</p>
+                        <p>AUS</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <div className="flex items-center">
+                      <img src="/icons/time-icon.svg" width="20" />
+                      <div className="flex flex-row gap-3 ml-4">
+                        <MenuItem _timezone="KST" />
+                        <MenuItem _timezone="UST" />
+                        <MenuItem _timezone="ACT" />
+                        <MenuItem _timezone="GMT" />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              ) : (
+                ''
+              )}
+              <img src="/icons/globe.svg" height="30" className="mr-5" />
+            </div>
+
+            <img
+              onClick={() => setShow(!show)}
+              src="/icons/menu-icon.svg"
+              height="30"
+            />
           </div>
         </div>
       </nav>

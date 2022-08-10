@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { Container } from '@components/container';
 import SubeventCard from '@components/eventPage/subevent/SubeventCard';
-import { EventTtileWrapper } from '@components/eventPage/Card';
+import { EventTitleWrapper } from '@components/eventPage/Card';
 
 const Event: React.FC = () => {
   const router = useRouter();
@@ -37,12 +37,12 @@ const Event: React.FC = () => {
         </div>
       </div>
       <div className="m-8">
-        <EventTtileWrapper>{event_title}</EventTtileWrapper>
+        <EventTitleWrapper>{event_title}</EventTitleWrapper>
       </div>
       <p className="text-white">{}</p>
       <div>
         {eventInfo &&
-          Object.keys(eventInfo).map((key) => (
+          Object.keys(eventInfo).sort((a, b)=>(eventInfo[a].subevent_time - eventInfo[b].subevent_time)).map((key) => (
             <SubeventCard subevent={eventInfo[key]} />
           ))}
       </div>
