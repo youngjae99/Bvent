@@ -25,6 +25,7 @@ firebase = pyrebase.initialize_app(config)
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 auth = firebase.auth()
+db = firebase.database()
 
 default_domain = "@my.wallet"
 
@@ -59,6 +60,9 @@ def register():
       elif loginType == "email":
         password = request.form["password"]
       user = auth.create_user_with_email_and_password(username, password)
+      from helper import sanitize
+      sanitized_username = sanitize(username)
+      db.child("users").child(sanitized_username).child("totalAmount").set(0)
     except:
       return jsonify({'error': 'Incorrect username or password'}), 400
     return jsonify(user)

@@ -56,10 +56,24 @@ def create_reviews():
     event_name =      request.form["event_name"] 
     subevent_id =     request.form["subevent_id"] # time
     timestamp =       request.form["timestamp"]           #
-    username =        username                    # time
+    amount          = request.form["amount"] 
+    username        = username                    # time
 
-    amount = 5
-    txHash = 533
+    from helper import sanitize
+    sanitized_username = sanitize(username)
+    sepUsername = sanitized_username.split(' ')
+    if (sepUsername[1] != "my" or sepUsername[2] != "wallet"):
+      return {
+        "status": "error",
+        "message": "User must have a 'wallet'.",
+      }, 400
+    walletAddress = sepUsername[0]
+
+    import requests 
+    response_data = requests.post("https://hello-wallet-2rc7jznmhq-du.a.run.app", 
+      data = {"amount": str(amount), "toAddress": sepUsername[0]}).json()
+    # print(response_data)
+    txHash = response_data["transactionHash"]
 
     data = {
       "review_content" : review_content,
@@ -67,19 +81,20 @@ def create_reviews():
       "event_name" : event_name,
       "subevent_id" : subevent_id,
       "timestamp" : timestamp,
-      "username" : username,
+      "username" : username,  
       "amount": amount,
       "txHash" : txHash
     }
-
-    from helper import sanitize
-    sanitized_username = sanitize(username)
 
     try:
       res = db.child("reviews").child(subevent_id).push(data) #creates a unique key for the user 
       reviewId = res["name"]
       #keep track of which user wrote which comment
-      db.child("users").child(sanitized_username).child("comments").push(reviewId) 
-      return jsonify({'status': 'Good review!'}), 200
+      db.child("users").child(sanitized_username).child("comments").child(reviewId).set(amount)
     except:
       return jsonify({'status': 'error occurred while pushing reivew'}), 503
+    cur_amount = db.child("users").child(sanitized_username).child("totalAmount").get().val() 
+    #print(cur_amount)
+    updated_amount = int(cur_amount) + int(amount)
+    db.child("users").child(sanitized_username).child("totalAmount").set(updated_amount)
+    return jsonify({'status': 'Good review!', "txHash": txHash}), 200
