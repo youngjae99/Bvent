@@ -9,7 +9,7 @@ from flask_cors import cross_origin
 from flask import Blueprint
 from flask import request, jsonify
 
-from auth import config
+from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 

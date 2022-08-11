@@ -6,7 +6,7 @@ from flask import request, jsonify
 from threading import Thread
 
 #initalize firebase
-from auth import config
+from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()

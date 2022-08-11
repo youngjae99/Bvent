@@ -3,10 +3,12 @@ const infuraKey = '172eff2ae22a4d4096cbbd73ddcf60ef'
 const web3 = new Web3(`https://ropsten.infura.io/v3/${infuraKey}`)
 const BN = require('bn.js')
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 function initWeb3() {
-  const privKey = '8ae5dc288a83f5710c67f91e47448b3ec678e5a2460d675966d94a043315db14' // 관리자키 (유출되면 안되는 주소)
+  const privKey = process.env.WEB3_PRIVKEY // 관리자키 (유출되면 안되는 주소)
   const account = web3.eth.accounts.privateKeyToAccount(privKey)
   web3.eth.accounts.wallet.add(account)
   web3.eth.defaultAccount = account.address

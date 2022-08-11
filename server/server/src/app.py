@@ -4,12 +4,13 @@ import os
 import time
 import pyrebase
 
+from mySecrets import config, app_secret_key
+
 app = Flask(__name__)
 cors = CORS(app)
-app.secret_key = "8feeef86bbe5049e9c70118e8aaf6f222e15850a7700f3a39c6e9ee05ddd5e03"
+app.secret_key = app_secret_key
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-from auth import config
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()

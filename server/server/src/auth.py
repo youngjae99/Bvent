@@ -13,13 +13,7 @@ from flask import url_for
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
-config = {
-  "apiKey": "AIzaSyCOSjb3q8glt7sHROPtfTnQHeSXCSsxDFo",
-  "authDomain": "bvent-seoul.firebaseapp.com",
-  "databaseURL": "https://bvent-seoul-default-rtdb.asia-southeast1.firebasedatabase.app",
-  "storageBucket": "bvent-seoul.appspot.com",
-}
-
+from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")

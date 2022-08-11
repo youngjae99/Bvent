@@ -1,5 +1,6 @@
 venv/
 node_modules/
+server/src/mySecrets.py
 
 *.pyc
 __pycache__/
