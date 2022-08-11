@@ -1,3 +1,5 @@
 export enum Atoms {
-    Counter = "Counter",
+    Events = "Events",
+    Sidebar = "Sidebar",
+    Timezone = "Timezone",
 }

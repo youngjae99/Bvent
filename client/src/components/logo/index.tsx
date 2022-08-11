@@ -1,13 +1,24 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
 
-export const Logo: React.FC = () => {
-    return (
-        <Image
-            src="/icons/nextjs-icon.svg"
-            alt="nextjs"
-            width="96"
-            height="58"
-        />
-    );
+type LogoType = {
+  width: number;
+  height: number;
 };
+
+const Logo = (props: LogoType) => {
+  const { width, height } = props;
+  return (
+    <a href="/">
+      <Image
+        src="/icons/bvent_logo.png"
+        alt="nextjs"
+        width={width ? width : 200}
+        height={height ? height : 100}
+      />
+    </a>
+  );
+};
+
+export default Logo;
