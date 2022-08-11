@@ -26,7 +26,7 @@ export const Main: React.FC = () => {
       <div
         className="ml-6 mr-5"
         style={{
-          height: '100vh',
+          height: 'auto',
           width: '2px',
           background:
             'linear-gradient(180deg, #F0194D00 0%, #F0194D 5%, #7B33FF 50.52%, #14DE95 100%)',
@@ -73,10 +73,10 @@ export const Main: React.FC = () => {
             Object.keys(events)
               .filter((key) => events[key].event_tag === 'future')
               .map((key) => <EventCard event={events[key]} />)}
+          <a href="/future" className="text-white text-right">
+            see more
+          </a>
         </div>
-        <a href="/future" className="text-white text-right">
-          see more
-        </a>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const ReviewContainer = (props: Props) => {
     const reviewCnt = review ? Object.keys(review).length : 0;
     return (
       <div className="text-white mt-3">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between mb-2">
           <p>{reviewCnt} reviews</p>
           <WriteReviewButton onClick={() => setShowPopup(true)} />
         </div>
@@ -39,11 +39,11 @@ const ReviewContainer = (props: Props) => {
             return <Review {..._review} />;
           })}
         </ul>
-        <NewReview
+        {showPopup && <NewReview
           event_name={event_name}
           subevent_id={subevent_id}
-          show={false}
-        />
+          handleClose={() => setShowPopup(false)}
+        />}
       </div>
     );
   } else {
@@ -53,11 +53,11 @@ const ReviewContainer = (props: Props) => {
           <p>There's no review!</p>
           <WriteReviewButton onClick={() => setShowPopup(true)} />
         </div>
-        <NewReview
+        {showPopup && <NewReview
           event_name={event_name}
           subevent_id={subevent_id}
-          show={false}
-        />
+          handleClose={() => setShowPopup(false)}
+        />}
       </div>
     );
   }

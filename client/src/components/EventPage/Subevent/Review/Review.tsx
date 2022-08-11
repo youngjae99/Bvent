@@ -13,18 +13,29 @@ type Props = {
 const Review = (props: Props) => {
   const { timestamp, username, review_title, review_content, txHash, amount } =
     { ...props };
+  console.log(timestamp);
+
   return (
     <div className="flex flex-row mb-3">
-      <div className="w-16">
+      <div className="w-12">
         <img
           src="/icons/default-profile-image.png"
-          width="40rem"
-          style={{ borderRadius: '25' }}
+          width="36rem"
+          style={{ borderRadius: '18rem' }}
         />
       </div>
-      <div>
-        <p className="text-white">{username.slice(0, 20)}</p>
-        <p className="text-gray-500">{parseEventTime(timestamp, 'UTC')}</p>
+      <div className="flex-1">
+        <p className="text-white text-md">{username.slice(0, 20)}</p>
+        <div className="flex flex-row justify-start gap-2">
+          <p className="text-gray-400">{parseEventTime(timestamp, 'UTC')}</p>
+          |
+          <a href={`https://ropsten.etherscan.io/tx/${txHash}`}>
+            <div className="flex flex-row gap-1 text-gray-300 hover:text-blue-400">
+              <img src="/icons/ethereum-logo.svg" width="10px" height="10px" />
+              {txHash.slice(0, 10) + '...'}
+            </div>
+          </a>
+        </div>
         <p>{review_title}</p>
         <p>{review_content}</p>
       </div>

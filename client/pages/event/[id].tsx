@@ -45,8 +45,8 @@ const Event: React.FC = () => {
       <p className="text-white">{}</p>
       <div>
         <div className="flex flex-row w-24 mr-2 text-green-400 font-bold">
-          <div className="w-12">{timezone}</div>
-          <div className="w-12">GMT</div>
+          <div className="w-12 text-center">{timezone}</div>
+          <div className="w-12 text-center">GMT</div>
         </div>
         <div className="mb-3 flex-1"></div>
         {eventInfo &&

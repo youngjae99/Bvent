@@ -6,7 +6,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import { parseTime, parseDate } from '@utils/parseTime';
 import { useRecoilState } from 'recoil';
 import { convertTime } from '@utils/parseTime';
-import {timezoneState} from '@recoil/atoms/timezone';
+import { timezoneState } from '@recoil/atoms/timezone';
 
 type Props = {
   subevent: any;
@@ -20,10 +20,13 @@ const CardWrapper = styled.div`
 `;
 
 const UserTimeWrapper = styled.div`
+  text-align: center;
   width: 3rem;
+  border-right: 1px dashed;
 `;
 
 const EventTimeWrapper = styled.div`
+  text-align: center;
   width: 3rem;
 `;
 
