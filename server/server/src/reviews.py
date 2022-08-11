@@ -3,7 +3,7 @@ import pyrebase, json, requests
 from flask_cors import cross_origin
 from flask import Blueprint
 from flask import request, jsonify
-
+from threading import Thread
 
 #initalize firebase
 from auth import config
@@ -37,7 +37,22 @@ def get_review(subevent_id):
     return jsonify({"": ""}), 200
   reviews = db.child("reviews").child(subevent_id).get()
   return reviews.val(), 200
-  
+
+"""
+Threaded task to asynchronously receive tx and update
+"""
+def t_receive_tx_and_update(amount, toAddress, subevent_id, reviewId):
+  #print("tx update start!", toAddress)
+  import requests 
+  try:
+    response_data = requests.post("https://hello-wallet-2rc7jznmhq-du.a.run.app", 
+      data = {"amount": str(amount), "toAddress": toAddress}).json()
+    # print(response_data)
+    txHash = response_data["transactionHash"]
+    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":txHash})
+    #print("receive_tx_and_upload done! with txHash" , txHash, "for ", subevent_id, " ", reviewId)
+  except:
+    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":0})
 
 @bp.route("/create", methods=("GET", "POST"))
 @cross_origin()
@@ -73,13 +88,7 @@ def create_reviews():
         "status": "error",
         "message": "User must have a 'wallet'.",
       }, 400
-    walletAddress = sepUsername[0]
 
-    import requests 
-    response_data = requests.post("https://hello-wallet-2rc7jznmhq-du.a.run.app", 
-      data = {"amount": str(amount), "toAddress": sepUsername[0]}).json()
-    # print(response_data)
-    txHash = response_data["transactionHash"]
 
     data = {
       "review_content" : review_content,
@@ -89,7 +98,7 @@ def create_reviews():
       "timestamp" : timestamp,
       "username" : username,  
       "amount": amount,
-      "txHash" : txHash
+      "txHash" : "updating"
     }
 
     try:
@@ -98,9 +107,12 @@ def create_reviews():
       #keep track of which user wrote which comment
       db.child("users").child(sanitized_username).child("comments").child(reviewId).set(amount)
     except:
-      return jsonify({'status': 'error occurred while pushing reivew'}), 503
+      return jsonify({'status': 'error occurred while pushing reivew'}), 503  
     cur_amount = db.child("users").child(sanitized_username).child("totalAmount").get().val() 
     #print(cur_amount)
     updated_amount = int(cur_amount) + int(amount)
     db.child("users").child(sanitized_username).child("totalAmount").set(updated_amount)
-    return jsonify({'status': 'Good review!', "txHash": txHash}), 200
+    thread = Thread(target=t_receive_tx_and_update, args=(amount, sepUsername[0], subevent_id, reviewId,))
+    thread.daemon = True
+    thread.start()
+    return jsonify({'status': 'Good review!', "txHash": "updating"}), 200
