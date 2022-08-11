@@ -1,0 +1,1 @@
+{"c":["pages/event/[...slug]","webpack"],"r":["pages/event/[id]"],"m":["./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?absolutePagePath=%2FUsers%2Faaron%2Fdev%2FBvent%2Fclient%2Fpages%2Fevent%2F%5Bid%5D.tsx&page=%2Fevent%2F%5Bid%5D!","./pages/event/[id].tsx","./src/components/eventPage/Card.tsx","./src/components/eventPage/subevent/SubeventCard.tsx"]}
