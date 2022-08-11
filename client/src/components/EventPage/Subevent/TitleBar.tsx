@@ -16,20 +16,21 @@ const TitleBarWrapper = styled.div`
 `;
 
 type Props = {
+  title: string;
   backUrl: string;
 };
 
 const TitleBar = (props: Props) => {
-  const { backUrl } = { ...props };
+  const { title, backUrl } = { ...props };
 
   return (
     <TitleBarWrapper>
       <Link href={backUrl}>
-        <BiArrowBack style={{ cursor: 'pointer' }}/>
+        <BiArrowBack style={{ cursor: 'pointer' }} />
       </Link>
-      <p>Session Reviews</p>
+      <p>{title}</p>
       <a href="/">
-        <BiShareAlt style={{ cursor: 'pointer' }}/>
+        <BiShareAlt style={{ cursor: 'pointer', visibility: 'hidden' }} />
       </a>
     </TitleBarWrapper>
   );

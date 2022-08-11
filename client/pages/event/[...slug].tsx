@@ -40,7 +40,7 @@ const SubEvent: React.FC = () => {
   return (
     <Container>
       {/* <h1 className="text-white">{event_title}</h1> */}
-      <TitleBar backUrl={`/event/${event_title}`} />
+      <TitleBar title="Session Reviews" backUrl={`/event/${event_title}`} />
       <SubeventHeader eventInfo={eventInfo} />
       <ReviewContainer event_name={event_title} subevent_id={subevent_id} review={eventReview}/>
     </Container>

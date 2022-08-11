@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { BiChevronDown } from 'react-icons/bi';
 import { parseTime, parseDate } from '@utils/parseTime';
+import { useRecoilState } from 'recoil';
+import { convertTime } from '@utils/parseTime';
+import {timezoneState} from '@recoil/atoms/timezone';
 
 type Props = {
   subevent: any;
@@ -40,17 +43,17 @@ const SubeventCard = (props: Props) => {
   const [userDate, setUserDate] = React.useState('');
   const [userTime, setUserTime] = React.useState('');
   const [eventTime, setEventTime] = React.useState('');
+  const [timezone] = useRecoilState(timezoneState);
 
   useEffect(() => {
     setEventTime(parseTime(subevent.subevent_time));
-    setUserTime(parseTime(subevent.subevent_time));
+    setUserTime(convertTime(subevent.subevent_time, timezone));
     setUserDate(parseDate(subevent.subevent_time));
-  }, []);
+  }, [timezone]);
 
   return (
     <CardWrapper className="mb-3 text-white">
       <div className="flex flex-row w-24 mr-2">
-        {userDate}
         <UserTimeWrapper>{userTime}</UserTimeWrapper>
         <EventTimeWrapper>{eventTime}</EventTimeWrapper>
       </div>

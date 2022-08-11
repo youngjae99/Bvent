@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import NewReview from './newReview';
 import Review from './Review';
@@ -22,6 +22,7 @@ const WriteReviewButton = ({ onClick }) => {
 
 const ReviewContainer = (props: Props) => {
   const { event_name, subevent_id, review } = props;
+  const [showPopup, setShowPopup] = useState(false);
   console.log(review);
 
   if (review) {
@@ -30,21 +31,35 @@ const ReviewContainer = (props: Props) => {
       <div className="text-white mt-3">
         <div className="flex flex-row justify-between">
           <p>{reviewCnt} reviews</p>
-          <WriteReviewButton onClick={() => alert('ho')} />
+          <WriteReviewButton onClick={() => setShowPopup(true)} />
         </div>
         <ul>
           {Object.keys(review).map((key) => {
             const _review = review[key];
-            return (
-              <Review {..._review}/>
-            );
+            return <Review {..._review} />;
           })}
         </ul>
-        <NewReview event_name={event_name} subevent_id={subevent_id} show={false}/>
+        <NewReview
+          event_name={event_name}
+          subevent_id={subevent_id}
+          show={false}
+        />
       </div>
     );
   } else {
-    return <div>no review!</div>;
+    return (
+      <div className="text-white mt-3">
+        <div className="flex flex-row justify-between">
+          <p>There's no review!</p>
+          <WriteReviewButton onClick={() => setShowPopup(true)} />
+        </div>
+        <NewReview
+          event_name={event_name}
+          subevent_id={subevent_id}
+          show={false}
+        />
+      </div>
+    );
   }
 };
 

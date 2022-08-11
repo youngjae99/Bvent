@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Container } from '@components/container';
 import { GradientText } from '@components/text/GradientText';
+import TitleBar from '@components/eventPage/subevent/TitleBar';
 
 const MyPage: React.FC = () => {
   return (
     <Container>
       <div>
-        <h1>
-          <GradientText>My Page</GradientText>
-        </h1>
+        <TitleBar title="My Page" backUrl={`/`} />
       </div>
+      <img src="/images/my-page.png"></img>
     </Container>
   );
 };

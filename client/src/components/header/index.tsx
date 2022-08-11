@@ -226,10 +226,10 @@ export const Header = () => {
                     <div className="flex items-center">
                       <img src="/icons/globe.svg" width="20" />
                       <div className="flex flex-row gap-3 ml-4">
-                        <p>KOR</p>
-                        <p>USA</p>
-                        <p>IND</p>
-                        <p>AUS</p>
+                        <p>KR</p>
+                        <p className="text-red-600">EN</p>
+                        <p>ES</p>
+                        <p>JP</p>
                       </div>
                     </div>
                   </li>
@@ -238,9 +238,9 @@ export const Header = () => {
                       <img src="/icons/time-icon.svg" width="20" />
                       <div className="flex flex-row gap-3 ml-4">
                         <MenuItem _timezone="KST" />
-                        <MenuItem _timezone="UST" />
-                        <MenuItem _timezone="ACT" />
-                        <MenuItem _timezone="GMT" />
+                        <MenuItem _timezone="EDT" />
+                        <MenuItem _timezone="PDT" />
+                        <MenuItem _timezone="IST" />
                       </div>
                     </div>
                   </li>
