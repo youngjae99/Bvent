@@ -34,7 +34,7 @@ def get_review(subevent_id):
   """
   all_reviews = db.child("reviews").shallow().get().val()
   if (subevent_id not in all_reviews):
-    return jsonify({"status": "empty"}), 404
+    return jsonify({"": ""}), 200
   reviews = db.child("reviews").child(subevent_id).get()
   return reviews.val(), 200
   
