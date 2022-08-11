@@ -20,13 +20,15 @@ but there are apparent problems that must be solved in order to improve user exp
 @youngjae99
 - NEXT.js
 - recoil
-- tailwind css
+- web3-react & ethers
+- SWR
+- styled-components & tailwind css
 
 ### Backend 
 @placidmoon1
 - flask
 - node.js
-- solidity contracts
+- solidity (contracts)
 - Google Firebase Realtime Database
 - Google Firebase Hosting
 - Google Cloud Functions
