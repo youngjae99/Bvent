@@ -1,12 +1,18 @@
-from flask import Flask, render_template, make_response, url_for, session
-from flask_cors import CORS
+from flask import Flask, render_template, make_response, url_for, session, request
+from flask_cors import CORS, cross_origin
 import os
 import time
+import pyrebase
 
 app = Flask(__name__)
 cors = CORS(app)
 app.secret_key = "8feeef86bbe5049e9c70118e8aaf6f222e15850a7700f3a39c6e9ee05ddd5e03"
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+from auth import config
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
+db = firebase.database()
 
 def format_server_time():
   server_time = time.localtime()
@@ -29,6 +35,9 @@ app.register_blueprint(events.bp)
 
 import users
 app.register_blueprint(users.bp)
+
+import tags
+app.register_blueprint(tags.bp)
 
 with app.test_request_context():
     print(url_for('events.event_info', event_title='2022 ETH Denver'))

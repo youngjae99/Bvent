@@ -42,9 +42,10 @@ def process_events():
       "event_end_time": event_end_time,
       "event_type" : line[4],
       "event_img" : line[5],
-    }
-  
+      "event_tag" : line[6]
+    }  
     db.child("events").child(sanitized_title).set(event_data) #creates a unique key for the user 
+    db.child("eventtags").child(line[6]).child(sanitized_title).set(event_data)
   csv1.close()
 
 def process_event_review():
