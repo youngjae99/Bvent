@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
@@ -7,15 +8,15 @@ import TitleBar from '@components/eventPage/subevent/TitleBar';
 import { SubeventHeader } from '@components/eventPage/subevent/SubeventHeader';
 import ReviewContainer from '@components/eventPage/subevent/review/ReviewContainer';
 
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
 const SubEvent: React.FC = () => {
   const router = useRouter();
   const slug = (router.query.slug as string[]) || [];
   const event_title = slug[0];
   const subevent_id = slug[1];
   const [eventInfo, setEventInfo] = useState();
-  const [eventReview, setEventReview] = useState();
-
-  //   const { subevent_info, subevent_presenter, subevent_src, subevent_timme } = eventInfo;
+  const { data } = useSWR(`https://bvent-seoul.web.app/reviews/`, fetcher);
 
   useEffect(() => {
     const getEventData = async () => {
@@ -24,16 +25,10 @@ const SubEvent: React.FC = () => {
       );
       setEventInfo(res.data);
     };
-    const getEventReview = async () => {
-        const res = await axios.get(
-          `https://bvent-seoul.web.app/reviews/`
-        );
-        setEventReview(res.data[subevent_id]);
-      };
-    
+
     if (event_title) {
       getEventData();
-      getEventReview();
+      //   getEventReview();
     }
   }, [event_title]);
 
@@ -42,7 +37,11 @@ const SubEvent: React.FC = () => {
       {/* <h1 className="text-white">{event_title}</h1> */}
       <TitleBar title="Session Reviews" backUrl={`/event/${event_title}`} />
       <SubeventHeader eventInfo={eventInfo} />
-      <ReviewContainer event_name={event_title} subevent_id={subevent_id} review={eventReview}/>
+      <ReviewContainer
+        event_name={event_title}
+        subevent_id={subevent_id}
+        review={data ? data[subevent_id] : []}
+      />
     </Container>
   );
 };

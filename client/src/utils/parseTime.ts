@@ -6,7 +6,7 @@ const offset = {
 };
 
 export const parseTime = (time: string) => {
-  const parsedTime = new Date(time);
+  const parsedTime = new Date(parseInt(time));
   const hour = parsedTime.getHours();
   const minute = parsedTime.getMinutes();
   if (minute < 10) {
@@ -16,13 +16,13 @@ export const parseTime = (time: string) => {
 };
 
 export const parseEventTime = (time: string, timeZone:string) => {
-  const parsedTime = new Date(time);
-//   console.log(parsedTime.toLocaleString())
+  const parsedTime = new Date(parseInt(time));
+  console.log(parsedTime);
   return parsedTime.toLocaleString('en-GB', { timeZone: timeZone });
 };
 
 export const parseDate =  (time):any => {
-  const parsedTime = new Date(time);
+  const parsedTime = new Date(parseInt(time));
   return parsedTime.getDate();
 };
 
