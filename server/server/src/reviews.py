@@ -107,11 +107,18 @@ def create_reviews():
       #keep track of which user wrote which comment
       db.child("users").child(sanitized_username).child("comments").child(reviewId).set(amount)
     except:
-      return jsonify({'status': 'error occurred while pushing reivew'}), 503  
-    cur_amount = db.child("users").child(sanitized_username).child("totalAmount").get().val() 
-    #print(cur_amount)
-    updated_amount = int(cur_amount) + int(amount)
+      return jsonify({'status': 'error occurred while pushing reivew'}), 503 
+
+    #NOTE: check if user has totalAmount. If not, create new totalAmount. If it has it, reference it.
+    print(username)
+    user_index = db.child("users").child(sanitized_username).shallow().get().val()
+    updated_amount = int(amount)
+    if ("totalAmount" in user_index):
+      cur_amount = db.child("users").child(sanitized_username).child("totalAmount").get().val() 
+      updated_amount = int(cur_amount) + int(amount)
     db.child("users").child(sanitized_username).child("totalAmount").set(updated_amount)
+
+    #start thread for tx and update for token transaction
     thread = Thread(target=t_receive_tx_and_update, args=(amount, sepUsername[0], subevent_id, reviewId,))
     thread.daemon = True
     thread.start()
