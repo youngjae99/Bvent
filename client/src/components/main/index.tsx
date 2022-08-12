@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 
-import { Button } from '@components/button';
-import EventCard from '../eventPage/Card';
+import { Button } from '@components/Button';
+import EventCard from '../eventpage/Card';
 import { eventState } from '@recoil/atoms/events';
-import { GradientText } from '@components/text/GradientText';
+import { GradientText } from '@components/Text/GradientText';
 
 export const Main: React.FC = () => {
   const [events, setEvents] = useRecoilState(eventState);

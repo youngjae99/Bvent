@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { Container } from '@components/container';
-import EventDetailCard from '@components/eventPage/DetailedCard';
-import Selector from '@components/dropdown';
+import Layout from '@components/Layout';
+import EventDetailCard from '@components/eventpage/DetailedCard';
+import Selector from '@components/Dropdown';
 
 type eventType = {
   event_start_time: string;
 };
 
+const defaultEvent = {
+  event_start_time: '',
+};
+
 const Now: React.FC = () => {
-  const [events, setEvents] = useState<eventType>([]);
+  const [events, setEvents] = useState<eventType>(defaultEvent);
   const [useFilter, setUseFilter] = useState(false);
 
   console.log(events);
@@ -36,7 +40,7 @@ const Now: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Layout>
       <div className="flex flex-col items-center">
         <h1 className="text-2xl">Ongoing Events</h1>
         <img src="/images/search-bar.png" />
@@ -71,7 +75,7 @@ const Now: React.FC = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </Layout>
   );
 };
 

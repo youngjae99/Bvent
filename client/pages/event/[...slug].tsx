@@ -3,10 +3,10 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { Container } from '@components/container';
-import TitleBar from '@components/eventPage/subevent/TitleBar';
-import { SubeventHeader } from '@components/eventPage/subevent/SubeventHeader';
-import ReviewContainer from '@components/eventPage/subevent/review/ReviewContainer';
+import Layout from '@components/Layout';
+import TitleBar from '@components/eventpage/Subevent/TitleBar';
+import { SubeventHeader } from '@components/eventpage/Subevent/SubeventHeader';
+import ReviewContainer from '@components/eventpage/Subevent/Review/ReviewContainer';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -33,16 +33,16 @@ const SubEvent: React.FC = () => {
   }, [event_title]);
 
   return (
-    <Container>
+    <Layout>
       {/* <h1 className="text-white">{event_title}</h1> */}
       <TitleBar title="Session Reviews" backUrl={`/event/${event_title}`} />
       <SubeventHeader eventInfo={eventInfo} />
       <ReviewContainer
         event_name={event_title}
         subevent_id={subevent_id}
-        review={data ? data[subevent_id] : []}
+        review={data ? data[subevent_id] : []} 
       />
-    </Container>
+    </Layout>
   );
 };
 

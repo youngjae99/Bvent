@@ -1,12 +1,12 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import '../styles/global.css';
-import { StyledThemeProvider } from '@definitions/styled-components';
-import { ethers } from 'ethers';
-import { Web3ReactProvider } from '@web3-react/core';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Hydrate } from 'react-query/hydration';
 import { RecoilRoot } from 'recoil';
+import { Hydrate } from 'react-query/hydration';
+import { ethers } from 'ethers';
+import { StyledThemeProvider } from '@definitions/styled-components';
+import { Web3ReactProvider } from '@web3-react/core';
+import '../styles/global.css';
 
 
 const getLibrary = (provider?: any) =>

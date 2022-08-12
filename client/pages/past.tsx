@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { Container } from '@components/container';
-import EventDetailCard from '@components/eventPage/DetailedCard';
-import Selector from '@components/dropdown';
+import Layout from '@components/Layout';
+import EventDetailCard from '@components/eventpage/DetailedCard';
+import Selector from '@components/Dropdown';
 
 type eventType = {
   event_start_time: string;
@@ -36,7 +36,7 @@ const Past: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Layout>
       <div className="flex flex-col items-center">
         <h1 className="text-2xl">Past Events</h1>
         <img src="/images/search-bar.png" />
@@ -71,7 +71,7 @@ const Past: React.FC = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </Layout>
   );
 };
 

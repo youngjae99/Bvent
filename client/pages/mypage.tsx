@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { Container } from '@components/container';
-import { GradientText } from '@components/text/GradientText';
-import TitleBar from '@components/eventPage/subevent/TitleBar';
+import Layout from '@components/Layout';
+import { GradientText } from '@components/Text/GradientText';
+import TitleBar from '@components/eventpage/Subevent/TitleBar';
 
 const MyPage: React.FC = () => {
   return (
-    <Container>
+    <Layout>
       <div>
         <TitleBar title="My Page" backUrl={`/`} />
       </div>
       <img src="/images/my-page.png"></img>
-    </Container>
+    </Layout>
   );
 };
 

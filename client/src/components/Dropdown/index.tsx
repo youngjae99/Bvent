@@ -4,7 +4,7 @@ import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 type SelectorProps = {
   label: string;
   options: string[];
-  handler: any;
+  handler?: any;
 };
 
 const Selector = (props: SelectorProps) => {

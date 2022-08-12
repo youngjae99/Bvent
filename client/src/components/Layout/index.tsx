@@ -1,7 +1,7 @@
-import { Header } from '@components/header';
+import Header from '@components/Header';
 import { Sidebar } from '@components/sidebar';
 
-export const Container = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <div
       className="min-h-screen flex flex-col pt-2"
@@ -13,3 +13,5 @@ export const Container = ({ children }) => {
     </div>
   );
 };
+
+export default Layout;

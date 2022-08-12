@@ -65,8 +65,8 @@ export const Sidebar = (props: Props) => {
     <div
       className={
         show
-          ? 'w-full h-full absolute z-40  transform  translate-x-0 '
-          : '   w-full h-full absolute z-40  transform -translate-x-full'
+          ? 'w-full h-full fixed z-40  transform  translate-x-0 '
+          : '   w-full h-full fixed z-40  transform -translate-x-full'
       }
     >
       <div

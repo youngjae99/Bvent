@@ -1,0 +1,36 @@
+Arguments: 
+  /Users/aaron/.nvm/versions/node/v17.5.0/bin/node /Users/aaron/.nvm/versions/node/v17.5.0/bin/yarn add @types/ethers
+
+PATH: 
+  /Users/aaron/.nvm/versions/node/v17.5.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/aaron/.nvm/versions/node/v17.5.0/bin:/opt/homebrew/bin:/Users/aaron/.fig/bin:/Users/aaron/.local/bin
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  17.5.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@types%2fethers: Not found
+      at Request.params.callback [as _callback] (/Users/aaron/.nvm/versions/node/v17.5.0/lib/node_modules/yarn/lib/cli.js:67029:18)
+      at Request.self.callback (/Users/aaron/.nvm/versions/node/v17.5.0/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:526:28)
+      at Request.<anonymous> (/Users/aaron/.nvm/versions/node/v17.5.0/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:526:28)
+      at IncomingMessage.<anonymous> (/Users/aaron/.nvm/versions/node/v17.5.0/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:645:28)
+      at IncomingMessage.emit (node:events:538:35)
+      at endReadableNT (node:internal/streams/readable:1342:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import Logo from '@components/logo';
+import Logo from '@components/Logo';
 import { sidebarShowState } from '@recoil/atoms/sidebar';
 import { timezoneState } from '@recoil/atoms/timezone';
 import { NodeNextRequest } from 'next/dist/server/base-http/node';
@@ -24,7 +24,7 @@ const MenuItem = ({ _timezone }) => {
   );
 };
 
-export const Header = () => {
+const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [timezone, setTimezone] = useRecoilState(timezoneState);
   const [profile, setProfile] = useState(false);
@@ -255,6 +255,7 @@ export const Header = () => {
               onClick={() => setShow(!show)}
               src="/icons/menu-icon.svg"
               height="30"
+              className="cursor-pointer"
             />
           </div>
         </div>
@@ -262,3 +263,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

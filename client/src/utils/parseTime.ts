@@ -46,3 +46,14 @@ export const convertTime = (time, timezone):any => {
   }
   return hour + ':' + minute;
 }
+
+
+export const getLocalTime = (time, timezone):any => {
+  const parsedTime = new Date(parseInt(time));
+  return parsedTime.toLocaleString();
+}
+
+export const getOriginTime = (time, timezone):any => {
+  const parsedTime = new Date(parseInt(time));
+  return parsedTime.toLocaleString();
+}

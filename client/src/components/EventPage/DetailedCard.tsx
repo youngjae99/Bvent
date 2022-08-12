@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { parseTime } from '@utils/parseTime';
+import { getLocalTime, getOriginTime, parseTime } from '@utils/parseTime';
 import {getImageURI} from '@utils/getImageURI';
 
 type Props = {
@@ -22,9 +22,10 @@ const EventDetailCard = (props: Props) => {
         <div className="flex flex-row gap-2 flex-1 w-full">
           <img src={getImageURI(event?.event_img)} width="120" height="70" className='m-2 rounded-md'/>
           <div className="flex flex-col items-start w-full">
-            <p>2022.00.00~2022.00.00 (GMT-6)</p>
+            <p>{getOriginTime(event.event_start_time)}</p>
+            <p>{getLocalTime(event.event_start_time)}</p>
             <br />
-            <p>Hackathon Ethereum.ORG</p>
+            <p>{event?.event_type}</p>
             <div className="flex flex-row justify-end w-full">
               <img src="/icons/copy-icon.svg" />
             </div>
