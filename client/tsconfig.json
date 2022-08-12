@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@public": ["public"],
+      "@public/*": ["public/*"],
+      "@definitions": ["src/definitions"],
+      "@definitions/*": ["src/definitions/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces": ["src/interfaces"],
+      "@styles/*": ["styles/*"],
+      "@styles": ["styles"],
+      "@recoil/*": ["src/recoil/*"],
+      "@recoil": ["src/recoil"],
+      "@constants/*": ["src/constants/*"],
+      "@constants": ["src/constants"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils"],
+      "@hook/*": ["src/hook/*"],
+      "@hook": ["src/hook"],
+      "@api/*": ["src/api/*"],
+      "@api": ["src/api"]
+    },
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/hooks/useWallet.js",
+    "src/recoil/atoms/auth.js"
+  ],
+  "exclude": ["node_modules"]
+}
