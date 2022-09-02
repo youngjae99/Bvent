@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WALLET_SUPPORT_HEX, WalletConnectorName } from '@constants/wallet';
+import { setItem } from '@utils/localStorage';
+import { LocalStorageKey } from '@constants/localStorage';
 
 // import { SUPPORT_CHAIN } from '@/utils/contractInit';
 export const SUPPORT_CHAIN = 1;
@@ -38,6 +40,7 @@ export const useWallet = () => {
     }
     try {
       await activate(injectedConnector);
+      setItem(LocalStorageKey.CONNECTOR_NAME, WalletConnectorName.METAMASK);
     } catch (e) {
       const error = e;
       console.error(e);
@@ -47,6 +50,7 @@ export const useWallet = () => {
   const disconnectWallet = () => {
     try {
       deactivate();
+      setItem(LocalStorageKey.CONNECTOR_NAME, 'null');
     } catch (e) {
       // do nothing
     }
@@ -54,6 +58,7 @@ export const useWallet = () => {
 
   useEffect(() => {
     if (account && library) {
+      setItem(LocalStorageKey.ACCOUNT, account);
       library.getBalance(account).then((balance: number) => {
         setEth(Number(ethers.utils.formatEther(balance)).toFixed(6).toString());
       });
@@ -68,7 +73,9 @@ export const useWallet = () => {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: WALLET_SUPPORT_HEX }],
           })
-          .catch(() => {});
+          .catch(() => {
+            console.log('error');
+          });
       }
     }
   }, [chainId]);

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import { Button } from '@components/Button';
 import EventCard from '../eventpage/Card';
 import { eventState } from '@recoil/atoms/events';
 import { GradientText } from '@components/Text/GradientText';
 import EventAPI from '@api/event';
+import GradientBar from './GradientBar';
 
 export const Main: React.FC = () => {
     const [events, setEvents] = useRecoilState(eventState);
@@ -21,15 +23,7 @@ export const Main: React.FC = () => {
 
     return (
         <div className="flex flex-row">
-            <div
-                className="ml-6 mr-5"
-                style={{
-                    height: 'auto',
-                    width: '2px',
-                    background:
-                        'linear-gradient(180deg, #F0194D00 0%, #F0194D 5%, #7B33FF 50.52%, #14DE95 100%)',
-                }}
-            />
+            <GradientBar />
             <div className="text-center font-light py-5 flex-1">
                 <GradientText
                     style={{

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Layout from '@components/Layout';
 import EventDetailCard from '@components/eventpage/DetailedCard';
 import Selector from '@components/Dropdown';
+import SearchBar from '@components/eventpage/searchBar';
 
 type eventType = {
   event_start_time: string;
@@ -43,7 +44,7 @@ const Now: React.FC = () => {
     <Layout>
       <div className="flex flex-col items-center">
         <h1 className="text-2xl">Ongoing Events</h1>
-        <img src="/images/search-bar.png" />
+        <SearchBar/>
       </div>
       <div className="border-t-2 border-gray-500 my-5 text-white pt-2 flex justify-end">
         <Selector

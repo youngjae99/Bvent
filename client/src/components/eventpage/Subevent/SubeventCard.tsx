@@ -55,7 +55,7 @@ const SubeventCard = (props: Props) => {
   }, [timezone]);
 
   return (
-    <CardWrapper className="mb-3 text-white">
+    <CardWrapper className="mb-3 text-white hover:bg-gray-900 transition-all">
       <div className="flex flex-row w-24 mr-2">
         <UserTimeWrapper>{userTime}</UserTimeWrapper>
         <EventTimeWrapper>{eventTime}</EventTimeWrapper>

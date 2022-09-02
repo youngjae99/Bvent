@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useWeb3React } from '@web3-react/core';
 import { useWallet } from '@hook/useWallet';
 import { formatAddress } from '@utils/formatAddress';
 import axios from 'axios';
-
-type Props = {};
 
 const MenuItem = ({ onClick, selected, children }: any) => (
   <li className="text-white py-4 cursor-pointer">
@@ -27,27 +25,30 @@ const AccountWrapper = styled.div`
 `;
 const SignInOutButton = styled.div``;
 
-export const LoginButton = (props: Props) => {
+export const LoginButton = () => {
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
   const { active, account, connector, chainId } = useWeb3React();
 
+  useEffect(() => {
+    console.log(active, account);
+  }, [active]);
+
   const handleLogin = async () => {
     connectMetamaskWallet();
-    const address = "0x163B3Bd064023B017bB6d06295591554D380b5C8";
+    const address = '0x163B3Bd064023B017bB6d06295591554D380b5C8';
     console.log(account);
-    // const registerRes = await axios.post(`https://bvent-seoul.web.app/auth/register`, {
-    //     username: address,
-    //     password: new Date(),
-    //     loginType: 'wallet',
-    // });
-    // console.log(registerRes);
-    const loginRes = await axios.post(`https://bvent-seoul.web.app/auth/login`,{
+    const loginRes = await axios.post(
+      `https://bvent-seoul.web.app/auth/login`,
+      {
         username: address,
         password: '990326',
         loginType: 'wallet',
-    });
+      },
+    );
     console.log(loginRes);
   };
+
+  console.log(active);
 
   if (active) {
     return (
