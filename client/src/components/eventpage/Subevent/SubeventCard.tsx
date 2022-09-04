@@ -3,10 +3,10 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
 import { BiChevronDown } from 'react-icons/bi';
-import { parseTime, parseDate } from '@utils/parseTime';
+import { parseTime, parseDate } from '@/utils/parseTime';
 import { useRecoilState } from 'recoil';
-import { convertTime } from '@utils/parseTime';
-import { timezoneState } from '@recoil/atoms/timezone';
+import { convertTime } from '@/utils/parseTime';
+import { timezoneState } from '@/recoil/atoms/timezone';
 
 type Props = {
   subevent: any;
@@ -55,7 +55,7 @@ const SubeventCard = (props: Props) => {
   }, [timezone]);
 
   return (
-    <CardWrapper className="mb-3 text-white">
+    <CardWrapper className="mb-3 text-white hover:bg-gray-900 transition-all">
       <div className="flex flex-row w-24 mr-2">
         <UserTimeWrapper>{userTime}</UserTimeWrapper>
         <EventTimeWrapper>{eventTime}</EventTimeWrapper>

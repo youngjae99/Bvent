@@ -1,17 +1,20 @@
 import React from 'react';
-
-import { Container } from '@components/container';
-import { GradientText } from '@components/text/GradientText';
-import TitleBar from '@components/eventPage/subevent/TitleBar';
+import Layout from '@/components/Layout';
+import TitleBar from '@/components/eventpage/Subevent/TitleBar';
+import { AboutMe } from '@/components/mypage/AboutMe';
+import Button from '@/components/Button';
 
 const MyPage: React.FC = () => {
+  const saveSettings = () => {
+    alert('saved!');
+  };
+
   return (
-    <Container>
-      <div>
-        <TitleBar title="My Page" backUrl={`/`} />
-      </div>
-      <img src="/images/my-page.png"></img>
-    </Container>
+    <Layout>
+      <TitleBar title="My Page" backUrl={`/`} />
+      <AboutMe />
+      <Button onClick={saveSettings}>Save Settings</Button>
+    </Layout>
   );
 };
 

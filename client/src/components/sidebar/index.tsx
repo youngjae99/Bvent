@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-import { sidebarShowState } from '@recoil/atoms/sidebar';
-import { useWallet } from '@hook/useWallet';
+import { sidebarShowState } from '@/recoil/atoms/sidebar';
+import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
 import { LoginButton } from './loginButton';
+import { TimeBox } from './timeBox';
 
-type Props = {};
+type Props = any;
 
 const MenuItem = ({ href, selected, children }: any) => (
   <a href={href}>
@@ -31,30 +31,6 @@ export const Sidebar = (props: Props) => {
   const [product, setProduct] = useState(false);
   const [deliverables, setDeliverables] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [time, setTime] = useState('09:00:00');
-
-  useEffect(() => {
-    setTimeout(() => {
-      getDate();
-    }, 1000);
-  }, [time]);
-
-  const getDate = () => {
-    const today = new Date();
-    const date =
-      today.getFullYear() +
-      '-' +
-      (today.getMonth() + 1) +
-      '-' +
-      today.getDate() +
-      '  ' +
-      today.getHours() +
-      ':' +
-      today.getMinutes() +
-      ':' +
-      today.getSeconds();
-    setTime(date);
-  };
 
   const onClickMetaMask = () => {
     console.log('pressed!');
@@ -65,8 +41,8 @@ export const Sidebar = (props: Props) => {
     <div
       className={
         show
-          ? 'w-full h-full absolute z-40  transform  translate-x-0 '
-          : '   w-full h-full absolute z-40  transform -translate-x-full'
+          ? 'w-full h-full fixed z-40  transform  translate-x-0 '
+          : '   w-full h-full fixed z-40  transform -translate-x-full'
       }
     >
       <div
@@ -112,16 +88,7 @@ export const Sidebar = (props: Props) => {
             </ul>
           </div>
           <div className="w-full">
-            <div className="border-t border-gray-300">
-              <div className="w-full flex items-center justify-between px-6 py-3">
-                KOR USA IND AUS
-              </div>
-            </div>
-            <div className="border-t border-gray-300">
-              <div className="w-full flex items-center justify-between px-6 py-3">
-                KST {time}
-              </div>
-            </div>
+            <TimeBox />
           </div>
         </div>
       </div>

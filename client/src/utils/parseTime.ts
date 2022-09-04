@@ -27,17 +27,17 @@ export const parseDate =  (time):any => {
 };
 
 export const calcTime = (timezone):any => {
-  var d = new Date();
-  var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-  var nd = new Date(utc + (3600000*offset[timezone]));
+  const d = new Date();
+  const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  const nd = new Date(utc + (3600000*offset[timezone]));
   return nd.toLocaleString();
 }
 
 export const convertTime = (time, timezone):any => {
   // console.log(time, timezone);
-  var d = new Date(time);
-  var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-  var nd = new Date(utc + (3600000*offset[timezone]));
+  const d = new Date(time);
+  const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  const nd = new Date(utc + (3600000*offset[timezone]));
   // console.log(nd);
   const hour = nd.getHours();
   const minute = nd.getMinutes();
@@ -46,3 +46,19 @@ export const convertTime = (time, timezone):any => {
   }
   return hour + ':' + minute;
 }
+
+
+export const getLocalTime = (time):any => {
+  const parsedTime = new Date(parseInt(time));
+  return parsedTime.toLocaleString();
+}
+
+export const getOriginTime = (time):any => {
+  const parsedTime = new Date(parseInt(time));
+  return parsedTime.toLocaleString();
+}
+
+// const changeTimezone = (date, ianatz):any => {
+//   const invdate = new Date(parseInt(time));
+//   return new Date(date.getTime())
+// }

@@ -1,16 +1,17 @@
 import React from 'react';
-import { parseEventTime } from '@utils/parseTime';
+import { parseEventTime } from '@/utils/parseTime';
+import { Review } from './type';
 
-type Props = {
-  timestamp: string;
-  username: string;
-  review_title: string;
-  review_content: string;
-  txHash: number;
-  amount: number;
-};
+// type Props = {
+//   timestamp: string;
+//   username: string;
+//   review_title: string;
+//   review_content: string;
+//   txHash: string;
+//   amount: number;
+// };
 
-const Review = (props: Props) => {
+const Review = (props: Review) => {
   const { timestamp, username, review_title, review_content, txHash, amount } =
     { ...props };
   console.log(timestamp);

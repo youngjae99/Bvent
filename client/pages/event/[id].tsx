@@ -3,16 +3,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import { Container } from '@components/container';
-import SubeventCard from '@components/eventPage/subevent/SubeventCard';
-import { EventTitleWrapper } from '@components/eventPage/Card';
+import Layout from '@/components/Layout';
+import SubeventCard from '@/components/eventpage/Subevent/SubeventCard';
+import { EventTitleWrapper } from '@/components/eventpage/Card';
 import { useRecoilState } from 'recoil';
-import { timezoneState } from '@recoil/atoms/timezone';
+import { timezoneState } from '@/recoil/atoms/timezone';
+import { Event as EventType } from '@/types/event';
+import { Subevent as SubeventType } from '@/types/event';
 
 const Event: React.FC = () => {
   const router = useRouter();
   const event_title = router.query.id as string;
-  const [eventInfo, setEventInfo] = useState();
+  const [eventInfo, setEventInfo] = useState<EventType>();
   const [timezone] = useRecoilState(timezoneState);
   console.log(router.query.id);
 
@@ -30,7 +32,7 @@ const Event: React.FC = () => {
   }, [event_title]);
 
   return (
-    <Container>
+    <Layout>
       <div className="flex flex-row justify-center mb-4">
         <div className="flex flex-col justify-center items-end">
           <p className="text-2xl font-bold text-white text-center">
@@ -54,9 +56,9 @@ const Event: React.FC = () => {
             .sort(
               (a, b) => eventInfo[a].subevent_time - eventInfo[b].subevent_time
             )
-            .map((key) => <SubeventCard subevent={eventInfo[key]} />)}
+            .map((key) => <SubeventCard key={key} subevent={eventInfo[key]} />)}
       </div>
-    </Container>
+    </Layout>
   );
 };
 
