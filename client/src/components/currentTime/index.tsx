@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { timezoneState } from '@recoil/atoms/timezone';
-import { calcTime } from '@utils/parseTime';
+import { timezoneState } from '@/recoil/atoms/timezone';
+import { calcTime } from '@/utils/parseTime';
 
 const CurrentTime = () => {
   const [time, setTime] = useState('');

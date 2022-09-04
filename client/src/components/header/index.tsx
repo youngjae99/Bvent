@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import Logo from '@/components/Logo';
+import Logo from '@/components/logo';
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { timezoneState } from '@/recoil/atoms/timezone';
 import { NodeNextRequest } from 'next/dist/server/base-http/node';
