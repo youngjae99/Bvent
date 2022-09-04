@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { formatAddress } from '@utils/formatAddress';
+import { formatAddress } from '@/utils/formatAddress';
 
 type Props = {
   address: string | null | undefined;

@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import { Hydrate } from 'react-query/hydration';
 import { ethers } from 'ethers';
-import { StyledThemeProvider } from '@definitions/styled-components';
+import { StyledThemeProvider } from '@/definitions/styled-components';
 import { Web3ReactProvider } from '@web3-react/core';
 import '../styles/global.css';
 import WalletProvider from 'src/wallet/WalletProvider';

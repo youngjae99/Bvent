@@ -35,7 +35,7 @@ const Selector = (props: SelectorProps) => {
         >
           {options &&
             options.map((option, i) => (
-              <li
+              <li key={i} 
                 className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
                 onClick={() => changeSelected(i)}
               >

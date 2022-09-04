@@ -19,6 +19,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    'no-empty-function': false,
+    // 'no-empty-function': 0,
   },
 };

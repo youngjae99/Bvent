@@ -1,4 +1,4 @@
-import { LocalStorageKey } from '@constants/localStorage';
+import { LocalStorageKey } from '@/constants/localStorage';
 
 export const getItem = (key: LocalStorageKey) => {
     try {

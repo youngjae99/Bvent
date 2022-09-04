@@ -2,13 +2,13 @@ import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { InjectedConnector } from '@web3-react/injected-connector';
-import { WALLET_SUPPORT_HEX, WalletConnectorName } from '@constants/wallet';
-import { setItem } from '@utils/localStorage';
-import { LocalStorageKey } from '@constants/localStorage';
+import { WALLET_SUPPORT_HEX, WalletConnectorName } from '@/constants/wallet';
+import { setItem } from '@/utils/localStorage';
+import { LocalStorageKey } from '@/constants/localStorage';
 
 // import { SUPPORT_CHAIN } from '@/utils/contractInit';
 export const SUPPORT_CHAIN = 1;
-import { isMobileDevice } from '@utils/isMobileDevice';
+import { isMobileDevice } from '@/utils/isMobileDevice';
 
 const injectedConnector = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42],

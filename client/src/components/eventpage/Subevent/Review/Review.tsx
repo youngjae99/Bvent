@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseEventTime } from '@utils/parseTime';
+import { parseEventTime } from '@/utils/parseTime';
 import { Review } from './type';
 
 // type Props = {

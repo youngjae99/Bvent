@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { parseTime } from '@utils/parseTime';
+import { parseTime } from '@/utils/parseTime';
 
 type Props = {
   event: any;

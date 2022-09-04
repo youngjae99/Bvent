@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Layout from '@components/Layout';
-import { Main } from '@components/main';
-import { GradientText } from '@components/Text/GradientText';
+import Layout from '@/components/Layout';
+import { Main } from '@/components/main';
+import { GradientText } from '@/components/Text/GradientText';
 import { useRecoilState } from 'recoil';
-import { timezoneState } from '@recoil/atoms/timezone';
-import CurrentTime from '@components/Time';
+import { timezoneState } from '@/recoil/atoms/timezone';
+import CurrentTime from '@/components/Time';
 
 const Home: React.FC = () => {
   const [timezone] = useRecoilState(timezoneState);

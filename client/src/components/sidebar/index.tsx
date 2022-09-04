@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-import { sidebarShowState } from '@recoil/atoms/sidebar';
-import { useWallet } from '@hook/useWallet';
+import { sidebarShowState } from '@/recoil/atoms/sidebar';
+import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
 import { LoginButton } from './loginButton';
 import { TimeBox } from './timeBox';
 
-type Props = {};
+type Props = any;
 
 const MenuItem = ({ href, selected, children }: any) => (
   <a href={href}>

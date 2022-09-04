@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import Logo from '@components/Logo';
-import { sidebarShowState } from '@recoil/atoms/sidebar';
-import { timezoneState } from '@recoil/atoms/timezone';
+import Logo from '@/components/Logo';
+import { sidebarShowState } from '@/recoil/atoms/sidebar';
+import { timezoneState } from '@/recoil/atoms/timezone';
 import { NodeNextRequest } from 'next/dist/server/base-http/node';
 
-const MenuItem = ({ _timezone }) => {
+const MenuItem = ({ _timezone }: any) => {
   const [timezone, setTimezone] = useRecoilState(timezoneState);
   console.log(_timezone);
 

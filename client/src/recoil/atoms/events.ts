@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Atoms } from "@recoil/constants";
+import { Atoms } from "@/recoil/constants";
 
 type EventType = {
     [key: string]: any;

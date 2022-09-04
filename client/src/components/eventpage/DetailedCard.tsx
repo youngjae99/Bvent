@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { getLocalTime, getOriginTime, parseTime } from '@utils/parseTime';
-import {getImageURI} from '@utils/getImageURI';
+import { getLocalTime, getOriginTime, parseTime } from '@/utils/parseTime';
+import {getImageURI} from '@/utils/getImageURI';
 
 type Props = {
   event: any;

@@ -3,11 +3,10 @@ import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import { Button } from '@components/Button';
 import EventCard from '../eventpage/Card';
-import { eventState } from '@recoil/atoms/events';
-import { GradientText } from '@components/Text/GradientText';
-import EventAPI from '@api/event';
+import { eventState } from '@/recoil/atoms/events';
+import { GradientText } from '@/components/Text/GradientText';
+import EventAPI from '@/api/event';
 import GradientBar from './GradientBar';
 
 export const Main: React.FC = () => {
@@ -40,7 +39,7 @@ export const Main: React.FC = () => {
                             .filter(
                                 (key) => events[key].event_tag === 'current'
                             )
-                            .map((key) => <EventCard event={events[key]} />)}
+                            .map((key) => <EventCard key={key} event={events[key]} />)}
                     <a href="/now" className="text-white text-right">
                         see more
                     </a>
@@ -59,7 +58,7 @@ export const Main: React.FC = () => {
                     {events &&
                         Object.keys(events)
                             .filter((key) => events[key].event_tag === 'past')
-                            .map((key) => <EventCard event={events[key]} />)}
+                            .map((key) => <EventCard key={key} event={events[key]} />)}
                     <a href="/past" className="text-white text-right">
                         see more
                     </a>
@@ -78,7 +77,7 @@ export const Main: React.FC = () => {
                     {events &&
                         Object.keys(events)
                             .filter((key) => events[key].event_tag === 'future')
-                            .map((key) => <EventCard event={events[key]} />)}
+                            .map((key) => <EventCard key={key} event={events[key]} />)}
                     <a href="/future" className="text-white text-right">
                         see more
                     </a>

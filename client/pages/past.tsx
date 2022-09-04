@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Layout from '@components/Layout';
-import EventDetailCard from '@components/eventpage/DetailedCard';
-import Selector from '@components/Dropdown';
+import Layout from '@/components/Layout';
+import EventDetailCard from '@/components/eventpage/DetailedCard';
+import Selector from '@/components/Dropdown';
+import {Event as EventType} from '@/types/event';
 
-type eventType = {
-  event_start_time: string;
-};
+const defaultValue = [];
 
 const Past: React.FC = () => {
-  const [events, setEvents] = useState<eventType>([]);
+  const [events, setEvents] = useState<EventType[]>(defaultValue);
   const [useFilter, setUseFilter] = useState(false);
 
   console.log(events);
@@ -63,11 +62,11 @@ const Past: React.FC = () => {
           <div className="container mx-auto flex flex-col gap-2">
             {!useFilter
               ? Object.keys(events).map((key) => (
-                  <EventDetailCard event={events[key]} />
+                  <EventDetailCard key={key} event={events[key]} />
                 ))
               : Object.keys(events)
                   .filter(eventFilter)
-                  .map((key) => <EventDetailCard event={events[key]} />)}
+                  .map((key) => <EventDetailCard key={key} event={events[key]} />)}
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import NewReview from './newReview';
 import Review from './Review';
+import ReviewForm from './ReviewForm';
 
 type Props = {
   event_name: string;
@@ -9,7 +10,7 @@ type Props = {
   review: any;
 };
 
-const WriteReviewButton = ({ onClick }) => {
+const WriteReviewButton = ({ onClick }: any) => {
   return (
     <div
       onClick={onClick}
@@ -23,44 +24,34 @@ const WriteReviewButton = ({ onClick }) => {
 const ReviewContainer = (props: Props) => {
   const { event_name, subevent_id, review } = props;
   const [showPopup, setShowPopup] = useState(false);
+  const reviewCnt = review ? Object.keys(review).length : 0;
+
   console.log(review);
 
-  if (review) {
-    const reviewCnt = review ? Object.keys(review).length : 0;
-    return (
-      <div className="text-white mt-3">
-        <div className="flex flex-row justify-between mb-2">
-          <p>{reviewCnt} reviews</p>
-          <WriteReviewButton onClick={() => setShowPopup(true)} />
-        </div>
-        <ul>
-          {Object.keys(review).map((key) => {
+  return (
+    <div className="text-white mt-3">
+      <div className="flex flex-row justify-between mb-2">
+        <p>{reviewCnt} reviews</p>
+        <WriteReviewButton onClick={() => setShowPopup(true)} />
+      </div>
+      <ul>
+        {review ? (
+          Object.keys(review).map((key) => {
             const _review = review[key];
-            return <Review {..._review} />;
-          })}
-        </ul>
-        {showPopup && <NewReview
-          event_name={event_name}
-          subevent_id={subevent_id}
-          handleClose={() => setShowPopup(false)}
-        />}
-      </div>
-    );
-  } else {
-    return (
-      <div className="text-white mt-3">
-        <div className="flex flex-row justify-between">
-          <p>There's no review!</p>
-          <WriteReviewButton onClick={() => setShowPopup(true)} />
-        </div>
-        {showPopup && <NewReview
-          event_name={event_name}
-          subevent_id={subevent_id}
-          handleClose={() => setShowPopup(false)}
-        />}
-      </div>
-    );
-  }
+            return <Review key={key} {..._review} />;
+          })
+        ) : (
+          <>No review</>
+        )}
+      </ul>
+      {/* <NewReview
+        event_name={event_name}
+        subevent_id={subevent_id}
+        handleClose={() => setShowPopup(false)}
+      /> */}
+      <ReviewForm />
+    </div>
+  );
 };
 
 export default ReviewContainer;

@@ -40,39 +40,32 @@ const NewReview = (props: Props) => {
     };
     const res = await axios.post(
       `https://bvent-seoul.web.app/review/${subevent_id}`,
-      data
+      data,
     );
     console.log(res.status);
   };
 
   return (
-    <div>
-      <div
-        className="inset-0 fixed w-full h-full"
-        style={{backgroundColor:"rgba(0,0,0,0.5)"}}
-        onClick={handleClose}
-      />
-      <div
-        className="fixed bottom-0 left-0 w-screen flex flex-col items-center rounded-t-2xl"
-        style={{ backgroundColor: '#010F21' }}
-      >
-        <TitleBarWrapper>
-          <div>
-            <BiArrowBack style={{ cursor: 'pointer' }} />
-          </div>
-          <p>Write Review</p>
-          <div onClick={submitReview}>
-            <BiPencil style={{ cursor: 'pointer' }} />
-          </div>
-        </TitleBarWrapper>
-        <div className="flex flex-row justify-start w-full px-10 mt-4">
-          <img src="/images/chat-profile.png" width={150}></img>
+    <div
+      className="fixed bottom-0 left-0 w-screen flex flex-col items-center rounded-t-2xl"
+      style={{ backgroundColor: '#010F21' }}
+    >
+      <TitleBarWrapper>
+        <div>
+          <BiArrowBack style={{ cursor: 'pointer' }} />
         </div>
-        <textarea
-          className="bg-gray-700 w-10/12 h-32 p-1 m-2 mb-5 rounded-lg"
-          onChange={(e) => setComment(e.target.value)}
-        ></textarea>
+        <p>Write Review</p>
+        <div onClick={submitReview}>
+          <BiPencil style={{ cursor: 'pointer' }} />
+        </div>
+      </TitleBarWrapper>
+      <div className="flex flex-row justify-start w-full px-10 mt-4">
+        <img src="/images/chat-profile.png" width={150}></img>
       </div>
+      <textarea
+        className="bg-gray-700 w-10/12 h-32 p-1 m-2 mb-5 rounded-lg"
+        onChange={(e) => setComment(e.target.value)}
+      ></textarea>
     </div>
   );
 };

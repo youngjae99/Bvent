@@ -1,8 +1,9 @@
+import React from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { FC, useEffect, useState } from 'react';
 
 import { WalletConnectorName } from '../constants/wallet';
-import { LocalStorageKey } from '@constants/localStorage';
+import { LocalStorageKey } from '@/constants/localStorage';
 
 import { getItem } from '../utils/localStorage';
 
@@ -26,7 +27,6 @@ const WalletProvider = ({ children }: any) => {
     if (connectorName === WalletConnectorName.WALLET_CONNECT) {
       if (!networkActive && !networkError) {
         activateNetwork(walletConnectConnector())
-          .then(() => {})
           .catch((e) => {
             console.log(e);
           });

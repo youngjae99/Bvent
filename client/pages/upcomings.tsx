@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Layout from '@components/Layout';
-import EventDetailCard from '@components/eventpage/DetailedCard';
-import Selector from '@components/Dropdown';
+import Layout from '@/components/Layout';
+import EventDetailCard from '@/components/eventpage/DetailedCard';
+import Selector from '@/components/Dropdown';
 
 const Upcoming: React.FC = () => {
   const [events, setEvents] = useState([]);
@@ -34,7 +34,7 @@ const Upcoming: React.FC = () => {
         <div className="text-center font-light py-5 flex-1">
           <div className="container mx-auto flex flex-col gap-2">
             {Object.keys(events).map((key) => (
-              <EventDetailCard event={events[key]} />
+              <EventDetailCard key={key} event={events[key]} />
             ))}
           </div>
         </div>

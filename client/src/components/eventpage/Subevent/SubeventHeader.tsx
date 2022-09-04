@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { HiOutlineLink } from 'react-icons/hi';
 import { CgProfile } from 'react-icons/cg';
-import { parseEventTime } from '@utils/parseTime';
+import { parseEventTime } from '@/utils/parseTime';
 import { SubeventImage } from './SubeventImage';
-import { getImageURI } from '@utils/getImageURI';
+import { getImageURI } from '@/utils/getImageURI';
 
 type Props = {
   eventInfo: any;

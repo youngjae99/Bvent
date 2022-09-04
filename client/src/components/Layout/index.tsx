@@ -1,7 +1,8 @@
-import Header from '@components/Header';
-import { Sidebar } from '@components/sidebar';
+import React from 'react';
+import Header from '@/components/header';
+import { Sidebar } from '@/components/sidebar';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }:any) => {
   return (
     <div
       className="min-h-screen flex flex-col pt-2"

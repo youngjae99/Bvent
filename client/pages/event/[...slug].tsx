@@ -3,10 +3,10 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import Layout from '@components/Layout';
-import TitleBar from '@components/eventpage/Subevent/TitleBar';
-import { SubeventHeader } from '@components/eventpage/Subevent/SubeventHeader';
-import ReviewContainer from '@components/eventpage/Subevent/Review/ReviewContainer';
+import Layout from '@/components/Layout';
+import TitleBar from '@/components/eventpage/Subevent/TitleBar';
+import { SubeventHeader } from '@/components/eventpage/Subevent/SubeventHeader';
+import ReviewContainer from '@/components/eventpage/Subevent/Review/ReviewContainer';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 

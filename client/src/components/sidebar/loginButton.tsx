@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useWeb3React } from '@web3-react/core';
-import { useWallet } from '@hook/useWallet';
-import { formatAddress } from '@utils/formatAddress';
+import { useWallet } from '@/hook/useWallet';
+import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
 
 const MenuItem = ({ onClick, selected, children }: any) => (
@@ -37,18 +37,19 @@ export const LoginButton = () => {
     connectMetamaskWallet();
     const address = '0x163B3Bd064023B017bB6d06295591554D380b5C8';
     console.log(account);
-    const loginRes = await axios.post(
-      `https://bvent-seoul.web.app/auth/login`,
-      {
-        username: address,
-        password: '990326',
-        loginType: 'wallet',
-      },
-    );
-    console.log(loginRes);
-  };
 
-  console.log(active);
+    const frm = new FormData();
+    frm.append('username', address);
+    frm.append('password', '990326');
+    frm.append('loginType', 'wallet');
+    const loginRes = await axios
+      .post(`https://bvent-seoul.web.app/auth/login`, frm, { withCredentials: true })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    console.log(loginRes);
+    sessionStorage.setItem('session', JSON.stringify(loginRes));
+  };
 
   if (active) {
     return (
