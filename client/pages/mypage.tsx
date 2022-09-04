@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import TitleBar from '@/components/eventpage/Subevent/TitleBar';
 import { AboutMe } from '@/components/mypage/AboutMe';
-import Button from '@/components/button';
+import Button from '@/components/Button';
 
 const MyPage: React.FC = () => {
   const saveSettings = () => {
