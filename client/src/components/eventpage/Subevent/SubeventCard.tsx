@@ -40,7 +40,6 @@ const EventTitle = styled.p`
 `;
 
 const SubeventCard = (props: Props) => {
-  console.log(props);
   const { subevent } = props;
   const showSpeaker = false;
   const [userDate, setUserDate] = React.useState('');
