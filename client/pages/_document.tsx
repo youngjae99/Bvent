@@ -1,5 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
-import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+  DocumentInitialProps,
+} from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 class CustomDocument extends Document {
@@ -38,9 +45,22 @@ class CustomDocument extends Document {
     } finally {
       sheet.seal();
     }
-    // FIXME(aaron): erase code under this line later
-    // const initialProps = await Document.getInitialProps(ctx);
-    // return initialProps;
+  }
+  render() {
+    return (
+      <Html>
+        <Head>
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+          />
+          <body>
+            <Main />
+            <NextScript />
+          </body>
+        </Head>
+      </Html>
+    );
   }
 }
 

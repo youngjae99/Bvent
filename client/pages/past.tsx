@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import EventDetailCard from '@/components/eventpage/DetailedCard';
 import Selector from '@/components/Dropdown';
 import {Event as EventType} from '@/types/event';
+import SearchBar from '@/components/eventpage/searchBar';
 
 const defaultValue = [];
 
@@ -37,8 +38,8 @@ const Past: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <h1 className="text-2xl">Past Events</h1>
-        <img src="/images/search-bar.png" />
+        <h1>Past Events</h1>
+        <SearchBar/>
       </div>
       <div className="border-t-2 border-gray-500 my-5 text-white pt-2 flex justify-end">
         <Selector

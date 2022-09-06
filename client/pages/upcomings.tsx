@@ -4,6 +4,7 @@ import axios from 'axios';
 import Layout from '@/components/Layout';
 import EventDetailCard from '@/components/eventpage/DetailedCard';
 import Selector from '@/components/Dropdown';
+import SearchBar from '@/components/eventpage/searchBar';
 
 const Upcoming: React.FC = () => {
   const [events, setEvents] = useState([]);
@@ -22,8 +23,8 @@ const Upcoming: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <h1 className="text-2xl">Upcoming Events</h1>
-        <img src="/images/search-bar.png" />
+        <h1>Upcoming Events</h1>
+        <SearchBar/>
       </div>
       <div className="border-t-2 border-gray-500 my-5 text-white pt-2 flex justify-end">
         <Selector label="Any Year" options={['All', '2022', '2021']} />

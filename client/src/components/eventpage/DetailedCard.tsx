@@ -15,7 +15,7 @@ const EventDetailCard = (props: Props) => {
   console.log(event);
   return (
     <Link href={`/event/${event?.event_title}`}>
-      <div className="flex flex-col items-start w-full pb-2 border-b-2 gap-1 text-white">
+      <div className="flex flex-col items-start w-full px-4 py-2 text-white bg-gray-900 rounded-lg hover:bg-gray-800">
         <p className="text-2xl font-semibold" style={{ color: '#F0194D' }}>
           {event?.event_title}
         </p>

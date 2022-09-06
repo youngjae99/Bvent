@@ -24,6 +24,7 @@ const TitleBarWrapper = styled.div`
   line-height: 1.5rem;
 `;
 
+// DEPRECATED(aaron): This component is no longer used.
 const NewReview = (props: Props) => {
   //  const [user, ] = useRecoilState(auth)
   const { active, account, connector, chainId } = useWeb3React();
