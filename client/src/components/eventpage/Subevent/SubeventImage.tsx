@@ -12,7 +12,7 @@ export const StyledImage = styled.img`
 export const SubeventImage = ({ src }: any) => {
   return (
     <StyledImageWrapper>
-      <StyledImage src={src} alt="subeventImage" />
+      <StyledImage src={src} alt="subeventImage"/>
     </StyledImageWrapper>
   );
 };
