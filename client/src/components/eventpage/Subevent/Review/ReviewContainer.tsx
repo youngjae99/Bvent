@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useWeb3React } from '@web3-react/core';
 import useSWR from 'swr';
 import axios from 'axios';
 
@@ -28,14 +29,19 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const ReviewContainer = (props: Props) => {
   const { event_name, subevent_id } = props;
-  const { data } = useSWR(`https://bvent-seoul.web.app/reviews/`, fetcher);
-  const review = data ? data[subevent_id] : [];
+
+  const { data } = useSWR(
+    `https://bvent-seoul.web.app/reviews/${subevent_id}`,
+    fetcher,
+  );
+  const review = data ? data : {};
   const reviewCnt = review ? Object.keys(review).length : 0;
 
   console.log(review);
 
   return (
     <div className="text-white mt-3">
+      <ReviewForm />
       <div className="flex flex-row justify-between mb-2">
         <p>{reviewCnt} reviews</p>
       </div>
@@ -49,12 +55,6 @@ const ReviewContainer = (props: Props) => {
           <>No review</>
         )}
       </ul>
-      {/* <NewReview
-        event_name={event_name}
-        subevent_id={subevent_id}
-        handleClose={() => setShowPopup(false)}
-      /> */}
-      <ReviewForm />
     </div>
   );
 };
