@@ -1,0 +1,6 @@
+{
+  "python.analysis.extraPaths": [
+    "/home/placid/competitions/Bvent/server/venv",
+    "./server/server/src"
+  ]
+}

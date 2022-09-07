@@ -2,7 +2,7 @@ import pyrebase, json, requests
 
 from flask_cors import cross_origin
 from flask import Blueprint
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 
 
 #initalize firebase
@@ -37,7 +37,8 @@ def get_myself():
   Show all the posts 
   """
   from auth import check_userToken
-  username = check_userToken() 
+  idToken = request.args.get('idToken')
+  username = check_userToken(idToken) 
 
   if username == "invalid request":
       return {
@@ -47,4 +48,5 @@ def get_myself():
   from helper import sanitize
   sanitized_username = sanitize(username)
   user_info = db.child("users").child(sanitized_username).get().val()
-  return jsonify(user_info), 200
+  resp = make_response(jsonify(user_info))
+  return resp, 200

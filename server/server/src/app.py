@@ -7,9 +7,17 @@ import pyrebase
 from mySecrets import config, app_secret_key
 
 app = Flask(__name__)
-cors = CORS(app)
 app.secret_key = app_secret_key
-app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['SECRET_KEY'] = 'the quick brown tig jumps over the lazy   dog'
+app.config['CORS_HEADERS'] = ['Content-Type', 'access-control-allow-origin']
+
+cors = CORS(app, resources={r"/*/": 
+    {"origins": ["https://www.bventdao.xyz/",
+                 "https://bvent-youngjae99.vercel.app/",
+                 "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca"]}
+    },
+    support_credentials=True, 
+    send_wildcard=False)
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
