@@ -10,7 +10,7 @@ import ReviewContainer from '@/components/eventpage/Subevent/Review/ReviewContai
 import { generateSubeventPageMeta } from '@/utils/seo';
 
 const SubEvent: React.FC = (props) => {
-  const { data }: any = props;
+  const { data, meta }: any = props;
   const eventInfo = data;
   const router = useRouter();
   const slug = (router.query.slug as string[]) || [];
@@ -19,7 +19,7 @@ const SubEvent: React.FC = (props) => {
 
   return (
     <>
-      <NextSeo {...generateSubeventPageMeta(eventInfo)} />
+      <NextSeo {...meta} />
       <Layout>
         <TitleBar title="Session Reviews" backUrl={`/event/${event_title}`} />
         <SubeventHeader eventInfo={eventInfo} />
@@ -38,7 +38,22 @@ export async function getServerSideProps(context) {
     `https://bvent-seoul.web.app/events/${event_title}/${subevent_id}`,
   );
   const data = await res.data;
-  return { props: { data } };
+  const meta = await generateSubeventPageMeta(res.data)
+  return { props: { data, meta } };
 }
+
+// export async function getStaticProps(context) {
+//   const slug = (context.query.slug as string[]) || [];
+//   const event_title = slug[0];
+//   const subevent_id = slug[1];
+
+//   const res = await axios.get(
+//     `https://bvent-seoul.web.app/events/${event_title}/${subevent_id}`,
+//   );
+//   const data = await res.data;
+//   const meta = await generateSubeventPageMeta(res.data)
+//   return { props: { data, meta } };
+// }
+
 
 export default SubEvent;
