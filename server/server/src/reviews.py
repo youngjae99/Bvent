@@ -44,8 +44,9 @@ Threaded task to asynchronously receive tx and update
 def t_receive_tx_and_update(amount, toAddress, subevent_id, reviewId):
   #print("tx update start!", toAddress)
   import requests 
+  from mySecrets import evmos_gcf
   try:
-    response_data = requests.post("https://hello-wallet-2rc7jznmhq-du.a.run.app", 
+    response_data = requests.post(evmos_gcf, 
       data = {"amount": str(amount), "toAddress": toAddress}).json()
     # print(response_data)
     txHash = response_data["transactionHash"]
@@ -63,21 +64,27 @@ def create_reviews():
   Given a user is logged in, create a new review
   """
   if request.method == "POST":
-    from auth import check_userToken
-    username = check_userToken() 
-
-    if username == "invalid request":
-        return {
-          "status": "you don't have permission :("
-      }, 403
+    params = request.get_json()
+    try:
+      userToken = params["idToken"] 
+      from auth import check_userToken
+      username = check_userToken(userToken) 
+      if username == "invalid request":
+          return {
+            "status": "you don't have permission :("
+        }, 403
+    except:
+      return {
+            "status": "you don't have permission :("
+        }, 403
 
     # autocreate id, if possible
-    review_content =  request.form["review_content"]     # string
-    review_title   =  request.form["review_title"]
-    event_name =      request.form["event_name"] 
-    subevent_id =     request.form["subevent_id"] # time
-    timestamp =       request.form["timestamp"]           #
-    amount          = request.form["amount"] 
+    review_content =  params["review_content"]     # string
+    review_title   =  params["review_title"]
+    event_name =      params["event_name"] 
+    subevent_id =     params["subevent_id"] # time
+    timestamp =       params["timestamp"]           #
+    amount          = params["amount"] 
     username        = username                    # time
 
     from helper import sanitize

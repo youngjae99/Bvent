@@ -7,7 +7,7 @@ import pyrebase
 from flask_cors import cross_origin
 
 from flask import Blueprint
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 
 from mySecrets import config
 firebase = pyrebase.initialize_app(config)
@@ -16,8 +16,7 @@ db = firebase.database()
 bp = Blueprint("events", __name__, url_prefix="/events")
 
 @bp.route("/", methods=["GET"])
-@cross_origin()
-def index():
+def get_events_slash():
   """
   Show all events 
   """
@@ -26,7 +25,6 @@ def index():
     return reviews.val(), 200
 
 @bp.route("/<event_title>", methods=["GET"])
-@cross_origin()
 
 def event_info(event_title):
   """
@@ -34,11 +32,14 @@ def event_info(event_title):
   """
   import re
   sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
-  subevents = db.child("subevents").child(sanitized_title).get()
-  return subevents.val(), 200
+  event_info = db.child("events").child(sanitized_title).get().val()
+  print(event_info)
+  subevents = db.child("subevents").child(sanitized_title).get().val()
+  resp = make_response(jsonify({"event_info": event_info, 
+                                "subevents": subevents}))
+  return resp, 200
 
 @bp.route("/<event_title>/<subevent_id>", methods=["GET"])
-@cross_origin()
 
 def subevent_info(event_title, subevent_id):
   """
@@ -50,7 +51,6 @@ def subevent_info(event_title, subevent_id):
   return subevents.val(), 200
 
 @bp.route("/create", methods=("GET", "POST"))
-@cross_origin()
 
 #@login_required
 def create_events():

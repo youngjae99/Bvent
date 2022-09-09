@@ -9,7 +9,7 @@ from mySecrets import config, app_secret_key
 app = Flask(__name__)
 app.secret_key = app_secret_key
 app.config['SECRET_KEY'] = 'the quick brown tig jumps over the lazy   dog'
-app.config['CORS_HEADERS'] = ['Content-Type', 'access-control-allow-origin']
+app.config['CORS_HEADERS'] = ['Content-Type']
 
 cors = CORS(app, resources={r"/*/": 
     {"origins": ["https://www.bventdao.xyz/",
@@ -35,6 +35,16 @@ def index():
     if 'userToken' in session:
         return f'Logged in as {session["userToken"]}', 200
     return 'You are not logged in', 200
+
+@app.route("/events", methods=["GET"])
+@cross_origin()
+def get_events():
+  """
+  Show all events 
+  """
+  if request.method == "GET":
+    reviews = db.child("events").get()
+    return reviews.val(), 200
 
 import reviews
 app.register_blueprint(reviews.bp)

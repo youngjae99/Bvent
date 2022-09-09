@@ -18,6 +18,13 @@ firebase = pyrebase.initialize_app(config)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+cors = CORS(bp, resources={r"/auth/": 
+    {"origins": ["https://www.bventdao.xyz/",
+                 "https://bvent-youngjae99.vercel.app/",
+                 "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca"]}
+    },
+    support_credentials=True, 
+    send_wildcard=False)
 
 auth = firebase.auth()
 db = firebase.database()
@@ -43,15 +50,16 @@ def register():
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
-    username = request.form["username"]
+    params = request.get_json()
+    username = params["username"]
     password = ""
-    loginType = request.form["loginType"]
+    loginType = params["loginType"]
     try:
       if loginType == "wallet":
         password = "wallet"
         username += default_domain
       elif loginType == "email":
-        password = request.form["password"]
+        password = params["password"]
       user = auth.create_user_with_email_and_password(username, password)
       from helper import sanitize
       sanitized_username = sanitize(username).lower()
@@ -71,15 +79,19 @@ def login():
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
-    username = request.form["username"]
+    print("login is_json", request.is_json)
+    if (request.is_json == False):
+      return "invalid body type. needs to be json", 403
+    params = request.get_json()
+    username = params["username"]
     password = ""
-    loginType = request.form["loginType"]
+    loginType = params["loginType"]
     try:
       if loginType == "wallet":
         password = "wallet"
         username += default_domain
       elif loginType == "email":
-        password = request.form["password"]
+        password = params["password"]
       else:
         return jsonify({'error': 'Invalid loginType field'}), 400
       user = auth.sign_in_with_email_and_password(username, password)
