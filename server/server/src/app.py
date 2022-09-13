@@ -14,7 +14,8 @@ app.config['CORS_HEADERS'] = ['Content-Type']
 cors = CORS(app, resources={r"/*/": 
     {"origins": ["https://www.bventdao.xyz/",
                  "https://bvent-youngjae99.vercel.app/",
-                 "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca"]}
+                 "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca",
+                 "http://localhost:3000"]}
     },
     support_credentials=True, 
     send_wildcard=False)
@@ -46,20 +47,23 @@ def get_events():
     reviews = db.child("events").get()
     return reviews.val(), 200
 
-import reviews
-app.register_blueprint(reviews.bp)
+import review
+app.register_blueprint(review.bp)
 
-import events
-app.register_blueprint(events.bp)
+import event
+app.register_blueprint(event.bp)
 
-import users
-app.register_blueprint(users.bp)
+import user
+app.register_blueprint(user.bp)
 
 import tags
 app.register_blueprint(tags.bp)
 
+import subevent
+app.register_blueprint(subevent.bp)
+
 with app.test_request_context():
-    print(url_for('events.event_info', event_title='2022 ETH Denver'))
+    print(url_for('event.event_info', event_title='2022 ETH Denver'))
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))

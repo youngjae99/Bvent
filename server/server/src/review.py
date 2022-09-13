@@ -12,58 +12,26 @@ auth = firebase.auth()
 db = firebase.database()
 #end of firebase init
 
-bp = Blueprint("reviews", __name__, url_prefix="/reviews")
+bp = Blueprint("review", __name__, url_prefix="/review")
 
-@bp.route("/", methods=["GET"])
-@cross_origin()
-
-def index():
+@bp.route("", methods=["GET", "POST"])
+def get_or_post_review():
   """
-  Show all the posts 
+  GET or POST a review for a subevent
   """
-  if request.method == "GET":
-    reviews = db.child("reviews").get()
-    return reviews.val(), 200
-
-@bp.route("/<subevent_id>", methods=["GET"])
-@cross_origin()
-
-def get_review(subevent_id):
-  """
-  Get a review for a subevent
-  """
-  all_reviews = db.child("reviews").shallow().get().val()
-  if (subevent_id not in all_reviews):
-    return jsonify({"": ""}), 200
-  reviews = db.child("reviews").child(subevent_id).get()
-  return reviews.val(), 200
-
-"""
-Threaded task to asynchronously receive tx and update
-"""
-def t_receive_tx_and_update(amount, toAddress, subevent_id, reviewId):
-  #print("tx update start!", toAddress)
-  import requests 
-  from mySecrets import evmos_gcf
-  try:
-    response_data = requests.post(evmos_gcf, 
-      data = {"amount": str(amount), "toAddress": toAddress}).json()
-    # print(response_data)
-    txHash = response_data["transactionHash"]
-    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":txHash})
-    #print("receive_tx_and_upload done! with txHash" , txHash, "for ", subevent_id, " ", reviewId)
-  except:
-    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":0})
-
-@bp.route("/create", methods=("GET", "POST"))
-@cross_origin()
-
-#@login_required
-def create_reviews():
-  """
-  Given a user is logged in, create a new review
-  """
-  if request.method == "POST":
+  #print("hello?")
+  if (request.method == "GET"):
+    subeventId =  request.args.get('subevent_id')
+    #change dict_keys to list 
+    all_reviews = db.child("reviews").shallow().get().val()
+    print(subeventId, all_reviews)
+    print(subeventId in all_reviews)
+    if (subeventId in all_reviews):
+      reviews = db.child("reviews").child(subeventId).get().val()
+      return reviews, 200
+    else:
+      return {"": ""}, 200
+  elif request.method == "POST":
     params = request.get_json()
     try:
       userToken = params["idToken"] 
@@ -79,8 +47,8 @@ def create_reviews():
         }, 403
 
     # autocreate id, if possible
-    review_content =  params["review_content"]     # string
-    review_title   =  params["review_title"]
+    review_content =  params["reviewContent"]     # string
+    review_title   =  params["reviewTitle"]
     event_name =      params["event_name"] 
     subevent_id =     params["subevent_id"] # time
     timestamp =       params["timestamp"]           #
@@ -120,13 +88,32 @@ def create_reviews():
     print(username)
     user_index = db.child("users").child(sanitized_username).shallow().get().val()
     updated_amount = int(amount)
-    if ("totalAmount" in user_index):
-      cur_amount = db.child("users").child(sanitized_username).child("totalAmount").get().val() 
+    if ("coins" in user_index):
+      cur_amount = db.child("users").child(sanitized_username).child("coins").get().val() 
       updated_amount = int(cur_amount) + int(amount)
-    db.child("users").child(sanitized_username).child("totalAmount").set(updated_amount)
+    db.child("users").child(sanitized_username).child("coins").set(updated_amount)
 
     #start thread for tx and update for token transaction
     thread = Thread(target=t_receive_tx_and_update, args=(amount, sepUsername[0], subevent_id, reviewId,))
     thread.daemon = True
     thread.start()
     return jsonify({'status': 'Good review!', "txHash": "updating"}), 200
+  else:
+    return jsonify({'status': "Invalid Request"}), 405
+
+"""
+Threaded task to asynchronously receive tx and update
+"""
+def t_receive_tx_and_update(amount, toAddress, subevent_id, reviewId):
+  #print("tx update start!", toAddress)
+  import requests 
+  from mySecrets import evmos_gcf
+  try:
+    response_data = requests.post(evmos_gcf, 
+      data = {"amount": str(amount), "toAddress": toAddress}).json()
+    # print(response_data)
+    txHash = response_data["transactionHash"]
+    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":txHash})
+    #print("receive_tx_and_upload done! with txHash" , txHash, "for ", subevent_id, " ", reviewId)
+  except:
+    db.child("reviews").child(subevent_id).child(reviewId).update({"txHash":0})

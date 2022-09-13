@@ -52,18 +52,21 @@ def register():
     #print ('data from client:', request)
     params = request.get_json()
     username = params["username"]
+    address  = params["address"]
     password = ""
-    loginType = params["loginType"]
     try:
-      if loginType == "wallet":
-        password = "wallet"
-        username += default_domain
-      elif loginType == "email":
-        password = params["password"]
+      password = "wallet"
+      username += default_domain
       user = auth.create_user_with_email_and_password(username, password)
       from helper import sanitize
       sanitized_username = sanitize(username).lower()
-      db.child("users").child(sanitized_username).set({"totalAmount": "0"})
+      initial_data = {
+        "username": sanitized_username,
+        "address": sanitized_username,
+        "profile_pic": 0,
+        "coins": 0
+      }
+      db.child("users").child(sanitized_username).set(initial_data)
     except:
       return jsonify({'error': 'Incorrect username or password'}), 400
     return jsonify(user)
@@ -75,7 +78,7 @@ def login():
   """
   Login a new user 
   """
-  if request.method == "POST":
+  if request.method == "POST":  
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
@@ -85,18 +88,11 @@ def login():
     params = request.get_json()
     username = params["username"]
     password = ""
-    loginType = params["loginType"]
     try:
-      if loginType == "wallet":
-        password = "wallet"
-        username += default_domain
-      elif loginType == "email":
-        password = params["password"]
-      else:
-        return jsonify({'error': 'Invalid loginType field'}), 400
+      password = "wallet"
+      username += default_domain
       user = auth.sign_in_with_email_and_password(username, password)
       idToken = user["idToken"]
-
     except requests.exceptions.HTTPError:
       return jsonify({'error': 'Incorrect username or password'}), 400
     resp = make_response(jsonify({'status': 'Good Copy :)','idToken': idToken }))

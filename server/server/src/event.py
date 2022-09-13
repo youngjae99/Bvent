@@ -13,14 +13,18 @@ from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-bp = Blueprint("events", __name__, url_prefix="/events")
+bp = Blueprint("event", __name__, url_prefix="/event")
 
-@bp.route("/", methods=["GET"])
+@bp.route("", methods=["GET"])
 def get_events_slash():
   """
   Show all events 
   """
   if request.method == "GET":
+    if (request.args.get('tags') is not None):
+      tags = request.args.get('tags')
+      reviews = db.child("eventtags").child(tags).get()
+      return reviews.val(), 200
     reviews = db.child("events").get()
     return reviews.val(), 200
 
