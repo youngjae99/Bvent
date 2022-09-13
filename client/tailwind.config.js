@@ -11,6 +11,17 @@ module.exports = {
     // },
     extend: {
       colors: {
+        primary: {
+            light: '#f59cbf',
+            DEFAULT:'#EE5390',
+            dark: '#e8196a'
+        },
+        secondary: {
+            light: '#41e7f4',
+            DEFAULT:'#0EDAE9',
+            dark: '#0baeba'
+        },
+        tertiary: '#1DF2DD',
         glass1: 'rgba(42,48,60,0.3)',
       },
     },

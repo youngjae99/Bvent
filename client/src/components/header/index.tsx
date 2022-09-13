@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import Logo from '@/components/logo';
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { timezoneState } from '@/recoil/atoms/timezone';
@@ -26,15 +27,14 @@ const MenuItem = ({ _timezone }: any) => {
 
 const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
-  const [timezone, setTimezone] = useRecoilState(timezoneState);
   const [profile, setProfile] = useState(false);
   return (
-    <div className="text-center bg-gray-800 fixed top-0 w-full z-10">
-      <nav className="w-full mx-auto bg-gray-900 shadow">
+    <div className="text-center fixed top-0 w-full z-10">
+      <nav className="w-full mx-auto bg-black bg-opacity-40" style={{backdropFilter:"blur(10px)"}}>
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">
-              <Logo width={100} height={42} />
+              <Logo width={80} height={30} />
             </div>
           </div>
           <div className="h-full xl:flex items-center justify-end hidden">
@@ -202,61 +202,13 @@ const Header = () => {
                 <span className="ml-2">Performance</span>
               </li>
             </ul>
-            <div
-              aria-haspopup="true"
-              className="cursor-pointer w-full flex items-center justify-end relative"
-              onClick={() => setProfile(!profile)}
-            >
-              {profile ? (
-                <ul
-                  className="p-2 w-48 border-r absolute rounded z-40 right-0 shadow mt-40"
-                  style={{
-                    background: 'rgba(0, 0, 0, 0.1)',
-                    borderRadius: '16px',
-                    // boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                    backdropFilter: 'blur(15px)',
-                    border: 0,
-                    // border: '1px solid rgba(255, 255, 255, 0.3)',
-                    // filter: 'drop-shadow(0px 8px 64px rgba(0, 0, 0, 0.1))',
-                    // backdropFilter: 'blur(80px)',
-                    // borderRadius: '12px',
-                  }}
-                >
-                  <li className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                    <div className="flex items-center">
-                      <img src="/icons/globe.svg" width="20" />
-                      <div className="flex flex-row gap-3 ml-4">
-                        <p>KR</p>
-                        <p className="text-red-600">EN</p>
-                        <p>ES</p>
-                        <p>JP</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                    <div className="flex items-center">
-                      <img src="/icons/time-icon.svg" width="20" />
-                      <div className="flex flex-row gap-3 ml-4">
-                        <MenuItem _timezone="KST" />
-                        <MenuItem _timezone="EDT" />
-                        <MenuItem _timezone="PDT" />
-                        <MenuItem _timezone="IST" />
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              ) : (
-                ''
-              )}
-              <img src="/icons/globe.svg" height="30" className="mr-5" />
-            </div>
-
-            <img
+            {/* <img
               onClick={() => setShow(!show)}
               src="/icons/menu-icon.svg"
               height="30"
               className="cursor-pointer"
-            />
+            /> */}
+            <Bars3Icon className="text-white w-8 cursor-pointer" onClick={() => setShow(!show)}/>
           </div>
         </div>
       </nav>

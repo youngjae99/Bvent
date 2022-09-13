@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const clientApi = axios.create({
-    baseURL: 'https://bvent-seoul.web.app',
+    baseURL: 'https://api.bventdao.xyz',
 });
 
 export default clientApi;

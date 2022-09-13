@@ -1,6 +1,6 @@
 export default {
   title: 'BVENT',
-  description: 'blockchain event reveiw platform',
+  description: 'Blockchain event reveiw platform',
   openGraph: {
     type: 'website',
     url: 'https://www.bventdao.xyz/',

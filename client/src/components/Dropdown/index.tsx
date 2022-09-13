@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
+// import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
+// import { CherveonDown, CherveonUp } from '@heroicons/react/outline';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 
 type SelectorProps = {
   label: string;
@@ -10,7 +12,7 @@ type SelectorProps = {
 const Selector = (props: SelectorProps) => {
   const [opened, setOpened] = useState(false);
   const { label, options, handler } = props;
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(0);Loading...
 
   const changeSelected = (index: number) => {
     setSelected(index);
@@ -35,7 +37,8 @@ const Selector = (props: SelectorProps) => {
         >
           {options &&
             options.map((option, i) => (
-              <li key={i} 
+              <li
+                key={i}
                 className="cursor-pointer text-white text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none"
                 onClick={() => changeSelected(i)}
               >
@@ -48,7 +51,7 @@ const Selector = (props: SelectorProps) => {
       )}
       <div className="flex flex-row gap-1 leading-none">
         {label}
-        {!opened ? <FiChevronDown /> : <FiChevronUp />}
+        {!opened ? <ChevronDownIcon /> : <ChevronUpIcon />}
       </div>
     </div>
   );

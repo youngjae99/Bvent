@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
-import styled from 'styled-components';
 
-import EventCard from '../eventpage/Card';
+import EventCard from '../Card';
 import { eventState } from '@/recoil/atoms/events';
 import { GradientText } from '@/components/Text/GradientText';
 import EventAPI from '@/api/event';
@@ -19,6 +17,8 @@ export const Main: React.FC = () => {
         };
         getEventData();
     }, []);
+
+    console.log(events);
 
     return (
         <div className="flex flex-row">

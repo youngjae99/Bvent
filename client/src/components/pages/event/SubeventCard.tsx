@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { CgProfile } from 'react-icons/cg';
-import { BiChevronDown } from 'react-icons/bi';
+import { UserCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { parseTime, parseDate } from '@/utils/parseTime';
 import { useRecoilState } from 'recoil';
 import { convertTime } from '@/utils/parseTime';
@@ -65,11 +64,11 @@ const SubeventCard = (props: Props) => {
         </Link>
         <div className="flex flex-row justify-between mt-2">
           <div className="flex flex-row gap-2 leading-4">
-            <CgProfile />
+            <UserCircleIcon className="w-5" />
             {subevent?.subevent_presenter.substring(0, 20)}
           </div>
-          <div className="text-green-600 cursor-pointer">
-            <BiChevronDown />
+          <div className="text-secondary cursor-pointer">
+            <ChevronDownIcon className="w-5" />
           </div>
         </div>
         {showSpeaker && <div>extra info about speaker</div>}

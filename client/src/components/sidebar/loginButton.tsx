@@ -9,7 +9,7 @@ const SignInWrapper = ({ onClick, active, children }: any) => {
   if (active) {
     return (
       <div
-        className="cursor-pointer bg-white text-indigo-500 border border-indigo-400 py-4 hover:bg-indigo-100 rounded-xl transition-all"
+        className="cursor-pointer bg-black text-gray-400 border border-primary py-4 hover:bg-indigo-100 hover:bg-opacity-20 rounded-xl transition-all"
         onClick={onClick}
       >
         <div className="flex items-center">
@@ -54,14 +54,18 @@ export const LoginButton = () => {
     frm.append('password', '990326');
     frm.append('loginType', 'wallet');
     const loginRes = await axios
-      .post(`https://bvent-seoul.web.app/auth/login`, frm, {
-        withCredentials: true,
+      .post(`https://api.bventdao.xyz/auth/login`, {
+        username: address,
+        password: '990326',
+        loginType: 'wallet',
+      })
+      .then((res) => {
+        return res.data;
       })
       .catch((error) => {
         console.log(error.response);
       });
-    console.log(loginRes);
-    sessionStorage.setItem('session', JSON.stringify(loginRes));
+    sessionStorage.setItem('session', loginRes.idToken); // TODO(aaron): change to cookie
   };
 
   if (active) {

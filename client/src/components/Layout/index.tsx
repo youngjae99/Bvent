@@ -5,8 +5,7 @@ import { Sidebar } from '@/components/sidebar';
 const Layout = ({ children }:any) => {
   return (
     <div
-      className="min-h-screen flex flex-col pt-2"
-      style={{ backgroundImage: 'linear-gradient(90deg,#01152a,#000a17)' }}
+      className="min-h-screen flex flex-col pt-2 bg-black"
     >
       <Header />
       <Sidebar />

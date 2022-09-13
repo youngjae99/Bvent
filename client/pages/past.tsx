@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Layout from '@/components/Layout';
-import EventDetailCard from '@/components/eventpage/DetailedCard';
+import EventDetailCard from '@/components/pages/event/DetailedCard';
 import Selector from '@/components/Dropdown';
 import {Event as EventType} from '@/types/event';
-import SearchBar from '@/components/eventpage/searchBar';
+import SearchBar from '@/components/pages/event/searchBar';
 
 const defaultValue = [];
 

@@ -33,19 +33,25 @@ const ReviewForm = () => {
     console.log(review);
     const loginRes = await axios
       .post(
-        `https://bvent-seoul.web.app/reviews/create`,
-        qs.stringify({
-          review_content: 'wow',
+        `https://api.bventdao.xyz/reviews/create`,
+        {
+          review_content: review,
+          review_title: "Title",
           event_name: '2021 ETH Denver',
           subevent_id: 17,
           timestamp: Date.now(),
           amount: 10,
-          withCreadentials: true,
-        }),
-        // { withCreadentials: true },
+          idToken: sessionStorage.getItem('session'),
+        },
       )
+      .then((res) => {
+        console.log(res);
+      })
       .catch((error) => {
         console.log(error.response);
+        if(error.response.status === 403) {
+          alert('로그인이 필요합니다.');
+        }
       });
     console.log(loginRes);
   };

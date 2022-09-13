@@ -13,12 +13,12 @@ type Props = any;
 
 const MenuItem = ({ href, selected, children }: any) => (
   <a href={href}>
-    <li className="text-white py-4 hover:bg-gray-200 rounded-xl transition-all">
+    <li className="text-white py-4 hover:bg-white hover:bg-opacity-10 rounded-xl transition-all">
       <div className="flex items-center">
         {selected ? (
-          <p className="text-indigo-500 ml-3 text-lg">{children}</p>
+          <p className="text-primary ml-3 text-lg">{children}</p>
         ) : (
-          <p className="text-gray-400 ml-3 text-lg">{children}</p>
+          <p className="text-gray-500 ml-3 text-lg">{children}</p>
         )}
       </div>
     </li>
@@ -50,7 +50,7 @@ export const Sidebar = (props: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-white bg-opacity-10 transition-opacity" style={{backdropFilter:"blur(10px)"}}/>
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
@@ -66,20 +66,11 @@ export const Sidebar = (props: Props) => {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto relative w-screen max-w-xs">
-                  {/* <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-500"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  ></Transition.Child> */}
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-black py-6 shadow-xl">
                     <div className="absolute top-0 right-0 -ml-8 flex pt-4 pr-4 sm:-ml-10 sm:pr-4">
                       <button
                         type="button"
-                        className="rounded-md text-gray-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-white"
+                        className="rounded-md text-gray-400 hover:text-white focus:outline-none"
                         onClick={() => setShow(false)}
                       >
                         <span className="sr-only">Close panel</span>
@@ -87,9 +78,6 @@ export const Sidebar = (props: Props) => {
                       </button>
                     </div>
                     <div className="px-4 sm:px-6">
-                      {/* <Dialog.Title className="text-lg font-medium text-gray-900">
-                        Panel title
-                      </Dialog.Title> */}
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
                       <ul className="f-m-m flex-1">
@@ -111,61 +99,5 @@ export const Sidebar = (props: Props) => {
         </div>
       </Dialog>
     </Transition.Root>
-
-    // <div
-    //   className={
-    //     show
-    //       ? 'w-full h-full fixed z-40  transform  translate-x-0 '
-    //       : '   w-full h-full fixed z-40  transform -translate-x-full'
-    //   }
-    // >
-    //   <div
-    //     className="bg-gray-800 opacity-50 inset-0 fixed w-full h-full"
-    //     onClick={() => setShow(!show)}
-    //   />
-    //   <div className="w-64 z-20 absolute right-0 top-0 bg-gray-900 text-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
-    //     <div className="flex flex-col justify-between h-full">
-    //       <div className="px-6 pt-4">
-    //         <div className="flex items-center justify-end">
-    //           <div
-    //             id="cross"
-    //             className=" text-white cursor-pointer"
-    //             onClick={() => setShow(!show)}
-    //           >
-    //             <svg
-    //               xmlns="http://www.w3.org/2000/svg"
-    //               className="icon icon-tabler icon-tabler-x"
-    //               width={24}
-    //               height={24}
-    //               viewBox="0 0 24 24"
-    //               strokeWidth={1}
-    //               stroke="currentColor"
-    //               fill="none"
-    //               strokeLinecap="round"
-    //               strokeLinejoin="round"
-    //             >
-    //               <path stroke="none" d="M0 0h24v24H0z" />
-    //               <line x1={18} y1={6} x2={6} y2={18} />
-    //               <line x1={6} y1={6} x2={18} y2={18} />
-    //             </svg>
-    //           </div>
-    //         </div>
-    //         <ul className="f-m-m">
-    //           <MenuItem href="/" selected>
-    //             Home
-    //           </MenuItem>
-    //           <MenuItem href="/now">Ongoing Events</MenuItem>
-    //           <MenuItem href="/past">Past Events</MenuItem>
-    //           <MenuItem href="/upcomings">Upcoming Events</MenuItem>
-    //           <MenuItem href="/mypage">My Page</MenuItem>
-    //           <LoginButton />
-    //         </ul>
-    //       </div>
-    //       <div className="w-full">
-    //         <TimeBox />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
