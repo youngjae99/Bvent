@@ -17,7 +17,7 @@ const Past: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('https://bvent-seoul.web.app/tags/past');
+      const res = await axios.get('/api/tags/past');
       console.log(res);
       setEvents(res.data);
     };

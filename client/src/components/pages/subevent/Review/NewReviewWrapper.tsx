@@ -56,7 +56,7 @@ const NewReviewWrapper = (props: Props) => {
   const submitReview = async () => {
     console.log(review);
     const loginRes = await axios
-      .post(`https://api.bventdao.xyz/reviews/create`, {
+      .post(`/api/reviews/create`, {
         review_content: review,
         review_title: 'Title', // TODO(aaron) : remove this field
         event_name: event_name,

@@ -33,7 +33,7 @@ const ReviewForm = () => {
     console.log(review);
     const loginRes = await axios
       .post(
-        `https://api.bventdao.xyz/reviews/create`,
+        `/api/reviews/create`,
         {
           review_content: review,
           review_title: "Title",
