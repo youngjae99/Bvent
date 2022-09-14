@@ -9,7 +9,7 @@ module.exports = withPlugins([], {
     return [
       {
         source: '/api/:path*',
-        destination: '/api/:path*',
+        destination: 'https://api.bventdao.xyz/:path*',
       },
     ]
   },
