@@ -54,7 +54,7 @@ export const LoginButton = () => {
     frm.append('password', '990326');
     frm.append('loginType', 'wallet');
     const loginRes = await axios
-      .post(`https://api.bventdao.xyz/auth/login`, {
+      .post(`/api/auth/login`, {
         username: address,
         password: '990326',
         loginType: 'wallet',

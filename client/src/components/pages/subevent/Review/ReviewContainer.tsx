@@ -31,7 +31,7 @@ const ReviewContainer = (props: Props) => {
   const { event_name, subevent_id } = props;
 
   const { data } = useSWR(
-    `https://api.bventdao.xyz/review?subevent_id=${subevent_id}`,
+    `/api/review?subevent_id=${subevent_id}`,
     fetcher,
   );
   const review = data ? data : {};
