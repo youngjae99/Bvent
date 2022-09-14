@@ -5,7 +5,7 @@ import { Sidebar } from '@/components/sidebar';
 const Layout = ({ children }:any) => {
   return (
     <div
-      className="min-h-screen flex flex-col pt-2 bg-black"
+      className="relative min-h-screen max-w-mobile flex flex-col pt-2 bg-black mx-auto"
     >
       <Header />
       <Sidebar />
