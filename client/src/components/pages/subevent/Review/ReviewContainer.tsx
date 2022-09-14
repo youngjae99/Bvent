@@ -31,7 +31,7 @@ const ReviewContainer = (props: Props) => {
   const { event_name, subevent_id } = props;
 
   const { data } = useSWR(
-    `https://bvent-seoul.web.app/reviews/${subevent_id}`,
+    `https://api.bventdao.xyz/review?subevent_id=${subevent_id}`,
     fetcher,
   );
   const review = data ? data : {};
@@ -41,16 +41,18 @@ const ReviewContainer = (props: Props) => {
 
   return (
     <div className="text-white mt-3">
-      <ReviewForm />
+      {/* <ReviewForm /> */}
       <div className="flex flex-row justify-between mb-2">
         <p>{reviewCnt} reviews</p>
       </div>
       <ul>
         {review ? (
-          Object.keys(review).map((key) => {
-            const _review = review[key];
-            return <Review key={key} {..._review} />;
-          })
+          Object.keys(review)
+            .sort((a, b) => review[b].timestamp - review[a].timestamp)
+            .map((key) => {
+              const _review = review[key];
+              return <Review key={key} {..._review} />;
+            })
         ) : (
           <>No review</>
         )}

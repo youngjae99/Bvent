@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
   const { id }: any = context.query;
   const event_title = id as string;
   const res = await axios.get(
-    `https://bvent-seoul.web.app/events/${event_title}`,
+    `https://bvent-seoul.web.app/subevent?event=${event_title}`,
   );
   const data = await res.data;
   const eventInfo = data.event_info;

@@ -15,9 +15,6 @@ import UserInfoWrapper from './UserInfoWrapper';
 
 const Review = (props: Review) => {
   const { timestamp, username, review_content, txHash, amount } = { ...props };
-
-  console.log(timestamp);
-
   return (
     <div className="flex flex-col mb-3">
       <UserInfoWrapper {...props} />

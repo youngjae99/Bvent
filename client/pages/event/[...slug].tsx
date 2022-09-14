@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
   const subevent_id = slug[1];
 
   const res = await axios.get(
-    `https://bvent-seoul.web.app/events/${event_title}/${subevent_id}`,
+    `https://bvent-seoul.web.app/subevent?event=${event_title}&subevent_id=${subevent_id}`,
   );
   const data = await res.data;
   const meta = await generateSubeventPageMeta(res.data);

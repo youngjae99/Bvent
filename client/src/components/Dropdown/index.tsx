@@ -12,7 +12,7 @@ type SelectorProps = {
 const Selector = (props: SelectorProps) => {
   const [opened, setOpened] = useState(false);
   const { label, options, handler } = props;
-  const [selected, setSelected] = useState(0);Loading...
+  const [selected, setSelected] = useState(0);
 
   const changeSelected = (index: number) => {
     setSelected(index);

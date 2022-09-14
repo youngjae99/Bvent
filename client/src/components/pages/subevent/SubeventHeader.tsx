@@ -22,6 +22,32 @@ const StyledInfoWrapper = styled.div`
   margin: 10px 0;
 `;
 
+// FIXME(aaron): should add endTime
+const TimeWrapper = ({ startTime, endTime }: any) => {
+  return <p>{parseEventTime(startTime, 'UTC')}</p>;
+};
+
+const SpeakerWrapper = ({ speaker }: any) => {
+  return (
+    <div className="flex flex-row items-center gap-2 leading-4 mt-1">
+      <UserCircleIcon style={{ width: '20px' }} />
+      {speaker}
+    </div>
+  );
+};
+
+const LinkWrapper = ({ subevent_src }: any) => {
+  return (
+    <a
+      href={subevent_src}
+      className="flex flex-row items-center gap-2 leading-4 mt-1"
+    >
+      <LinkIcon style={{ width: '20px' }} />
+      {subevent_src.slice(0, 30)}
+    </a>
+  );
+};
+
 export const SubeventHeader = (props: Props) => {
   const { eventInfo } = props;
   return (
@@ -34,17 +60,12 @@ export const SubeventHeader = (props: Props) => {
         }
       />
       <StyledInfoWrapper>
-        <p className="text-green-400 text-2xl">
+        <p className="text-secondary text-2xl">
           {eventInfo?.subevent_info.slice(0, 60)}
         </p>
-        <p>{parseEventTime(eventInfo?.subevent_time, 'UTC')}</p>
-        <div className="flex flex-row gap-2 leading-4 mt-1">
-          <UserCircleIcon style={{ width: '20px' }} />
-          {eventInfo?.subevent_presenter}
-        </div>
-        <a href={eventInfo?.subevent_src} className="mt-1">
-          <LinkIcon style={{ width: '20px' }} />
-        </a>
+        <TimeWrapper startTime={eventInfo?.subevent_time}/>
+        <SpeakerWrapper speaker={eventInfo?.subevent_presenter} />
+        <LinkWrapper subevent_src={eventInfo?.subevent_src} />
       </StyledInfoWrapper>
     </div>
   );

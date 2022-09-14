@@ -22,7 +22,7 @@ const Button: React.FC<IButton> = ({
   }
   return (
     <button
-      className={`py-2 px-4 rounded-lg bg-primary font-bold hover:bg-primary-dark outline-none ring-opacity-75 ring-green-400 focus:ring text-white text-lg ${className} transition-color duration-300`}
+      className={`py-2 px-4 rounded-lg bg-primary font-bold hover:bg-primary-dark outline-none ring-opacity-75 text-white text-lg ${className} transition-color duration-300`}
       {...rest}
     >
       {children}

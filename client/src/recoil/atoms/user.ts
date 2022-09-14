@@ -7,6 +7,7 @@ export const userState = atom({
         username: "TEST_USERNAME",
         profilePic: "",
         walletAddress: "0x123456789",
+        location: "SEOUL",
         coin: 0,
     },
 });
