@@ -1,8 +1,6 @@
 import React from 'react'
 
-type Props = {}
-
-const Events = (props: Props) => {
+const Events = (props: any) => {
   return (
     <div>Events</div>
   )

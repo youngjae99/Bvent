@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 // import { CherveonDown, CherveonUp } from '@heroicons/react/outline';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 type SelectorProps = {
   label: string;

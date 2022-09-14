@@ -4,15 +4,16 @@ import ProfileImage from './ProfileImage';
 
 type Props = {
   username: string;
-  walletAddress: string;
+  walletAddress?: string;
   timestamp?: string;
-  amount: number;
+  amount?: number;
   txHash?: string;
   isMyProfile?: boolean;
 };
 
 const UserInfoWrapper = (props: Props) => {
-  const { username, walletAddress, timestamp, amount, txHash, isMyProfile} = props;
+  const { username, walletAddress, timestamp, amount, txHash, isMyProfile } =
+    props;
   return (
     <div className="flex flex-row mb-3 text-white">
       <div className="w-12">
@@ -22,11 +23,12 @@ const UserInfoWrapper = (props: Props) => {
         <p className="text-white text-md text-left">
           {username?.slice(0, 20) || 'undefined user'}
         </p>
-        <p className="text-white text-md text-left">
-          {walletAddress}
-        </p>
+        <p className="text-white text-md text-left">{walletAddress}</p>
         <div className="flex flex-row justify-start gap-2">
-          <p className="text-gray-400">{timestamp && parseEventTime(timestamp, 'UTC')}</p>|
+          <p className="text-gray-400">
+            {timestamp && parseEventTime(timestamp, 'UTC')}
+          </p>
+          |
           <a href={`https://ropsten.etherscan.io/tx/${txHash}`}>
             <div className="flex flex-row gap-1 text-gray-300 hover:text-blue-400">
               <img
