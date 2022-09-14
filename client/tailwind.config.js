@@ -24,6 +24,12 @@ module.exports = {
         tertiary: '#1DF2DD',
         glass1: 'rgba(42,48,60,0.3)',
       },
+      maxWidth: {
+        mobile: '480px',
+      },
+      right: {
+        320: '320px',
+      }
     },
   },
   variants: {
