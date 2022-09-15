@@ -6,7 +6,7 @@ import { withCoalescedInvoke } from 'next/dist/lib/coalesced-function';
 
 type Props = {
   userAddress: string;
-  timestamp: string;
+  timestamp?: string;
   isMyProfile?: boolean;
 };
 
