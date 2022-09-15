@@ -28,7 +28,7 @@ const SubEvent: React.FC = (props) => {
       <Layout>
         <TitleBar title="Reviews" backUrl={`/event/${event_title}`} />
         <SubeventHeader eventInfo={eventInfo} />
-        <ReviewContainer event_name={event_title} subevent_id={subevent_id} />
+        <ReviewContainer subevent_id={subevent_id} />
 
         <FloatingContainer>
           <NewReviewButton onClick={() => setIsOpen(true)} />

@@ -98,7 +98,7 @@ const NewReviewWrapper = (props: Props) => {
           <TextButton onClick={submitReview}>Submit</TextButton>
         </TitleBarWrapper>
         <div className="flex flex-col gap-2 justify-start w-full h-full px-4 mt-4">
-          <UserInfoWrapper {...user} isMyProfile />
+          <UserInfoWrapper userAddress={account || ''} isMyProfile />
           <textarea
             className="h-3/4 p-1 ml-12 mb-5 rounded-lg text-white"
             style={{ backgroundColor: 'black', outline: '0', resize: 'none' }}
