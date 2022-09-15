@@ -8,18 +8,19 @@ import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
 import { LoginButton } from './loginButton';
 import { TimeBox } from './timeBox';
+import Profile from '../Profile';
 
 type Props = any;
 
 const MenuItem = ({ href, selected, children }: any) => (
   <a href={href}>
-    <li className="text-white py-4 hover:bg-gray-200 rounded-xl transition-all">
-      <div className="flex items-center">
-        {selected ? (
-          <p className="text-indigo-500 ml-3 text-lg">{children}</p>
-        ) : (
-          <p className="text-gray-400 ml-3 text-lg">{children}</p>
-        )}
+    <li
+      className={`text-white py-4 px-4 hover:bg-gray-200 rounded-xl transition-all ${
+        selected ? 'border-solid border border-pink' : ''
+      }`}
+    >
+      <div className="flex w-full items-center justify-end">
+        <p className="body text-right text-gray-400 m-0">{children}</p>
       </div>
     </li>
   </a>
@@ -40,7 +41,11 @@ export const Sidebar = (props: Props) => {
 
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog as="div" className="relative z-10 max-w-mobile mx-auto" onClose={setShow}>
+      <Dialog
+        as="div"
+        className="relative z-10 max-w-mobile mx-auto"
+        onClose={setShow}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -75,7 +80,7 @@ export const Sidebar = (props: Props) => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   ></Transition.Child> */}
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-darkgray py-6 shadow-xl">
                     <div className="absolute top-0 right-0 -ml-8 flex pt-4 pr-4 sm:-ml-10 sm:pr-4">
                       <button
                         type="button"
@@ -92,6 +97,17 @@ export const Sidebar = (props: Props) => {
                       </Dialog.Title> */}
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
+                      <Profile.Primary>
+                        <Profile.Primary.Image />
+                        <Profile.Primary.Info>
+                          <div className="title2 text-white">Username</div>
+                          <div className="caption text-gray">caption</div>
+                        </Profile.Primary.Info>
+                      </Profile.Primary>
+                      <div className="headline text-white flex gap-1">
+                        <span>Total Rewards</span>
+                        <span className="text-pink">{7}</span>
+                      </div>
                       <ul className="f-m-m flex-1">
                         <MenuItem href="/" selected>
                           Home
