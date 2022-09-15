@@ -12,9 +12,9 @@ const Logo = (props: LogoType) => {
   return (
     <a href="/">
       <Image
-        src="/icons/logo.svg"
+        src="/images/bvent_symbol.svg"
         alt="nextjs"
-        width={width ? width : 200}
+        width={width ? width : 100}
         height={height ? height : 100}
       />
     </a>
