@@ -17,10 +17,10 @@ type Props = {
 // `;
 
 const EventCard = (props: Props) => {
-  console.log(props);
+  // console.log(props);
   const { event } = props;
-  const time = parseTime(event.event_time);
-  console.log(time);
+  // const time = parseTime(event.event_time);
+  // console.log(time);
   return (
     <Link href={`/event/${event?.event_title}`}>
       <p className="flex justify-center text-white cursor-pointer">{event?.event_title}</p>

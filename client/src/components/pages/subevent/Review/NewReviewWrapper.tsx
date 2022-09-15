@@ -4,9 +4,10 @@ import { useWeb3React } from '@web3-react/core';
 import axios from 'axios';
 import styled from 'styled-components';
 import UserInfoWrapper from './UserInfoWrapper';
-import Button from '@/components/Button';
+import TextButton from '@/components/Button/TextButton';
 import { userState } from '@/recoil/atoms/user';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import ReviewAPI from '@/api/review';
 
 type Props = {
   event_name: string;
@@ -28,20 +29,23 @@ const TitleBarWrapper = styled.div`
   line-height: 1.5rem;
 `;
 
-const SignintoWritePlaceholder = () => {
+const SignintoWritePlaceholder = ({ onClose }: any) => {
   return (
-    <div>
-      <div
-        className="flex justify-center items-center mb-2 text-white text-lg outline-none w-full h-32 p-2 rounded-lg"
-        style={{ backgroundColor: 'rgba(255,255,255,.1)' }}
-      >
-        <a href="/auth/signin" className="text-blue-400 mr-1">
-          Sign In
-        </a>{' '}
-        to write your review
-      </div>
-      <div className="flex flex-row justify-end">
-        <Button disabled>Submit</Button>
+    <div className="fixed top-16 left-0 z-10 w-screen h-full flex flex-col items-center">
+      <div className="w-full max-w-mobile h-full bg-black bg-opacity-100 text-white">
+        <TitleBarWrapper>
+          <div className="w-20">
+            <ArrowLeftIcon className="w-6 cursor-pointer" onClick={onClose} />
+          </div>
+          <p>Write Review</p>
+          <div className="w-20"></div>
+        </TitleBarWrapper>
+        <div className="h-3/5 flex justify-center items-center">
+          <a href="/auth/signin" className="text-blue-400 mr-1">
+            Sign In
+          </a>{' '}
+          to write your review
+        </div>
       </div>
     </div>
   );
@@ -55,16 +59,17 @@ const NewReviewWrapper = (props: Props) => {
 
   const submitReview = async () => {
     console.log(review);
-    const loginRes = await axios
-      .post(`/api/reviews/create`, {
-        review_content: review,
-        review_title: 'Title', // TODO(aaron) : remove this field
-        event_name: event_name,
-        subevent_id: subevent_id,
-        timestamp: Date.now(),
-        amount: 10,
-        idToken: sessionStorage.getItem('session'),
-      })
+
+    if (review.length === 0) {
+      alert('Write more than 0 characters');
+      return;
+    }
+
+    const loginRes = await ReviewAPI.writeReview({
+      review_content: review,
+      event_name: event_name,
+      subevent_id: subevent_id,
+    })
       .then((res) => {
         console.log(res);
         onClose();
@@ -79,27 +84,30 @@ const NewReviewWrapper = (props: Props) => {
   };
 
   if (!active) {
-    return SignintoWritePlaceholder();
+    return SignintoWritePlaceholder({ onClose: onClose });
   }
 
   return (
-    <div className="fixed bottom-0 left-0 z-20 w-screen h-5/6 flex flex-col items-center bg-black bg-opacity-100 text-white">
-      <TitleBarWrapper>
-        <div className='w-20'>
-          <ArrowLeftIcon className="w-6 cursor-pointer" onClick={onClose}/>
+    <div className="fixed top-16 left-0 z-10 w-screen h-full flex flex-col items-center">
+      <div className="w-full max-w-mobile h-full bg-black bg-opacity-100 text-white">
+        <TitleBarWrapper>
+          <div className="w-20">
+            <ArrowLeftIcon className="w-6 cursor-pointer" onClick={onClose} />
+          </div>
+          <p>Write Review</p>
+          <TextButton onClick={submitReview}>Submit</TextButton>
+        </TitleBarWrapper>
+        <div className="flex flex-col gap-2 justify-start w-full h-full px-4 mt-4">
+          <UserInfoWrapper {...user} isMyProfile />
+          <textarea
+            className="h-3/4 p-1 ml-12 mb-5 rounded-lg text-white"
+            style={{ backgroundColor: 'black', outline: '0', resize: 'none' }}
+            onChange={(e) => setReview(e.target.value)}
+            placeholder="Write your review here"
+            autoFocus
+          ></textarea>
         </div>
-        <p>Write Review</p>
-        <Button onClick={submitReview}>Submit</Button>
-      </TitleBarWrapper>
-      <div className="flex flex-row justify-start w-full px-4 mt-4">
-        <UserInfoWrapper {...user} isMyProfile />
       </div>
-      <textarea
-        className="w-10/12 h-32 p-1 m-2 mb-5 rounded-lg text-white"
-        style={{ backgroundColor: 'rgba(255,255,255,.1)' }}
-        onChange={(e) => setReview(e.target.value)}
-        placeholder="Write your review here"
-      ></textarea>
     </div>
   );
 };

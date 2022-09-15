@@ -1,15 +1,15 @@
 import React from 'react';
 
 type Props = {
-  address?: string;
+  src?: string;
 };
 
 const ProfileImage = (props: Props) => {
-  const { address } = { ...props };
-  if (address) {
+  const { src } = { ...props };
+  if (src) {
     return (
       <img
-        src="/icons/default-profile-image.png"
+        src={src}
         width="36rem"
         style={{ borderRadius: '18rem' }}
         alt="profileImage"
@@ -18,7 +18,7 @@ const ProfileImage = (props: Props) => {
   } else {
     return (
       <img
-        src="/icons/default-profile-image.png"
+        src="/icons/default_profile_pic.png"
         width="36rem"
         style={{ borderRadius: '18rem' }}
         alt="profileImage"

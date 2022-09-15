@@ -6,7 +6,7 @@ type Props = {
 
 const FloatingContainer = (props: Props) => {
   return (
-    <div className="fixed bottom-8 right-8">{props.children}</div>
+    <div className="max-w-mobile mx-auto w-full bottom-0 fixed -ml-5 p-8 flex justify-end">{props.children}</div>
   )
 }
 

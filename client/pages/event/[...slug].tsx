@@ -36,17 +36,6 @@ const SubEvent: React.FC = (props) => {
 
         <Transition.Root show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-500"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in-out duration-500"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </Transition.Child>
             <div className="fixed inset-0 z-10 overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <Transition.Child
@@ -81,7 +70,7 @@ export async function getServerSideProps(context) {
   const subevent_id = slug[1];
 
   const res = await axios.get(
-    `/api/subevent?event=${event_title}&subevent_id=${subevent_id}`,
+    `https://api.bventdao.xyz/subevent?event=${event_title}&subevent_id=${subevent_id}`,
   );
   const data = await res.data;
   const meta = await generateSubeventPageMeta(res.data);
