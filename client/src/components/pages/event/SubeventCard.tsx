@@ -92,7 +92,7 @@ const SubeventCard = (props: Props) => {
             <UserCircleIcon className="w-5" />
             {subevent?.subevent_presenter.substring(0, 20)}
           </div>
-          <div
+          {/* <div
             className="text-secondary cursor-pointer"
             onClick={() => setShowDropdown((prev) => !prev)}
           >
@@ -101,11 +101,11 @@ const SubeventCard = (props: Props) => {
             ) : (
               <ChevronDownIcon className="w-5" />
             )}
-          </div>
+          </div> */}
         </div>
-        {showDropdown && (
+        {/* {showDropdown && (
           <DropdownWrapper>subevent topic is shown here</DropdownWrapper>
-        )}
+        )} */}
       </div>
     </CardWrapper>
   );

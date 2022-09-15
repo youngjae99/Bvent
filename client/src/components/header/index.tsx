@@ -34,7 +34,7 @@ const Header = () => {
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">
-              <Logo width={80} height={30} />
+              <Logo width={35} height={35} />
             </div>
           </div>
           <div className="flex items-center relative">

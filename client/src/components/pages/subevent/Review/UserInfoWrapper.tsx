@@ -1,35 +1,56 @@
-import React from 'react';
-import { parseEventTime } from '@/utils/parseTime';
+import React, { useEffect, useState } from 'react';
+import { parseReviewTime } from '@/utils/parseTime';
 import ProfileImage from './ProfileImage';
+import UserAPI from '@/api/user';
+import { withCoalescedInvoke } from 'next/dist/lib/coalesced-function';
 
 type Props = {
-  username: string;
-  walletAddress?: string;
-  timestamp?: string;
-  amount?: number;
-  txHash?: string;
+  userAddress: string;
+  timestamp: string;
   isMyProfile?: boolean;
 };
 
+const defaultUserInfo = {
+  username: 'Undefined user',
+  bio: 'Undefined bio',
+  profile_pic: '/icons/default_profile_pic.png',
+};
+
+
 const UserInfoWrapper = (props: Props) => {
-  const { username, walletAddress, timestamp, amount, txHash, isMyProfile } =
-    props;
+  const { userAddress, timestamp, isMyProfile } = props;
+  const [userInfo, setUserInfo] = useState(defaultUserInfo);
+  const { username, bio, profile_pic } = userInfo;
+  console.log(userInfo);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await UserAPI.getUserInfoWithAddress(userAddress);
+      setUserInfo(data);
+    };
+    fetch();
+  }, []);
+
   return (
-    <div className="flex flex-row mb-3 text-white">
+    <div className="flex flex-row text-white">
       <div className="w-12">
-        <ProfileImage />
+        <ProfileImage src={profile_pic} />
       </div>
       <div className="flex-1">
-        <p className="text-white text-md text-left">
-          {username?.slice(0, 20) || 'undefined user'}
-        </p>
-        <p className="text-white text-md text-left">{walletAddress}</p>
-        <div className="flex flex-row justify-start gap-2">
-          <p className="text-gray-400">
-            {timestamp && parseEventTime(timestamp, 'UTC')}
+        <div className="flex flex-row gap-2">
+          <p className="text-white text-md text-left">
+            {username?.slice(0, 20) || userAddress.slice(0, 15)}
           </p>
-          |
-          <a href={`https://ropsten.etherscan.io/tx/${txHash}`}>
+          <p className="text-white text-opacity-70 text-sm text-left">
+            {timestamp && parseReviewTime(timestamp)}
+          </p>
+        </div>
+        <p className="text-white text-opacity-70 text-md text-left">{bio || 'Bventer'}</p>
+        <div className="flex flex-row justify-start gap-2">
+          {/* <p className="text-gray-400">
+            {timestamp && parseEventTime(timestamp, 'UTC')}
+          </p> */}
+          {/* <a href={`https://ropsten.etherscan.io/tx/${txHash}`}>
             <div className="flex flex-row gap-1 text-gray-300 hover:text-blue-400">
               <img
                 src="/icons/ethereum-logo.svg"
@@ -39,7 +60,7 @@ const UserInfoWrapper = (props: Props) => {
               />
               {txHash?.slice(0, 10) + '...'}
             </div>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

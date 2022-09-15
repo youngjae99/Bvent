@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core';
 import styled from 'styled-components';
 
 import Address from '../Address';
+import axios from 'axios';
 
 // interface Props {
 //     onPress: any;
@@ -59,6 +60,9 @@ const FieldSet = ({ title, required, description }: FieldSetProps) => {
 
 export const AboutMe = () => {
   const { active, account, connector, chainId } = useWeb3React();
+
+
+  axios.get('/api/user/myself', {})
 
   return (
     <StyledWrapper>
