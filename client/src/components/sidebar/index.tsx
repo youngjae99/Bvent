@@ -39,90 +39,62 @@ export const Sidebar = (props: Props) => {
     connectMetamaskWallet();
   };
 
+  console.log('rerender');
+
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
-        as="div"
-        className="relative z-10 max-w-mobile mx-auto"
+        className="fixed z-10 max-w-mobile w-full mx-auto inset-0 overflow-hidden"
         onClose={setShow}
       >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-in-out duration-500"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in-out duration-500"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="mx-auto fixed inset-0 bg-gray-500 bg-opacity-75 max-w-mobile transition-opacity" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 overflow-hidden mx-auto max-w-mobile">
-          <div className="absolute inset-0 overflow-hidden mx-auto max-w-mobile w-full">
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex max-w-full pl-10">
-              <Transition.Child
-                as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
-              >
-                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-xs">
-                  {/* <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-500"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  ></Transition.Child> */}
-                  <div className="flex h-full flex-col overflow-y-scroll bg-darkgray py-6 shadow-xl">
-                    <div className="absolute top-0 right-0 -ml-8 flex pt-4 pr-4 sm:-ml-10 sm:pr-4">
-                      <button
-                        type="button"
-                        className="rounded-md text-gray-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => setShow(false)}
-                      >
-                        <span className="sr-only">Close panel</span>
-                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
-                    </div>
-                    <div className="px-4 sm:px-6">
-                      {/* <Dialog.Title className="text-lg font-medium text-gray-900">
-                        Panel title
-                      </Dialog.Title> */}
-                    </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
-                      <Profile.Primary>
-                        <Profile.Primary.Image />
-                        <Profile.Primary.Info>
-                          <div className="title2 text-white">Username</div>
-                          <div className="caption text-gray">caption</div>
-                        </Profile.Primary.Info>
-                      </Profile.Primary>
-                      <div className="headline text-white flex gap-1">
-                        <span>Total Rewards</span>
-                        <span className="text-pink">{7}</span>
-                      </div>
-                      <ul className="f-m-m flex-1">
-                        <MenuItem href="/" selected>
-                          Home
-                        </MenuItem>
-                        <MenuItem href="/now">Ongoing Events</MenuItem>
-                        <MenuItem href="/past">Past Events</MenuItem>
-                        <MenuItem href="/upcomings">Upcoming Events</MenuItem>
-                        <MenuItem href="/mypage">My Page</MenuItem>
-                      </ul>
-                      <LoginButton />
-                    </div>
+        <div className="absolute inset-0 overflow-hidden w-full">
+          <div className="overflow-hidden inset-y-0 right-full max-w-mobile w-full">
+            <Transition.Child
+              className="absolute right-0 max-w-xs w-full"
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="translate-x-3/4"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0 opacity-100"
+              leaveTo="translate-x-full opacity-0"
+            >
+              <Dialog.Panel>
+                <div className="flex h-full flex-col overflow-y-scroll bg-darkgray py-6 shadow-xl rounded-l-2xl">
+                  <div>
+                    <img
+                      className="cursor-pointer"
+                      src="/icons/close.svg"
+                      width={12}
+                      height={12}
+                    />
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                  <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
+                    <Profile.Primary>
+                      <Profile.Primary.Image />
+                      <Profile.Primary.Info>
+                        <div className="title2 text-white">Sign in</div>
+                        <div className="caption text-gray">
+                          Sign in with your wallet
+                        </div>
+                      </Profile.Primary.Info>
+                    </Profile.Primary>
+                    <div className="headline text-white flex gap-1">
+                      <span>Total Rewards</span>
+                      <span className="text-pink">{7}</span>
+                    </div>
+                    <ul className="f-m-m flex-1">
+                      <MenuItem href="/" selected>
+                        Home
+                      </MenuItem>
+                      <MenuItem href="/now">Connect Wallet</MenuItem>
+                      <MenuItem href="/events">Events</MenuItem>
+                      <MenuItem href="/mypage">My Page</MenuItem>
+                    </ul>
+                    <LoginButton />
+                  </div>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </div>
       </Dialog>
