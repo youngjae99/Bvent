@@ -30,7 +30,10 @@ const Header = () => {
   const [profile, setProfile] = useState(false);
   return (
     <div className="text-center fixed top-0 max-w-mobile w-full z-10">
-      <nav className="w-full mx-auto bg-black bg-opacity-40" style={{backdropFilter:"blur(10px)"}}>
+      <nav
+        className="w-full mx-auto bg-black bg-opacity-40"
+        style={{ backdropFilter: 'blur(10px)' }}
+      >
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">
@@ -129,7 +132,10 @@ const Header = () => {
               height="30"
               className="cursor-pointer"
             /> */}
-            <Bars3Icon className="text-white w-8 cursor-pointer" onClick={() => setShow(!show)}/>
+            <Bars3Icon
+              className="text-white w-8 cursor-pointer"
+              onClick={() => setShow(!show)}
+            />
           </div>
         </div>
       </nav>

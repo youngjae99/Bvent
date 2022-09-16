@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Dialog, Transition } from '@headlessui/react';
+import axios from 'axios';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
@@ -9,15 +10,17 @@ import { useWeb3React } from '@web3-react/core';
 import { LoginButton } from './loginButton';
 import { TimeBox } from './timeBox';
 import Profile from '../Profile';
+import { formatAccount } from '@/utils/wallet';
 
 type Props = any;
 
-const MenuItem = ({ href, selected, children }: any) => (
-  <a href={href}>
+const MenuItem = ({ href, onClick, selected, children }: any) => (
+  <a className="block mt-1 first:mt-0 cursor-pointer" href={href}>
     <li
-      className={`text-white py-4 px-4 hover:bg-gray-200 rounded-xl transition-all ${
-        selected ? 'border-solid border border-pink' : ''
-      }`}
+      onClick={onClick}
+      className={`border-pink border-solid text-white py-4 px-4 rounded-xl transition-bg ${
+        selected ? 'border' : 'border-0'
+      } `}
     >
       <div className="flex w-full items-center justify-end">
         <p className="body text-right text-gray-400 m-0">{children}</p>
@@ -27,30 +30,48 @@ const MenuItem = ({ href, selected, children }: any) => (
 );
 
 export const Sidebar = (props: Props) => {
-  const { connectMetamaskWallet } = useWallet();
-  const { active, account, connector, chainId } = useWeb3React();
   const [show, setShow] = useRecoilState(sidebarShowState);
-  const [product, setProduct] = useState(false);
-  const [deliverables, setDeliverables] = useState(false);
-  const [profile, setProfile] = useState(false);
+  const { connectMetamaskWallet, disconnectWallet } = useWallet();
+  const { active, account, connector, chainId } = useWeb3React();
 
-  const onClickMetaMask = () => {
-    console.log('pressed!');
-    connectMetamaskWallet();
+  useEffect(() => {
+    console.log(active, account);
+  }, [active]);
+
+  const handleLogin = async () => {
+    await connectMetamaskWallet();
+    const address = '0x163B3Bd064023B017bB6d06295591554D380b5C8';
+    console.log(account);
+
+    const frm = new FormData();
+    frm.append('username', address);
+    frm.append('password', '990326');
+    frm.append('loginType', 'wallet');
+    const loginRes = await axios
+      .post(`https://api.bventdao.xyz/auth/login`, {
+        username: address,
+        password: '990326',
+        loginType: 'wallet',
+      })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    sessionStorage.setItem('session', loginRes.idToken); // TODO(aaron): change to cookie
   };
-
-  console.log('rerender');
 
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
-        className="fixed z-10 max-w-mobile w-full mx-auto inset-0 overflow-hidden"
+        className="fixed z-10 max-w-mobile w-full mx-auto inset-x-0 top-0 bottom-6 overflow-hidden"
         onClose={setShow}
       >
         <div className="absolute inset-0 overflow-hidden w-full">
-          <div className="overflow-hidden inset-y-0 right-full max-w-mobile w-full">
+          <div className="absolute overflow-hidden inset-y-0 right-0 max-w-mobile w-full h-full">
             <Transition.Child
-              className="absolute right-0 max-w-xs w-full"
+              className="absolute right-0 max-w-xs w-full h-full"
               enter="transition ease-in-out duration-300 transform"
               enterFrom="translate-x-3/4"
               enterTo="translate-x-0"
@@ -58,35 +79,38 @@ export const Sidebar = (props: Props) => {
               leaveFrom="translate-x-0 opacity-100"
               leaveTo="translate-x-full opacity-0"
             >
-              <Dialog.Panel>
-                <div className="flex h-full flex-col overflow-y-scroll bg-darkgray py-6 shadow-xl rounded-l-2xl">
+              <Dialog.Panel as={Fragment}>
+                <div className="flex h-full flex-col px-3.5 py-5 erflow-y-scroll bg-darkgray shadow-xl rounded-l-2xl">
                   <div>
                     <img
                       className="cursor-pointer"
                       src="/icons/close.svg"
                       width={12}
                       height={12}
+                      onClick={() => setShow(!show)}
                     />
                   </div>
-                  <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
+                  <div className="relative mt-12 flex-1 px-2 flex flex-col h-full">
                     <Profile.Primary>
                       <Profile.Primary.Image />
                       <Profile.Primary.Info>
-                        <div className="title2 text-white">Sign in</div>
+                        <div className="title2 text-white">
+                          {formatAccount(account)}
+                        </div>
                         <div className="caption text-gray">
                           Sign in with your wallet
                         </div>
                       </Profile.Primary.Info>
                     </Profile.Primary>
-                    <div className="headline text-white flex gap-1">
+                    <div className="headline text-white flex gap-1 px-2 mt-5">
                       <span>Total Rewards</span>
                       <span className="text-pink">{7}</span>
                     </div>
-                    <ul className="f-m-m flex-1">
+                    <ul className="f-m-m flex-1 mt-5">
                       <MenuItem href="/" selected>
                         Home
                       </MenuItem>
-                      <MenuItem href="/now">Connect Wallet</MenuItem>
+                      <MenuItem onClick={handleLogin}>Connect Wallet</MenuItem>
                       <MenuItem href="/events">Events</MenuItem>
                       <MenuItem href="/mypage">My Page</MenuItem>
                     </ul>
