@@ -1,27 +1,27 @@
 import React from 'react';
 
-import Modal from '@/components/modal';
+import { useWeb3React } from '@web3-react/core';
 import Layout from '@/components/Layout';
-import { Main } from '@/components/pages/main/main';
-import { GradientText } from '@/components/Text/GradientText';
-import { useRecoilState } from 'recoil';
-import { timezoneState } from '@/recoil/atoms/timezone';
-import CurrentTime from '@/components/Time';
 import Tabs from '@/components/pages/main/Tabs';
 import HeroSection from '@/components/pages/main/HeroSection';
 import LogoSection from '@/components/pages/main/LogoSection';
 import RecentReviewsSection from '@/components/pages/main/RecentReviewsSection';
 
 const Home: React.FC = () => {
-  // const [timezone] = useRecoilState(timezoneState);
+  const { active } = useWeb3React();
+
   return (
     <Layout>
-      <HeroSection />
+      {!active && <HeroSection />}
       <LogoSection />
-      <h1>Events</h1>
-      <Tabs />
-      <h1>Recent Reviews</h1>
-      <RecentReviewsSection />
+      <div className="mb-10">
+        <h1>Events</h1>
+        <Tabs />
+      </div>
+      <div className="mb-10">
+        <h1>Recent Reviews</h1>
+        <RecentReviewsSection />
+      </div>
     </Layout>
   );
 };

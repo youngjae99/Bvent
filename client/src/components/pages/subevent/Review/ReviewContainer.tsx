@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import useSWR from 'swr';
 import axios from 'axios';
-
-// import { BsPencilSquare } from 'react-icons/bs';
-// import NewReview from './newReview';
 import Review from './Review';
 
 type Props = {

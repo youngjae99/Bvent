@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { Tab } from '@headlessui/react';
@@ -6,20 +6,6 @@ import { Tab } from '@headlessui/react';
 import { eventState } from '@/recoil/atoms/events';
 import EventAPI from '@/api/event';
 import EventCard from './EventCard';
-
-const TabButton = ({ children, selected }: any) => {
-  return (
-    <button
-      className={
-        selected
-          ? 'border border-primary text-white mr-2 p-3 rounded-lg'
-          : 'border border-white text-white mr-2 p-3 rounded-lg'
-      }
-    >
-      {children}
-    </button>
-  );
-};
 
 const Tabs = () => {
   const [events, setEvents] = useRecoilState(eventState);
@@ -37,16 +23,44 @@ const Tabs = () => {
   return (
     <Tab.Group>
       <Tab.List className="text-white">
-        <Tab>
+        <Tab as={Fragment}>
           {({ selected }) => (
-            <TabButton selected={selected}>Upcoming</TabButton>
+            <button
+              className={
+                selected
+                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                  : 'border border-white text-white mr-2 p-3 rounded-lg'
+              }
+            >
+              Upcoming
+            </button>
           )}
         </Tab>
-        <Tab>
-          {({ selected }) => <TabButton selected={selected}>Current</TabButton>}
+        <Tab as={Fragment}>
+          {({ selected }) => (
+            <button
+              className={
+                selected
+                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                  : 'border border-white text-white mr-2 p-3 rounded-lg'
+              }
+            >
+              Current
+            </button>
+          )}
         </Tab>
-        <Tab>
-          {({ selected }) => <TabButton selected={selected}>Past</TabButton>}
+        <Tab as={Fragment}>
+          {({ selected }) => (
+            <button
+              className={
+                selected
+                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                  : 'border border-white text-white mr-2 p-3 rounded-lg'
+              }
+            >
+              Past
+            </button>
+          )}
         </Tab>
       </Tab.List>
       <Tab.Panels className="text-white mt-10">

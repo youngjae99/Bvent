@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { parseEventTime } from '@/utils/parseTime';
-import { Review } from './type';
+// import { Review } from './type';
 import ProfileImage from './ProfileImage';
 import UserInfoWrapper from './UserInfoWrapper';
 
@@ -84,8 +84,8 @@ const UpDownWrapper = () => {
   );
 };
 
-const Review = (props: Review) => {
-  const { timestamp, walletAddress, review_content, txHash } = props;
+const Review = (props: any) => {
+  const { timestamp, walletAddress, review_content, txHash, hideUpDown=false } = props;
 
   return (
     <div className="flex flex-col mb-3">
@@ -93,7 +93,7 @@ const Review = (props: Review) => {
       <div className="ml-12">
         <p style={{ whiteSpace: 'pre-line'}}>{review_content}</p>
       </div>
-      <UpDownWrapper />
+      {!hideUpDown && <UpDownWrapper />}
     </div>
   );
 };

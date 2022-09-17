@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from '@/components/header';
+import Header from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { Sidebar } from '@/components/sidebar';
 
 const Layout = ({ children }:any) => {
@@ -10,6 +11,7 @@ const Layout = ({ children }:any) => {
       <Header />
       <Sidebar />
       <div className="px-5 pt-16">{children}</div>
+      <Footer/>
     </div>
   );
 };
