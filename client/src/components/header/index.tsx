@@ -25,7 +25,7 @@ const MenuItem = ({ _timezone }: any) => {
   );
 };
 
-const Header = () => {
+export const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [profile, setProfile] = useState(false);
   return (
@@ -136,5 +136,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;
