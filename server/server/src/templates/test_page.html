@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="test_Button">click me to test</button>
+    <button id="myself">myself check</button>
+  </body>
+  <script>
+    function getCookie(cookieName){
+      var cookieValue=null;
+      if(document.cookie){
+          var array=document.cookie.split((escape(cookieName)+'='));
+          if(array.length >= 2){
+              var arraySub=array[1].split(';');
+              cookieValue=unescape(arraySub[0]);
+          }
+      }
+      return cookieValue;
+    }
+    document.getElementById("test_Button").addEventListener('click', function () {
+      $.ajax({
+        url: 'https://api.bventdao.xyz/auth/login',
+        success: function (data) {
+          console.log(data)
+        },
+        error: function (data) {
+          console.log(data)
+        },
+          type: "POST",
+          xhrFields: {
+            withCredentials: true
+          },
+          contentType: "application/json",
+          data: JSON.stringify({"username": "0xE1ee63a6670a1AbFE06fA78100b7956EE4d00BB1","password":"444"}),
+      });
+    });
+    document.getElementById("myself").addEventListener('click', function () {
+      $.ajax({
+        url: 'https://api.bventdao.xyz/user/myself',
+        success: function (data) {
+          console.log(data)
+        },
+        error: function (data) {
+          console.log(data)
+        },
+        headers: {
+          "Authorization": getCookie('idToken')
+        },
+          type: "GET",
+          xhrFields: {
+            withCredentials: true
+          },
+      });
+    });
+  </script>
+</html>

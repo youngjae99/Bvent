@@ -17,15 +17,6 @@ from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
-
-cors = CORS(bp, resources={r"/auth/": 
-    {"origins": ["https://www.bventdao.xyz/",
-                 "https://bvent-youngjae99.vercel.app/",
-                 "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca"]}
-    },
-    support_credentials=True, 
-    send_wildcard=False)
-
 auth = firebase.auth()
 db = firebase.database()
 
@@ -61,7 +52,7 @@ def register():
       from helper import sanitize
       sanitized_username = sanitize(username).lower()
       initial_data = {
-        "username": sanitized_username,
+        "username": "bventer",
         "address": sanitized_username,
         "profile_pic": 0,
         "coins": 0
@@ -85,18 +76,22 @@ def login():
     print("login is_json", request.is_json)
     if (request.is_json == False):
       return "invalid body type. needs to be json", 403
-    params = request.get_json()
+    print(request.data)
+    params = json.loads(request.data, strict=False)
     username = params["username"]
     password = ""
     try:
       password = "wallet"
       username += default_domain
       user = auth.sign_in_with_email_and_password(username, password)
-      idToken = user["idToken"]
+      session["idToken"] = user["idToken"]
+      resp = make_response(jsonify({'status': 'Good Copy :)'}))
+      resp.set_cookie('idToken', user['idToken'], samesite='Strict')
+      return resp, 200
+      #print(user["idToken"])
     except requests.exceptions.HTTPError:
       return jsonify({'error': 'Incorrect username or password'}), 400
-    resp = make_response(jsonify({'status': 'Good Copy :)','idToken': idToken }))
-    return resp, 200
+    
 
 
 @bp.route('/logout')

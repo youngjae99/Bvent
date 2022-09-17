@@ -13,7 +13,7 @@ from mySecrets import config
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-bp = Blueprint("event", __name__, url_prefix="/event")
+bp = Blueprint("event", __name__, url_prefix="/events")
 
 @bp.route("", methods=["GET"])
 def get_events_slash():
@@ -43,16 +43,26 @@ def event_info(event_title):
                                 "subevents": subevents}))
   return resp, 200
 
-@bp.route("/<event_title>/<subevent_id>", methods=["GET"])
+@bp.route("/<event_title>/subevents", methods=["GET"])
 
-def subevent_info(event_title, subevent_id):
+def subevent_info(event_title):
   """
   Show the specific of a subevent
   """
   import re
   sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
-  subevents = db.child("subevents").child(sanitized_title).child(subevent_id).get()
-  return subevents.val(), 200
+  subevents = db.child("subevents").child(sanitized_title).get().val()
+  #hardfix for 2022 eth denver
+  if type(subevents) == type([]):
+    print("lists are bad, hot fix!")
+    new_subevent = {}
+    #hotfix for 2022 ETH Denver
+    for i in range(1, len(subevents)):
+      subevent_id = subevents[i]["subevent_id"]
+      new_subevent[subevent_id] = subevents[i]
+    return new_subevent, 200
+
+  return subevents, 200
 
 @bp.route("/create", methods=("GET", "POST"))
 

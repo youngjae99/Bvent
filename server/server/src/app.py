@@ -7,18 +7,17 @@ import pyrebase
 from mySecrets import config, app_secret_key
 
 app = Flask(__name__)
+#app.config['SESSION_COOKIE_SECURE']  = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'
 app.secret_key = app_secret_key
 app.config['SECRET_KEY'] = 'the quick brown tig jumps over the lazy   dog'
 app.config['CORS_HEADERS'] = ['Content-Type']
 
-cors = CORS(app, resources={r"/*/": 
-    {"origins": ["https://www.bventdao.xyz/",
+cors = CORS(app, origins=["https://www.bventdao.xyz/",
                  "https://bvent-youngjae99.vercel.app/",
                  "chrome-extension://laookkfknpbbblfpciffpaejjkokdgca",
-                 "http://localhost:3000"]}
-    },
-    support_credentials=True, 
-    send_wildcard=False)
+                 "http://localhost:8080"],
+    supports_credentials=True)
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
@@ -31,8 +30,10 @@ def format_server_time():
 import auth
 app.register_blueprint(auth.bp)
 
+
 @app.route('/')
 def index():
+    session['userToken'] = "hello world!"
     if 'userToken' in session:
         return f'Logged in as {session["userToken"]}', 200
     return 'You are not logged in', 200
@@ -46,6 +47,11 @@ def get_events():
   if request.method == "GET":
     reviews = db.child("events").get()
     return reviews.val(), 200
+
+@app.after_request
+def creds(response):
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
 
 import review
 app.register_blueprint(review.bp)
@@ -61,6 +67,9 @@ app.register_blueprint(tags.bp)
 
 import subevent
 app.register_blueprint(subevent.bp)
+
+import test
+app.register_blueprint(test.bp)
 
 with app.test_request_context():
     print(url_for('event.event_info', event_title='2022 ETH Denver'))
