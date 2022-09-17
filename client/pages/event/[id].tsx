@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import Layout from '@/components/Layout';
@@ -9,14 +7,27 @@ import SubeventCard from '@/components/pages/event/SubeventCard';
 import EventTitleWrapper from '@/components/pages/event/EventTitle';
 import { useRecoilState } from 'recoil';
 import { timezoneState } from '@/recoil/atoms/timezone';
-import { Event as EventType } from '@/types/event';
-import { Subevent as SubeventType } from '@/types/event';
 import { generateEventPageMeta } from '@/utils/seo';
+import EventAPI from '@/api/event';
 
 const Event: React.FC = (props) => {
   const { eventInfo, subevents }: any = props;
   const event_title = eventInfo.event_title;
   const [timezone] = useRecoilState(timezoneState);
+
+  if (subevents == null) {
+    return (
+      <>
+        <Layout>
+          <div className="flex flex-row justify-start">
+            <p className="text-2xl text-white text-center">Event Details</p>
+          </div>
+          <EventTitleWrapper>{event_title}</EventTitleWrapper>
+          <div className="text-white" style={{height:"400px"}}>Event Not ready</div>
+        </Layout>
+      </>
+    );
+  }
 
   return (
     <>
