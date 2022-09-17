@@ -44,7 +44,7 @@ def get_or_post_review():
       else: #id = 0 is recent review
         r_val = db.child("reviews").order_by_child("timestamp").limit_to_last(recent).get().val()
     elif reqType == "event":
-      r_val = db.child("reviews").order_by_child("event_id").equal_to(subeventId).get().val()
+      r_val = db.child("reviews").order_by_child("event_id").equal_to(eventId).get().val()
     #print(r_val)
     if (r_val == []):
       r_val = {}
@@ -113,7 +113,7 @@ def get_or_post_review():
       res = db.child("reviews").push(data) #creates a unique key for the user 
       reviewId = res["name"]
       #keep track of which user wrote which comment
-      db.child("users").child(sanitized_username).child("comments").child(reviewId).set(amount)
+      db.child("users").child(sanitized_username).child("reviews").child(reviewId).set(amount)
     except:
       return jsonify({'status': 'error occurred while pushing reivew'}), 503 
 
@@ -127,29 +127,13 @@ def get_or_post_review():
     db.child("users").child(sanitized_username).child("coins").set(updated_amount)
 
     #start thread for tx and update for token transaction
-    thread = Thread(target=t_receive_tx_and_update, args=(amount, sepUsername[0], subevent_id, reviewId,))
-    thread.daemon = True
-    thread.start()
+
     return jsonify({'status': 'Good review!', "txHash": "updating"}), 200
   else:
     return jsonify({'status': "Invalid Request"}), 405
 
-"""
-Threaded task to asynchronously receive tx and update
-"""
-def t_receive_tx_and_update(amount, toAddress, subevent_id, reviewId):
-  #print("tx update start!", toAddress)
-  import requests 
-  from mySecrets import evmos_gcf
-  try:
-    response_data = requests.post(evmos_gcf, 
-      data = {"amount": str(amount), "toAddress": toAddress}).json()
-    # print(response_data)
-    txHash = response_data["transactionHash"]
-    db.child("reviews").child(reviewId).update({"txHash":txHash})
-    #print("receive_tx_and_upload done! with txHash" , txHash, "for ", subevent_id, " ", reviewId)
-  except:
-    db.child("reviews").child(reviewId).update({"txHash":0})
+
+
 
 @bp.route("", methods=["GET"])
 def get_recent_review():

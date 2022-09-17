@@ -71,6 +71,9 @@ app.register_blueprint(subevent.bp)
 import test
 app.register_blueprint(test.bp)
 
+import like
+app.register_blueprint(like.bp)
+
 with app.test_request_context():
     print(url_for('event.event_info', event_title='2022 ETH Denver'))
 
