@@ -11,16 +11,15 @@ type Props = {
 };
 
 const defaultUserInfo = {
-  username: 'Undefined user',
-  bio: 'Undefined bio',
+  username: '',
+  bio: 'Bventer',
   profile_pic: '/icons/default_profile_pic.png',
 };
-
 
 const UserInfoWrapper = (props: Props) => {
   const { userAddress, timestamp, isMyProfile } = props;
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
-  const { username, bio, profile_pic } = userInfo;
+  const { username, bio = 'Bventer', profile_pic } = userInfo;
 
   useEffect(() => {
     const fetch = async () => {
@@ -44,7 +43,9 @@ const UserInfoWrapper = (props: Props) => {
             {timestamp && parseReviewTime(timestamp)}
           </p>
         </div>
-        <p className="text-white text-opacity-70 text-md text-left">{bio || 'Bventer'}</p>
+        <p className="text-white text-opacity-70 text-md text-left">
+          {bio || 'Bventer'}
+        </p>
         <div className="flex flex-row justify-start gap-2">
           {/* <p className="text-gray-400">
             {timestamp && parseEventTime(timestamp, 'UTC')}
