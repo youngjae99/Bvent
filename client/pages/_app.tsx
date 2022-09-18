@@ -22,10 +22,12 @@ const initializeRecoilState =
   ({ set }) =>
     set(userState, {
       ...initialRecoilState,
+      isSignIn: true,
     });
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient();
+  console.log(pageProps.userInfo);
 
   return (
     <StyledThemeProvider>
@@ -35,7 +37,10 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <RecoilRoot
-                initializeState={initializeRecoilState(pageProps.userInfo)}
+                initializeState={
+                  pageProps.userInfo &&
+                  initializeRecoilState(pageProps.userInfo)
+                }
               >
                 <Component {...pageProps} />
               </RecoilRoot>

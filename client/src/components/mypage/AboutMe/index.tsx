@@ -91,7 +91,13 @@ const ForwardRefInput = forwardRef(Input);
 
 export const AboutMe = () => {
   const [userInfoState, setUserInfoState] = useRecoilState(userState);
-  const { bio, username, totalAmount, profilePic } = userInfoState;
+  const {
+    bio = 'Bventer',
+    username,
+    totalAmount,
+    profilePic,
+    isSignIn,
+  } = userInfoState;
 
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
@@ -110,10 +116,10 @@ export const AboutMe = () => {
           <Profile.Primary.Image editMode />
           <Profile.Primary.Info>
             <div className="title2 text-white">
-              {`${username?.slice(0, 10)}` || 'Sign In'}
+              {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
             </div>
             <div className="caption text-gray">
-              {bio || 'Sign in with your wallet'}
+              {isSignIn ? bio : 'Sign in with your wallet'}
             </div>
           </Profile.Primary.Info>
         </Profile.Primary>
@@ -130,7 +136,10 @@ export const AboutMe = () => {
                   bio: _bio,
                 });
                 const userInfo = await UserAPI.getMyInfo();
-                setUserInfoState(userInfo);
+                setUserInfoState({
+                  ...userInfo,
+                  isSignIn: true,
+                });
               }
             } catch (error) {
               console.error(error);

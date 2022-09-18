@@ -12,6 +12,7 @@ import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
 import { useRouter } from 'next/router';
 import { userState } from '@/recoil/atoms/user';
+import UserAPI from '@/api/user';
 
 type Props = any;
 
@@ -34,7 +35,13 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
 
 export const Sidebar = (props: Props) => {
   const [userInfoState, setUserInfoState] = useRecoilState(userState);
-  const { bio, username, totalAmount, profilePic } = userInfoState;
+  const {
+    bio = 'Bventer',
+    username,
+    totalAmount,
+    profilePic,
+    isSignIn,
+  } = userInfoState;
 
   const [show, setShow] = useRecoilState(sidebarShowState);
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
@@ -54,6 +61,11 @@ export const Sidebar = (props: Props) => {
       await axios.post(`/api/auth/login`, {
         username: account,
       });
+      const userInfo = await UserAPI.getMyInfo();
+      setUserInfoState({
+        ...userInfo,
+        isSignIn: true,
+      });
     } catch (error) {
       await axios.post(`/api/auth/register`, {
         username: account,
@@ -63,12 +75,24 @@ export const Sidebar = (props: Props) => {
         await axios.post(`/api/auth/login`, {
           username: account,
         });
+        const userInfo = await UserAPI.getMyInfo();
+        setUserInfoState({
+          ...userInfo,
+          isSignIn: true,
+        });
 
         router.push('/mypage?edit=true', '/mypage');
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const handleLogout = async () => {
+    setUserInfoState({
+      isSignIn: false,
+    });
+    document.cookie = 'idToken=; Max-Age=-99999999;';
   };
 
   return (
@@ -104,10 +128,10 @@ export const Sidebar = (props: Props) => {
                       <Profile.Primary.Image />
                       <Profile.Primary.Info>
                         <div className="title2 text-white">
-                          {`${username?.slice(0, 10)}` || 'Sign In'}
+                          {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
                         </div>
                         <div className="caption text-gray">
-                          {bio || 'Sign in with your wallet'}
+                          {isSignIn ? bio : 'Sign in with your wallet'}
                         </div>
                       </Profile.Primary.Info>
                     </Profile.Primary>
@@ -119,7 +143,9 @@ export const Sidebar = (props: Props) => {
                       <MenuItem href="/" selected>
                         Home
                       </MenuItem>
-                      <MenuItem onClick={handleLogin}>Connect Wallet</MenuItem>
+                      <MenuItem onClick={isSignIn ? handleLogout : handleLogin}>
+                        {isSignIn ? 'Disconnect Wallet' : 'Connect Wallet'}
+                      </MenuItem>
                       <MenuItem>
                         <Disclosure>
                           {({ open }) => (
