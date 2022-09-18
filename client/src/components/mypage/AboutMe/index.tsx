@@ -8,6 +8,7 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
 import axios from 'axios';
+import UserAPI from '@/api/user';
 
 // interface Props {
 //     onPress: any;
@@ -89,8 +90,8 @@ const ForwardRefInput = forwardRef(Input);
 export const AboutMe = () => {
   const { active, account, connector, chainId } = useWeb3React();
   const [editMode, setEditMode] = useState(false);
-  const usernameRef = useRef();
-  const bioRef = useRef();
+  const usernameRef = useRef(null);
+  const bioRef = useRef<HTMLInputElement>(null);
 
   // axios.get('/api/user/myself', {})
 
@@ -98,7 +99,7 @@ export const AboutMe = () => {
     <StyledWrapper className="divide-white divide-y">
       <div className="flex justify-between pl-3 items-end">
         <Profile.Primary>
-          <Profile.Primary.Image />
+          <Profile.Primary.Image editMode />
           <Profile.Primary.Info>
             <div className="title2 text-white">
               {formatAccount(account) || 'Sign In'}
@@ -108,8 +109,19 @@ export const AboutMe = () => {
         </Profile.Primary>
         <Button
           className="h-11"
-          onClick={() => {
-            setEditMode((prev) => !prev);
+          onClick={async () => {
+            try {
+              if (editMode && bioRef.current) {
+                await UserAPI.updateMyInfo({
+                  username: "",
+                  bio: bioRef.current.value
+                });
+              }
+            } catch (error) {
+              console.error(error);
+            } finally {
+              setEditMode((prev) => !prev);
+            }
           }}
         >
           {editMode ? 'Save' : 'Edit Profile'}
