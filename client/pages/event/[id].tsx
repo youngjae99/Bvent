@@ -12,8 +12,11 @@ import EventAPI from '@/api/event';
 
 const Event: React.FC = (props) => {
   const { eventInfo, subevents }: any = props;
+  console.log(eventInfo);
   const event_title = eventInfo.event_title;
   const [timezone] = useRecoilState(timezoneState);
+
+  const metadata = generateEventPageMeta(eventInfo);
 
   if (subevents == null) {
     return (
@@ -31,7 +34,7 @@ const Event: React.FC = (props) => {
 
   return (
     <>
-      <NextSeo {...generateEventPageMeta(event_title)} />
+      <NextSeo title={metadata.title} description={metadata.description} openGraph={metadata.openGraph} />
       <Layout>
         <div className="flex flex-row justify-start">
           <p className="text-2xl text-white text-center">Event Details</p>

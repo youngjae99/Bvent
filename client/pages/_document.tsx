@@ -54,6 +54,7 @@ class CustomDocument extends Document {
             httpEquiv="Content-Security-Policy"
             content="upgrade-insecure-requests"
           />
+          <link rel="shortcut icon" href="/images/logo/favicon.ico" />
           <body>
             <Main />
             <NextScript />

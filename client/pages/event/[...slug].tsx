@@ -16,15 +16,22 @@ import NewReviewWrapper from '@/components/pages/subevent/Review/NewReviewWrappe
 const SubEvent: React.FC = (props) => {
   const { data, meta }: any = props;
   const eventInfo = data;
+  console.log(eventInfo);
   const router = useRouter();
   const slug = (router.query.slug as string[]) || [];
   const event_title = slug[0];
   const subevent_id = slug[1];
   const [isOpen, setIsOpen] = useState(false);
 
+  const metadata = generateSubeventPageMeta(eventInfo);
+
   return (
     <>
-      <NextSeo title={event_title} description={subevent_id} />
+      <NextSeo
+        title={metadata.title}
+        description={metadata.description}
+        openGraph={metadata.openGraph}
+      />
       <Layout>
         <TitleBar title="Reviews" backUrl={`/event/${event_title}`} />
         <SubeventHeader eventInfo={eventInfo} />
