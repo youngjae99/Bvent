@@ -72,6 +72,7 @@ const UpDownWrapper = ({ review_id, likes }: any) => {
   const handleUp = async () => {
     if (updown === 'up') {
       // setUpDown('none'); not-allowed
+      alert('You have already liked/disliked this review');
     } else {
       const res = await ReviewAPI.likeReivew({
         review_id: review_id,
@@ -82,7 +83,9 @@ const UpDownWrapper = ({ review_id, likes }: any) => {
         setUpDown('up');
         setUpCnt((prev) => prev + 1);
       } else if (res.status === 'You have already liked this review') {
-        alert('You have already liked this review');
+        alert('You have already liked/disliked this review');
+      } else if (res.status === 'You are the owner') {
+        alert('You cannot like your own review');
       } else if (res.status === 403) {
         console.log('please login');
       }
@@ -92,6 +95,7 @@ const UpDownWrapper = ({ review_id, likes }: any) => {
   const handleDown = async () => {
     if (updown === 'down') {
       // setUpDown('none'); not-allowed
+      alert('You have already liked/disliked this review');
     } else {
       const res = await ReviewAPI.dislikeReivew({
         review_id: review_id,
@@ -101,8 +105,10 @@ const UpDownWrapper = ({ review_id, likes }: any) => {
         console.log('disliked!');
         setUpDown('down');
         setDownCnt((prev) => prev + 1);
-      } else if (res.status === 'You have already disliked this review') {
-        alert('You have already disliked this review');
+      } else if (res.status === 'You have already liked this review') {
+        alert('You have already liked/disliked this review');
+      } else if (res.status === 'You are the owner') {
+        alert('You cannot like your own review');
       } else if (res.status === 403) {
         console.log('please login');
       }
