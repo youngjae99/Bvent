@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { parseEventTime } from '@/utils/parseTime';
 // import { Review } from './type';
 // import ProfileImage from './ProfileImage';
 import UserInfoWrapper from './UserInfoWrapper';
+import ReviewAPI from '@/api/review';
+import { useWeb3React } from '@web3-react/core';
 
 // type Props = {
 //   timestamp: string;
@@ -41,23 +43,70 @@ const DownBtn = (props: any) => {
   );
 };
 
-const UpDownWrapper = () => {
+const UpDownWrapper = ({ review_id, likes }: any) => {
   const [updown, setUpDown] = useState<string>('none');
-  // const [down, setDown] = useState(false);
+  const { active, account, connector, chainId } = useWeb3React();
+  // let upCnt = 0;
+  // let downCnt = 0;
+  const [upCnt, setUpCnt] = useState<number>(0);
+  const [downCnt, setDownCnt] = useState<number>(0);
 
-  const upCnt = 0;
-  const downCnt = 0;
+  useEffect(() => {
+    setUpCnt(
+      likes ? Object.keys(likes).filter((key) => likes[key] === 1).length : 0,
+    );
+    setDownCnt(
+      likes ? Object.keys(likes).filter((key) => likes[key] === -1).length : 0,
+    );
+    const parsedAccount = account?.toLowerCase() + ' my wallet';
+    console.log(parsedAccount);
+    if (likes && likes[parsedAccount]) {
+      if (likes[parsedAccount] == 1) {
+        setUpDown('up');
+      } else if (likes[parsedAccount] == -1) {
+        setUpDown('down');
+      }
+    }
+  }, []);
 
-  const handleUp = () => {
+  const handleUp = async () => {
     if (updown === 'up') {
-      setUpDown('none');
-    } else setUpDown('up');
+      // setUpDown('none'); not-allowed
+    } else {
+      const res = await ReviewAPI.likeReivew({
+        review_id: review_id,
+      });
+      console.log(res);
+      if (res.status === 'like complete!') {
+        console.log('liked!');
+        setUpDown('up');
+        setUpCnt((prev) => prev + 1);
+      } else if (res.status === 'You have already liked this review') {
+        alert('You have already liked this review');
+      } else if (res.status === 403) {
+        console.log('please login');
+      }
+    }
   };
 
-  const handleDown = () => {
+  const handleDown = async () => {
     if (updown === 'down') {
-      setUpDown('none');
-    } else setUpDown('down');
+      // setUpDown('none'); not-allowed
+    } else {
+      const res = await ReviewAPI.dislikeReivew({
+        review_id: review_id,
+      });
+      console.log(res);
+      if (res.status === 'like complete!') {
+        console.log('disliked!');
+        setUpDown('down');
+        setDownCnt((prev) => prev + 1);
+      } else if (res.status === 'You have already disliked this review') {
+        alert('You have already disliked this review');
+      } else if (res.status === 403) {
+        console.log('please login');
+      }
+    }
   };
 
   return (
@@ -85,15 +134,23 @@ const UpDownWrapper = () => {
 };
 
 const Review = (props: any) => {
-  const { timestamp, walletAddress, review_content, txHash, hideUpDown=false } = props;
+  const {
+    review_id,
+    timestamp,
+    walletAddress,
+    review_content,
+    likes,
+    txHash,
+    hideUpDown = false,
+  } = props;
 
   return (
     <div className="flex flex-col mb-3">
       <UserInfoWrapper userAddress={walletAddress} timestamp={timestamp} />
       <div className="ml-12">
-        <p style={{ whiteSpace: 'pre-line'}}>{review_content}</p>
+        <p style={{ whiteSpace: 'pre-line' }}>{review_content}</p>
       </div>
-      {!hideUpDown && <UpDownWrapper />}
+      {!hideUpDown && <UpDownWrapper review_id={review_id} likes={likes} />}
     </div>
   );
 };

@@ -39,7 +39,7 @@ const ReviewContainer = (props: Props) => {
             .sort((a, b) => review[b].timestamp - review[a].timestamp)
             .map((key) => {
               const _review = review[key];
-              return <Review key={key} {..._review} />;
+              return <Review key={key} review_id={key} {..._review} />;
             })
         ) : (
           <>No review</>

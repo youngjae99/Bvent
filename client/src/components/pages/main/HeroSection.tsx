@@ -16,7 +16,9 @@ const HeroSection = () => {
         className="flex flex-col justify-center items-center"
         style={{ height: '40vh' }}
       >
-        <Button outlined>Check all Events</Button>
+        <a href="#LogoSection">
+          <Button outlined>Check all Events</Button>
+        </a>
         <Lottie
           animationData={animationData}
           loop={true}
