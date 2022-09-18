@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { type } from 'os';
 
 const offset = {
   KST: 9,
@@ -24,7 +25,9 @@ export const parseMainTabEventTime = (startTime: number, endTime: number) => {
   const parsedStartTime = DateTime.fromJSDate(new Date(startTime));
   const parsedEndTime = DateTime.fromJSDate(new Date(endTime));
   console.log(parsedStartTime, parsedEndTime);
-  return parsedStartTime.toLocaleString() + ' ~ ' + parsedEndTime.toLocaleString();
+  return (
+    parsedStartTime.toLocaleString() + ' ~ ' + parsedEndTime.toLocaleString()
+  );
 };
 
 export const parseEventTime = (time: string, timeZone: string) => {
@@ -35,16 +38,20 @@ export const parseEventTime = (time: string, timeZone: string) => {
 
 export const parseReviewTime = (time: number) => {
   const parsedTime = new Date(time);
-  console.log()
+  console.log();
 
   const diffInDays = parseInt(
-    DateTime.now().diff(DateTime.fromJSDate(parsedTime), 'days').days,
+    DateTime.now().diff(DateTime.fromJSDate(parsedTime), 'days').days.toFixed(),
   );
   const diffInHours = parseInt(
-    DateTime.now().diff(DateTime.fromJSDate(parsedTime), 'hours').hours,
+    DateTime.now()
+      .diff(DateTime.fromJSDate(parsedTime), 'hours')
+      .hours.toFixed(),
   );
   const diffInMins = parseInt(
-    DateTime.now().diff(DateTime.fromJSDate(parsedTime), 'minutes').minutes,
+    DateTime.now()
+      .diff(DateTime.fromJSDate(parsedTime), 'minutes')
+      .minutes.toFixed(),
   );
 
   if (diffInDays >= 7) {

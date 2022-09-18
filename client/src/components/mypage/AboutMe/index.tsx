@@ -61,8 +61,7 @@ const FieldSet = ({ title, required, description }: FieldSetProps) => {
 export const AboutMe = () => {
   const { active, account, connector, chainId } = useWeb3React();
 
-
-  axios.get('/api/user/myself', {})
+  // axios.get('/api/user/myself', {})
 
   return (
     <StyledWrapper>
