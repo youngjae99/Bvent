@@ -72,11 +72,11 @@ const SubEvent: React.FC = (props) => {
 
 export async function getServerSideProps(context) {
   const slug = (context.query.slug as string[]) || [];
-  const event_title = slug[0];
+  // const event_title = slug[0];
   const subevent_id = slug[1];
 
   const res = await axios.get(
-    `https://api.bventdao.xyz/subevent?event=${event_title}&subevent_id=${subevent_id}`,
+    `https://api.bventdao.xyz/subevent?subevent_id=${subevent_id}`,
   );
   const data = await res.data;
   const meta = await generateSubeventPageMeta(res.data);
