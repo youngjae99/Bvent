@@ -11,7 +11,7 @@ export const SUPPORT_CHAIN = 1;
 import { isMobileDevice } from '@/utils/isMobileDevice';
 
 const injectedConnector = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42],
+  supportedChainIds: [9000, 9001],//[1, 3, 4, 5, 42],
 });
 
 declare global {
