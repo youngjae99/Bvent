@@ -11,6 +11,7 @@ import Profile from '../Profile';
 import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
 import { useRouter } from 'next/router';
+import { userState } from '@/recoil/atoms/user';
 
 type Props = any;
 
@@ -32,6 +33,9 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
 );
 
 export const Sidebar = (props: Props) => {
+  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const { bio, username, totalAmount, profilePic } = userInfoState;
+
   const [show, setShow] = useRecoilState(sidebarShowState);
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
   const { active, account, connector, chainId } = useWeb3React();
@@ -100,10 +104,10 @@ export const Sidebar = (props: Props) => {
                       <Profile.Primary.Image />
                       <Profile.Primary.Info>
                         <div className="title2 text-white">
-                          {formatAccount(account) || 'Sign In'}
+                          {`${username?.slice(0, 10)}` || 'Sign In'}
                         </div>
                         <div className="caption text-gray">
-                          Sign in with your wallet
+                          {bio || 'Sign in with your wallet'}
                         </div>
                       </Profile.Primary.Info>
                     </Profile.Primary>

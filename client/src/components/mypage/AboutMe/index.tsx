@@ -9,6 +9,8 @@ import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
 import UserAPI from '@/api/user';
 import { useRouter } from 'next/router';
+import { userState } from '@/recoil/atoms/user';
+import { useRecoilState } from 'recoil';
 
 // interface Props {
 //     onPress: any;
@@ -87,26 +89,18 @@ const Input = ({ placeholder, limit, initial }: any, ref) => {
 
 const ForwardRefInput = forwardRef(Input);
 
-interface AboutMeProps {
-  bio: string;
-  username: string;
-  totalAmount: number;
-}
+export const AboutMe = () => {
+  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const { bio, username, totalAmount, profilePic } = userInfoState;
 
-export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
-  const [editMode, setEditMode] = useState(router.query.edit);
+  const [editMode, setEditMode] = useState(router.query.edit === 'true');
   const usernameRef = useRef<HTMLInputElement>(null);
   const bioRef = useRef<HTMLInputElement>(null);
-  const [userInfo, setUserInfo] = useState({
-    bio,
-    username,
-    totalAmount,
-  });
 
   useEffect(() => {
-    setEditMode(router.query.edit);
+    setEditMode(router.query.edit === 'true');
   }, [router.query]);
 
   return (
@@ -116,10 +110,10 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
           <Profile.Primary.Image editMode />
           <Profile.Primary.Info>
             <div className="title2 text-white">
-              {`${userInfo.username.slice(0, 10)}` || 'Sign In'}
+              {`${username?.slice(0, 10)}` || 'Sign In'}
             </div>
             <div className="caption text-gray">
-              {userInfo.bio || 'Sign in with your wallet'}
+              {bio || 'Sign in with your wallet'}
             </div>
           </Profile.Primary.Info>
         </Profile.Primary>
@@ -135,11 +129,8 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
                   username: _username,
                   bio: _bio,
                 });
-                setUserInfo((prev) => ({
-                  ...prev,
-                  bio: _bio,
-                  username: _username,
-                }));
+                const userInfo = await UserAPI.getMyInfo();
+                setUserInfoState(userInfo);
               }
             } catch (error) {
               console.error(error);
@@ -158,13 +149,9 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
               ref={usernameRef}
               placeholder="Username"
               limit={50}
-              initial={userInfo.username}
+              initial={username}
             />
-            <ForwardRefInput
-              ref={bioRef}
-              placeholder="Bio"
-              initial={userInfo.bio}
-            />
+            <ForwardRefInput ref={bioRef} placeholder="Bio" initial={bio} />
           </>
         ) : (
           <>
