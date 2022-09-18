@@ -1,4 +1,4 @@
-import clientApi from './axios';
+import { clientApi }  from './axios';
 
 const EventAPI = {
   getAll: async () => {

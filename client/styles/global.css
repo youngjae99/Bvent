@@ -15,6 +15,36 @@
     margin-bottom: 0.5rem;
     color: white;
   }
+
+  input {
+    all: unset;
+  }
+
+  .title {
+    font-size: 28px;
+    line-height: 33.41px;
+  }
+
+  .title2 {
+    font-size: 22px;
+    line-height: 26.25px;
+  }
+
+  .headline {
+    font-size: 17px;
+    font-weight: 590;
+  }
+
+  .body {
+    font-size: 15px;
+    line-height: 17.9px;
+  }
+
+  .caption {
+    font-size: 12px;
+    line-height: 14.32px;
+  }
+  
   .swiper {
     width: 100%;
   }
