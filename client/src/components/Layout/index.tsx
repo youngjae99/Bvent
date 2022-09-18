@@ -10,7 +10,7 @@ const Layout = ({ children }:any) => {
     >
       <Header />
       <Sidebar />
-      <div className="px-5 pt-16">{children}</div>
+      <div className="px-5 pt-16 min-h-screen">{children}</div>
       <Footer/>
     </div>
   );
