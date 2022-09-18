@@ -21,14 +21,13 @@ const ReviewAPI = {
     return data;
   },
 
-  writeEventReview: async ({ review_content, event_name, event_id }) => {
+  writeEventReview: async ({ review_content, event_id }) => {
     const token = getCookie('idToken');
     const { data } = await clientApi.post(
       `/review`,
       {
         review_content: review_content,
         event_id: event_id,
-        event_name: event_name, // FIXME(aaron): remove event_name later
         timestamp: Date.now(),
       },
       {
@@ -39,14 +38,13 @@ const ReviewAPI = {
     );
     return data;
   },
-  writeSubeventReview: async ({ review_content, event_name, subevent_id }) => {
+  writeSubeventReview: async ({ review_content, subevent_id }) => {
     const token = getCookie('idToken');
     const { data } = await clientApi.post(
       `/review`,
       {
         review_content: review_content,
         subevent_id: subevent_id,
-        event_name: event_name,
         timestamp: Date.now(),
       },
       {
