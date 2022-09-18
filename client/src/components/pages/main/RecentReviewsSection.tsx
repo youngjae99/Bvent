@@ -1,6 +1,6 @@
 import ReviewAPI from '@/api/review';
 import React, { useEffect, useState } from 'react';
-import Review from '../subevent/Review/Review';
+import Review from '../review/Review';
 
 const RecentReviewsSection = () => {
   const [reviews, setReviews] = useState({});

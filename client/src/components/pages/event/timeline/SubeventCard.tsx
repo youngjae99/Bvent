@@ -59,7 +59,7 @@ const DropdownWrapper = (props: any) => {
   );
 };
 
-const SubeventCard = (props: Props) => {
+const TimelineSubevent = (props: Props) => {
   const { subevent } = props;
   const [showDropdown, setShowDropdown] = useState(false);
   const [userDate, setUserDate] = useState('');
@@ -111,4 +111,4 @@ const SubeventCard = (props: Props) => {
   );
 };
 
-export default SubeventCard;
+export default TimelineSubevent;

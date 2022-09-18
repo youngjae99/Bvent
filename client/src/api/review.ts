@@ -21,16 +21,65 @@ const ReviewAPI = {
     return data;
   },
 
-  writeReview: async ({ review_content, event_name, subevent_id }) => {
+  writeEventReview: async ({ review_content, event_name, event_id }) => {
     const token = getCookie('idToken');
     const { data } = await clientApi.post(
       `/review`,
       {
         review_content: review_content,
-        event_name: event_name,
-        subevent_id: subevent_id,
-        amount: 0,
+        event_id: event_id,
+        event_name: event_name, // FIXME(aaron): remove event_name later
         timestamp: Date.now(),
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    return data;
+  },
+  writeSubeventReview: async ({ review_content, event_name, subevent_id }) => {
+    const token = getCookie('idToken');
+    const { data } = await clientApi.post(
+      `/review`,
+      {
+        review_content: review_content,
+        subevent_id: subevent_id,
+        event_name: event_name,
+        timestamp: Date.now(),
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    return data;
+  },
+  likeReivew: async ({ review_id }) => {
+    const token = getCookie('idToken');
+    const { data } = await clientApi.post(
+      `/like`,
+      {
+        review_id: review_id,
+        like_type: "like",
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    return data;
+  },
+  dislikeReivew: async ({ review_id }) => {
+    const token = getCookie('idToken');
+    const { data } = await clientApi.post(
+      `/like`,
+      {
+        review_id: review_id,
+        like_type: "dislike",
       },
       {
         headers: {
