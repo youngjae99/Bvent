@@ -85,7 +85,7 @@ const TimelineSubevent = (props: Props) => {
       </TimeWrapper>
       <div className="mb-3 flex-1 rounded-lg hover:bg-gray-900">
         <Link href={`/event/${subevent?.event_title}/${subevent?.subevent_id}`}>
-          <EventTitle>{subevent?.subevent_info}</EventTitle>
+          <EventTitle>{subevent?.subevent_title}</EventTitle>
         </Link>
         <div className="flex flex-row justify-between mt-2">
           <div className="flex flex-row gap-2 leading-4">
