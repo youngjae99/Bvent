@@ -69,7 +69,6 @@ const NewReviewWrapper = (props: Props) => {
     if (event_id) {
       const loginRes = await ReviewAPI.writeEventReview({
         review_content: review,
-        event_name: event_name,
         event_id: event_id,
       })
         .then((res) => {
@@ -88,7 +87,6 @@ const NewReviewWrapper = (props: Props) => {
     if (subevent_id) {
       const loginRes = await ReviewAPI.writeSubeventReview({
         review_content: review,
-        event_name: event_name,
         subevent_id: subevent_id,
       })
         .then((res) => {
