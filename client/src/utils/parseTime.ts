@@ -1,4 +1,4 @@
-const offset = {
+export const offset = {
   KST: 9,
   EDT: '-4',
   PDT: -7,

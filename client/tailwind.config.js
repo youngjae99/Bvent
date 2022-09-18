@@ -44,6 +44,7 @@ module.exports = {
     extend: {
       borderWidth: ['responsive', 'hover'],
       margin: ['responsive', 'hover', 'first'],
+      borderRadius: ['responsive', 'hover', 'first', 'last'],
     },
   },
   plugins: [
