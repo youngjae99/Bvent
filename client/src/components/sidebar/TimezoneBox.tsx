@@ -6,8 +6,7 @@ import { timezoneState } from '@/recoil/atoms/timezone';
 
 const TimezoneBox = () => {
   const [timezone, setTimezone] = useRecoilState(timezoneState);
-  console.log(timezone);
-
+  
   return (
     <div className="relative">
       <Menu>

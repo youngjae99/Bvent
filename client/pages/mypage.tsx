@@ -49,7 +49,6 @@ const MyPage: React.FC = () => {
       />
       <TitleBar title="My Page" backUrl={`/`} />
       <AboutMe />
-      <Button onClick={saveSettings}>Save Settings</Button>
     </Layout>
   );
 };

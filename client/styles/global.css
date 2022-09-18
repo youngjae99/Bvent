@@ -16,6 +16,10 @@
     color: white;
   }
 
+  input {
+    all: unset;
+  }
+
   .title {
     font-size: 28px;
     line-height: 33.41px;
