@@ -1,12 +1,20 @@
-export const generateMeta = ({ title, description, image, og }: any) => { //FIXME(youngjae): remove any
+export const generateMeta = ({ title, description, image_url }: any) => {
+  //FIXME(youngjae): remove any
   return {
-    title,
-    description,
+    title: title,
+    description: description,
     openGraph: {
-      title,
-      description,
-      image,
-      ...og,
+      type: 'website',
+      title: title,
+      description: description,
+      images: [
+        {
+          url: image_url,
+          width: 800,
+          height: 600,
+          alt: title,
+        },
+      ],
     },
   };
 };
@@ -14,16 +22,15 @@ export const generateMeta = ({ title, description, image, og }: any) => { //FIXM
 export const generateEventPageMeta = (eventInfo) => {
   return generateMeta({
     title: eventInfo.event_title,
-    description: eventInfo.subevent_info,
-    image: eventInfo.subevent_img,
+    description: `checkout ${eventInfo.event_title} info on Bvent`,
+    image_url: eventInfo.event_img,
   });
 };
 
-
 export const generateSubeventPageMeta = (eventInfo) => {
   return generateMeta({
-    title: eventInfo.event_title,
+    title: eventInfo.event_title + ' - ' + eventInfo.subevent_info,
     description: eventInfo.subevent_info,
-    image: eventInfo.subevent_img,
+    image_url: eventInfo.subevent_img,
   });
 };

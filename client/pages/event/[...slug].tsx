@@ -4,14 +4,14 @@ import axios from 'axios';
 import { NextSeo } from 'next-seo';
 import { Dialog, Transition } from '@headlessui/react';
 
+import { generateSubeventPageMeta } from '@/utils/seo';
 import Layout from '@/components/Layout';
 import TitleBar from '@/components/pages/subevent/TitleBar';
 import { SubeventHeader } from '@/components/pages/subevent/SubeventHeader';
-import ReviewContainer from '@/components/pages/subevent/Review/ReviewContainer';
+import ReviewContainer from '@/components/pages/review/ReviewContainer';
 import FloatingContainer from '@/components/pages/subevent/FloatingContainer';
 import NewReviewButton from '@/components/pages/subevent/NewReviewButton';
-import { generateSubeventPageMeta } from '@/utils/seo';
-import NewReviewWrapper from '@/components/pages/subevent/Review/NewReviewWrapper';
+import NewReviewWrapper from '@/components/pages/review/NewReviewWrapper';
 
 const SubEvent: React.FC = (props) => {
   const { data, meta }: any = props;
@@ -22,13 +22,19 @@ const SubEvent: React.FC = (props) => {
   const subevent_id = slug[1];
   const [isOpen, setIsOpen] = useState(false);
 
+  const metadata = generateSubeventPageMeta(eventInfo);
+
   return (
     <>
-      <NextSeo title={event_title} description={subevent_id} />
+      <NextSeo
+        title={metadata.title}
+        description={metadata.description}
+        openGraph={metadata.openGraph}
+      />
       <Layout>
         <TitleBar title="Reviews" backUrl={`/event/${event_title}`} />
         <SubeventHeader eventInfo={eventInfo} />
-        <ReviewContainer event_name={event_title} subevent_id={subevent_id} />
+        <ReviewContainer subevent_id={subevent_id} />
 
         <FloatingContainer>
           <NewReviewButton onClick={() => setIsOpen(true)} />
@@ -36,17 +42,6 @@ const SubEvent: React.FC = (props) => {
 
         <Transition.Root show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-500"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in-out duration-500"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            </Transition.Child>
             <div className="fixed inset-0 z-10 overflow-y-auto">
               <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 <Transition.Child
@@ -81,7 +76,7 @@ export async function getServerSideProps(context) {
   const subevent_id = slug[1];
 
   const res = await axios.get(
-    `https://bvent-seoul.web.app/subevent?event=${event_title}&subevent_id=${subevent_id}`,
+    `https://api.bventdao.xyz/subevent?event=${event_title}&subevent_id=${subevent_id}`,
   );
   const data = await res.data;
   const meta = await generateSubeventPageMeta(res.data);

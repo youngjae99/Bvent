@@ -13,7 +13,7 @@ const Upcoming: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('https://bvent-seoul.web.app/tags/future');
+      const res = await axios.get('/api/tags/future');
       console.log(res);
       setEvents(res.data);
     };

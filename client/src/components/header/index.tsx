@@ -25,7 +25,7 @@ const MenuItem = ({ _timezone }: any) => {
   );
 };
 
-const Header = () => {
+export const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
   const [profile, setProfile] = useState(false);
   return (
@@ -37,10 +37,10 @@ const Header = () => {
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">
-              <Logo width={80} height={30} />
+              <Logo width={100} height={40} />
             </div>
           </div>
-          <div className="visible flex items-center relative">
+          <div className="flex items-center relative">
             <ul className="p-2 w-64 border-r bg-white absolute top-0 -ml-2 rounded right-0 shadow mt-12 lg:mt-16 hidden">
               <li className="cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                 <div className="flex items-center">
@@ -142,5 +142,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;

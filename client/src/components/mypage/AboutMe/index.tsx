@@ -7,6 +7,7 @@ import { formatAccount } from '@/utils/wallet';
 import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
+import axios from 'axios';
 
 // interface Props {
 //     onPress: any;
@@ -90,6 +91,8 @@ export const AboutMe = () => {
   const [editMode, setEditMode] = useState(false);
   const usernameRef = useRef();
   const bioRef = useRef();
+
+  // axios.get('/api/user/myself', {})
 
   return (
     <StyledWrapper className="divide-white divide-y">

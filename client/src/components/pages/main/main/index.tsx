@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
-import EventCard from '../Card';
+import EventCard from '../EventCard';
 import { eventState } from '@/recoil/atoms/events';
 import { GradientText } from '@/components/Text/GradientText';
 import EventAPI from '@/api/event';

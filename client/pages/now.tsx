@@ -22,7 +22,7 @@ const Now: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('https://bvent-seoul.web.app/tags/current');
+      const res = await axios.get('/api/tags/current');
       console.log(res);
       setEvents(res.data);
     };

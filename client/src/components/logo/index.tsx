@@ -12,10 +12,11 @@ const Logo = (props: LogoType) => {
   return (
     <a href="/">
       <Image
-        src="/icons/logo.svg"
+        src="/images/logo/bvent-symbol-type-color.svg"
         alt="nextjs"
-        width={width ? width : 200}
+        width={width ? width : 100}
         height={height ? height : 100}
+        style={{marginTop:"6px"}} //FIXME(aaron): change logo margin bottom
       />
     </a>
   );

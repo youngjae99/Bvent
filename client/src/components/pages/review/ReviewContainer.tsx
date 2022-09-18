@@ -2,38 +2,27 @@ import React, { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import useSWR from 'swr';
 import axios from 'axios';
-
-// import { BsPencilSquare } from 'react-icons/bs';
-// import NewReview from './newReview';
 import Review from './Review';
-import ReviewForm from './ReviewForm';
 
 type Props = {
-  event_name: string;
-  subevent_id: string;
+  event_id?: string;
+  subevent_id?: string;
 };
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-// TODO(youngjae): erase this
-// const WriteReviewButton = ({ onClick }: any) => {
-//   return (
-//     <div
-//       onClick={onClick}
-//       className="text-white text-2xl cursor-pointer hover:text-green-100"
-//     >
-//       <BsPencilSquare></BsPencilSquare>
-//     </div>
-//   );
-// };
-
 const ReviewContainer = (props: Props) => {
-  const { event_name, subevent_id } = props;
+  const { event_id, subevent_id } = props;
 
-  const { data } = useSWR(
-    `https://api.bventdao.xyz/review?subevent_id=${subevent_id}`,
-    fetcher,
-  );
+  let url = '';
+  if (event_id) {
+    url = `/api/review?event_id=${event_id}`;
+  }
+  if (subevent_id) {
+    url = `/api/review?subevent_id=${subevent_id}`;
+  }
+
+  const { data } = useSWR(url, fetcher);
   const review = data ? data : {};
   const reviewCnt = review ? Object.keys(review).length : 0;
 
@@ -41,7 +30,6 @@ const ReviewContainer = (props: Props) => {
 
   return (
     <div className="text-white mt-3">
-      {/* <ReviewForm /> */}
       <div className="flex flex-row justify-between mb-2">
         <p>{reviewCnt} reviews</p>
       </div>
@@ -51,7 +39,7 @@ const ReviewContainer = (props: Props) => {
             .sort((a, b) => review[b].timestamp - review[a].timestamp)
             .map((key) => {
               const _review = review[key];
-              return <Review key={key} {..._review} />;
+              return <Review key={key} review_id={key} {..._review} />;
             })
         ) : (
           <>No review</>

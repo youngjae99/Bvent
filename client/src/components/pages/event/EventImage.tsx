@@ -12,7 +12,7 @@ export const StyledImage = styled.img`
   border-radius: 10px;
 `;
 
-export const SubeventImage = ({ src }: any) => {
+export const EventImage = ({ src }: any) => {
   return (
     <StyledImageWrapper>
       <Image src={src} width={600} height={400} style={{borderRadius:"10px"}}/>
