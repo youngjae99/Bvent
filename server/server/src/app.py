@@ -74,6 +74,17 @@ app.register_blueprint(test.bp)
 import like
 app.register_blueprint(like.bp)
 
+import token_economy
+app.register_blueprint(token_economy.bp)
+
+@app.context_processor
+def utility_functions():
+    def print_in_console(message):
+        print(str(message))
+
+    return dict(mdebug=print_in_console)
+
+
 with app.test_request_context():
     print(url_for('event.event_info', event_title='2022 ETH Denver'))
 

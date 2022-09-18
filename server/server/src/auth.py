@@ -55,7 +55,8 @@ def register():
         "username": "bventer",
         "address": sanitized_username,
         "profile_pic": 0,
-        "coins": 0
+        "coins": 0,
+        "like_left": 5
       }
       db.child("users").child(sanitized_username).set(initial_data)
     except:

@@ -1,11 +1,15 @@
-id,컨퍼런스 이름,행사 기간(시작),행사 기간(끝),행사종류,이미지,이벤트 tag,행사 진행 재단
-id,event_title,event_start,event_end,event_type,event_img,event_tag,
-1,2022 ETH Denver,2022.02.11,2022.02.20,Hackathon,https://drive.google.com/file/d/17tbnyNmnnp1miqSqdfoaEt7Su1mV1M8V/view?usp=sharing,past,
-2,2021 ETH Denver,2021.02.05,2021.02.12,Hackathon,https://drive.google.com/file/d/1aIw_eOEZkMePIVKOoBI8CvvRBbojHXJw/view?usp=sharing,past,
-3,NFT.NYC 2022,2022.06.20,2022.06.23,NFT Conference,https://drive.google.com/file/d/1bT563N4bQ2-Dfsha6q7AzwV_LcNOVLug/view?usp=sharingg,past,
-4,NFT.NYC 2021,2021.11.01,2021.11.05,NFT Conference,https://drive.google.com/file/d/1bT563N4bQ2-Dfsha6q7AzwV_LcNOVLug/view?usp=sharing,past,
-5,2022 KBW,2022.08.07,2022.08.14,Conference,https://drive.google.com/file/d/1NN4EFa3iwq0tGnYN9hbobqmMK7Rcc8OV/view?usp=sharing,current,
-6,2021 KBW,2021.12.08,2021.12.08,Conference,https://drive.google.com/file/d/1VtSI1p9jKfsIc_s_JId-Zo4WUxwh0nhC/view?usp=sharing,past,
-7,NFT.NYC 2023,2023.06.20,2023.06.23,NFT Conference,https://drive.google.com/file/d/1bT563N4bQ2-Dfsha6q7AzwV_LcNOVLug/view?usp=sharing,future,NFT.NYC
-8,2023 ETH Denver,2023.02.24,2023.03.05,Hackathon,https://drive.google.com/file/d/17liK0fnklJcwAWdmzKxSUJyh0Qx2a9xN/view?usp=sharing,future,Ethereum.ORG
-9,2023 KBW,2023.08.07,2023.08.14,Conference,.,future,"Hashed , FACTBLOCK"
+id,컨퍼런스 이름,행사 기간(시작),행사 기간(끝),행사종류,이미지(홈),이벤트 tag,행사 진행 재단,행사 장소
+id,event_title,event_start,event_end,event_type,event_img,event_tag,,
+1,2022 ETH Denver,2022.02.11,2022.02.20,Hackathon,https://drive.google.com/file/d/1EE6E6AtrhZ2yuDzTnUtZOZlVc3T3rkpN/view?usp=sharing,past,,"USA,Denver"
+2,2021 ETH Denver,2021.02.05,2021.02.12,Hackathon,https://drive.google.com/file/d/1EEOdAekZydjq4XbeHtdRNFOaniXTQghQ/view?usp=sharing,past,,"USA,Denver"
+3,NFT.NYC 2022,2022.06.20,2022.06.23,NFT Conference,https://drive.google.com/file/d/1EE6E6AtrhZ2yuDzTnUtZOZlVc3T3rkpN/view?usp=sharing,past,,"USA,New York"
+4,NFT.NYC 2021,2021.11.01,2021.11.05,NFT Conference,https://drive.google.com/file/d/1EE6E6AtrhZ2yuDzTnUtZOZlVc3T3rkpN/view?usp=sharing,past,,"USA,New York"
+5,2022 KBW,2022.08.07,2022.08.14,Conference,https://drive.google.com/file/d/1EOE_IBhSGrV9PujqkUsEI8aGHCy_3qyB/view?usp=sharing,past,,"Korea,Seoul"
+6,2021 KBW,2021.12.08,2021.12.08,Conference,https://drive.google.com/file/d/1EPtPnpy_AGcRS_wA8Uo1qoHBnL-P6wuo/view?usp=sharing,past,,"Korea,Seoul"
+7,BUIDL ASIA,2022.08.04,2022.08.05,Conference,https://drive.google.com/file/d/19gyKJ4lytiq6HdE0Ucpnin6Uz3cnbEJ1/view?usp=sharing,past,"kryptoseoul, ","Korea,Seoul"
+8,ETH Seoul,2022.08.05,2022.08.13,Hackathon,https://drive.google.com/file/d/19_lbsqiycJkrjKch1mSAItnrbTyY5HGc/view?usp=sharing,past,"kryptoseoul,Dystopia Labs","Korea,Seoul"
+9,NFT.NYC 2023,2023.06.20,2023.06.23,NFT Conference,https://drive.google.com/file/d/1EE6E6AtrhZ2yuDzTnUtZOZlVc3T3rkpN/view?usp=sharing,future,NFT.NYC,"USA,New York"
+10,2023 ETH Denver,2023.02.24,2023.03.05,Hackathon,https://drive.google.com/file/d/1EE6E6AtrhZ2yuDzTnUtZOZlVc3T3rkpN/view?usp=sharing,future,Ethereum.ORG,"USA,Denver"
+11,2023 KBW,2023.08.07,2023.08.14,Conference,,future,"Hashed , FACTBLOCK","Korea,Seoul"
+12,Wow summit,2022.10.08,2022.10.14,Conference,https://drive.google.com/file/d/1EsuSdhJGJubXmVkhvfcfsJM4M62kKkdS/view?usp=sharing,future,GUYWAY EVENTS,"UAE, Dubai"
+13,Web Summit,2022.11.01,2022.11.04,Conference,https://drive.google.com/file/d/19_AGtCo-Xxna_Bdk0JaDtXWnWMUXR0og/view?usp=sharing,future,Web Summit,"Portugal,Lisbon"

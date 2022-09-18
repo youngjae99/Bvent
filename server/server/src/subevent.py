@@ -20,21 +20,10 @@ def get_subevent():
   """
   Show all events 
   """
-  import re
-  event_title = request.args.get("event")
-  if event_title == None:
-    return "invalid request", 405
-  sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
   if (request.args.get("topic") is not None):
     pass
   elif (request.args.get("subevent_id") is not None):
     subevent_id = request.args.get("subevent_id") 
-    subevents = db.child("subevents").child(sanitized_title).child(subevent_id).get()
+    subevents = db.child("subevents").child(subevent_id).get()
     return subevents.val(), 200
-  else:
-    event_info = db.child("events").child(sanitized_title).get().val()
-    #print(event_info)
-    subevents = db.child("subevents").child(sanitized_title).get().val()
-    resp = make_response(jsonify({"event_info": event_info, 
-                                "subevents": subevents}))
-    return resp, 200
+  return {}, 200

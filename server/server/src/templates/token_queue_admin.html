@@ -1,0 +1,140 @@
+<html>
+  <head>
+    <title>Token Queue Admin Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+      body {
+        margin: 10px;
+      }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+      }
+      thead {
+        font-weight: bold;
+      }
+
+      #reviewData {
+        max-width: 500px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Token Queue Admin Page </h1>
+    <label for="admin_pw">Admin PW:</label><br>
+    <input type="text" id = "admin_pw"><br><br>
+    <h3>Review Data</h3>
+    <div id="reviewData">
+
+    </div>
+    <br>
+    <br>
+
+    <table id ="myTable">
+      <thead>
+        <td>event_name</td>
+        <td>review_id</td>
+        <td>reward_type</td>
+        <td>subevent_id</td>
+        <td>wallet_address</td>
+        <td>Accept</td>
+        <td>Deny</td>
+      </thead>
+      {% if token_queue is not none %}
+        {% for review in token_queue %}
+        <tr>
+          {% for val in token_queue[review] %}
+            {% if val == 'review_id' %}
+              <td><button class="review_id" id="{{token_queue[review][val]}}" onclick="getReview(this)">
+                {{token_queue[review][val]}}
+              </button></td>
+            {% elif val == 'wallet_address' %}
+              <td>{{token_queue[review][val][:10] + '...'}}</td>
+            {% else %}
+              <td>{{token_queue[review][val]}}</td>
+            {% endif %}
+          {% endfor %}
+          <td><button class="review_yes" queue_id="{{review}}" onclick="provideReward(this)">Accept</button></td>
+          <td><button class="reject" queue_id="{{review}}" onclick="removeItem(this)">Deny</button></td> 
+        </tr>
+        {% endfor %}
+      {% endif %}
+    </table>
+  </body>
+  <script>
+    base_url = "http://127.0.0.1:8080"
+    mode = "production"
+    //mode = "development"
+    if (mode === "production") {
+      base_url = "https://api.bventdao.xyz"
+    }
+    
+    function getReview(e) {
+      $.ajax({
+        url: `${base_url}/review/` + e.id,
+        success: function (data) {
+          alert(JSON.stringify(data))
+          console.log(data)
+          $('#reviewData').text(JSON.stringify(data));
+        },
+        error: function (data) {
+          alert("no data available")
+        },
+        type: "GET",          
+        xhrFields: {
+          withCredentials: true
+        },
+      });
+    }
+    
+    function provideReward(e) {
+      admin_pw = document.getElementById("admin_pw").value
+      $.ajax({
+        url: `${base_url}/token_economy/provide_reward`,
+        success: function (data) {
+          alert(JSON.stringify(data))
+          console.log(data)
+          $("#myTable").load("token_economy #myTable");
+        },
+        error: function (data) {
+          alert("no data available")
+        },
+        type: "POST",       
+        xhrFields: {
+          withCredentials: true
+        },
+        contentType: "application/json",
+        data: JSON.stringify({
+          "admin_pw": admin_pw, 
+          "queue_id": e.getAttribute('queue_id')
+        })
+      });
+    }
+
+
+    function removeItem(e) {
+      admin_pw = document.getElementById("admin_pw").value
+      $.ajax({
+        url: `${base_url}/token_economy/remove_queue_item/` + e.getAttribute('queue_id') + `?admin_pw=${admin_pw}`,
+        success: function (data) {
+          alert(JSON.stringify(data))
+          console.log(data)
+          $("#myTable").load("token_economy #myTable");
+        },
+        error: function (data) {
+          alert("no data available")
+        },
+        type: "DELETE",       
+        xhrFields: {
+          withCredentials: true
+        },
+      });
+    }
+
+
+    
+  </script>
+</html>

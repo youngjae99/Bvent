@@ -21,7 +21,9 @@ def get_events_slash():
   Show all events 
   """
   if request.method == "GET":
+    print("tags", request.args.get('tags'))
     if (request.args.get('tags') is not None):
+      
       tags = request.args.get('tags')
       reviews = db.child("eventtags").child(tags).get()
       return reviews.val(), 200
@@ -38,7 +40,8 @@ def event_info(event_title):
   sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
   event_info = db.child("events").child(sanitized_title).get().val()
   print(event_info)
-  subevents = db.child("subevents").child(sanitized_title).get().val()
+  subevents = db.child("subevents").order_by_child("event_title").equal_to(event_title).get().val()
+
   resp = make_response(jsonify({"event_info": event_info, 
                                 "subevents": subevents}))
   return resp, 200
@@ -49,9 +52,7 @@ def subevent_info(event_title):
   """
   Show the specific of a subevent
   """
-  import re
-  sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
-  subevents = db.child("subevents").child(sanitized_title).get().val()
+  subevents = db.child("subevents").order_by_child("event_title").equal_to(event_title).get().val()
   #hardfix for 2022 eth denver
   if type(subevents) == type([]):
     print("lists are bad, hot fix!")
@@ -63,49 +64,3 @@ def subevent_info(event_title):
     return new_subevent, 200
 
   return subevents, 200
-
-@bp.route("/create", methods=("GET", "POST"))
-
-#@login_required
-def create_events():
-  """
-  Given a user !!has privileges!!, create a new event
-  """
-  editable = True
-  if request.method == "POST":
-    if (editable == False):
-      return jsonify({'status': 'error', 'message': 'Resource forbidden!'}), 403
-    # autocreate id, if possible
-    event_title =         request.form["event_title"]         # string
-    event_start =         request.form["event_start"]         # time
-    event_end =           request.form["event_end"]           # time
-    event_type =          request.form["event_type"]          # string
-    subevent_presenter =  request.form["subevent_presenter"]  # string
-    subevent_info =       request.form["subevent_info"]       # string
-    subevent_src	 =      request.form["subevent_src"]        # string
-    event_img =           request.form["event_img"]           # string
-    subevent_date =       request.form["subevent_date"]       # time
-
-    import re
-    sanitized_title = re.sub(r'[^A-Za-z0-9 ]+', ' ', event_title)
-
-    event_data = {
-      "event_title" : event_title,
-      "event_start" : event_start,  
-      "event_end" : event_end,  
-      "event_type" : event_type,
-      "event_img" : event_img,
-    }
-
-    subevent_data = {
-      "event_title" : event_title,
-      "subevent_presenter" : subevent_presenter,
-      "subevent_info" : subevent_info,
-      "subevent_src" : subevent_src,
-      "subevent_date" : subevent_date,
-    }
-  
-    db.child("events").child(sanitized_title).set(event_data) #creates a unique key for the user 
-    db.child("subevents").child(sanitized_title).push(subevent_data) #creates a unique key for the user 
-
-    return jsonify({'status': 'Good Copy :)'}), 200

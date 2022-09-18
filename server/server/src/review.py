@@ -69,17 +69,23 @@ def get_or_post_review():
 
     # autocreate id, if possible
     review_content =  params["review_content"]     # string
-    event_name =      params["event_name"] 
+    event_title =      ""
     timestamp =       params["timestamp"]           #
-    amount          = params["amount"] 
-
     subevent_id = ""
     event_id = ""
+
     if is_json_key_present(params, "subevent_id"):
       subevent_id = params["subevent_id"]
+      event_title = db.child("subevents").child(subevent_id).child("event_title").get().val()
+      event_id = "-1"
     else:
       subevent_id = "-1"
-    
+      event_id = params["event_id"]
+      event_info = db.child("events").order_by_child("event_id").equal_to(event_id).get().val()
+      event_info = list(json.loads(json.dumps(event_info)).keys())
+      print(event_info, event_id, type(event_id))
+      event_title = event_info[0]
+
     if is_json_key_present(params, "event_id"):
       event_id = params["event_id"]
     else:
@@ -96,45 +102,52 @@ def get_or_post_review():
         "message": "User must have a 'wallet'.",
       }, 400
 
-
     data = {
       "review_content" : review_content,
-      "event_name" : event_name,
+      "event_title" : event_title,
       "subevent_id" : subevent_id,
       "event_id": event_id,
       "timestamp" : timestamp,
       "username" : db.child("users").child(sanitized_username).get().val()["username"],  
       "walletAddress" : user_address.split('@')[0],  
-      "amount": amount,
       "txHash" : "updating"
     }
 
     try:
       res = db.child("reviews").push(data) #creates a unique key for the user 
-      reviewId = res["name"]
+      review_id = res["name"]
       #keep track of which user wrote which comment
-      db.child("users").child(sanitized_username).child("reviews").child(reviewId).set(amount)
+      db.child("users").child(sanitized_username).child("reviews").child(review_id).set(timestamp)
+
+      #queue up token in incomplete 
     except:
       return jsonify({'status': 'error occurred while pushing reivew'}), 503 
+    
+    #rewards. event review doesn't get rewards!
+    
+    if (subevent_id != "-1"):
+      reward_type = "researcher"
 
-    #NOTE: check if user has totalAmount. If not, create new totalAmount. If it has it, reference it.
-    #print(username)
-    user_index = db.child("users").child(sanitized_username).shallow().get().val()
-    updated_amount = int(amount)
-    if ("coins" in user_index):
-      cur_amount = db.child("users").child(sanitized_username).child("coins").get().val() 
-      updated_amount = int(cur_amount) + int(amount)
-    db.child("users").child(sanitized_username).child("coins").set(updated_amount)
-
-    #start thread for tx and update for token transaction
-
-    return jsonify({'status': 'Good review!', "txHash": "updating"}), 200
-  else:
-    return jsonify({'status': "Invalid Request"}), 405
-
-
-
-
-@bp.route("", methods=["GET"])
-def get_recent_review():
-  pass
+      try:
+        resp = requests.get(review_content)
+        if resp.status_code == 200:
+          reward_type = "researcher"
+        else:
+          reward_type = "reviewer"
+      except:
+        reward_type = "reviewer"
+    
+      queue_data = {
+        "review_id": review_id,
+        "reward_type": reward_type,
+        "wallet_address": sepUsername[0],
+        "event_title": event_title,
+        "subevent_id": subevent_id
+      }
+      db.child("token_queue").push(queue_data)
+      return jsonify({'status': 'Good review!', "txHash": "updating"}), 200
+    return jsonify({'status': 'Good review!', "txHash": "noTxHash for review"}), 200
+   
+@bp.route("/<review_id>", methods=["GET"])
+def get_review_by_review_id(review_id):
+  return db.child("reviews").child(review_id).get().val()
