@@ -21,6 +21,7 @@ const EventCard = (props: Props) => {
           height: '200px',
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
           borderRadius: '10px',
+          cursor: 'pointer',
         }}
       >
         <Image src={getImageURI(event?.event_img)} width={230} height={130} style={{borderRadius:"10px 10px 0 0"}}/>

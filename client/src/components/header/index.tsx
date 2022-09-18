@@ -30,7 +30,7 @@ export const Header = () => {
   const [profile, setProfile] = useState(false);
   return (
     <div className="text-center fixed top-0 max-w-mobile w-full z-10">
-      <nav className="w-full mx-auto bg-black bg-opacity-40" style={{backdropFilter:"blur(10px)"}}>
+      <nav className="w-full mx-auto bg-black bg-opacity-40" style={{backdropFilter:"blur(10px)", WebkitBackdropFilter:"blur(10px)"}}>
         <div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
           <div className="h-full flex items-center">
             <div className="mr-10 flex items-center">

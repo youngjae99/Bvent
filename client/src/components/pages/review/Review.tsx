@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { parseEventTime } from '@/utils/parseTime';
 // import { Review } from './type';
-import ProfileImage from './ProfileImage';
+// import ProfileImage from './ProfileImage';
 import UserInfoWrapper from './UserInfoWrapper';
 
 // type Props = {
@@ -45,8 +45,8 @@ const UpDownWrapper = () => {
   const [updown, setUpDown] = useState<string>('none');
   // const [down, setDown] = useState(false);
 
-  const upCnt = 10;
-  const downCnt = 4;
+  const upCnt = 0;
+  const downCnt = 0;
 
   const handleUp = () => {
     if (updown === 'up') {

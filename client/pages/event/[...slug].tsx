@@ -4,19 +4,18 @@ import axios from 'axios';
 import { NextSeo } from 'next-seo';
 import { Dialog, Transition } from '@headlessui/react';
 
+import { generateSubeventPageMeta } from '@/utils/seo';
 import Layout from '@/components/Layout';
 import TitleBar from '@/components/pages/subevent/TitleBar';
 import { SubeventHeader } from '@/components/pages/subevent/SubeventHeader';
-import ReviewContainer from '@/components/pages/subevent/Review/ReviewContainer';
+import ReviewContainer from '@/components/pages/review/ReviewContainer';
 import FloatingContainer from '@/components/pages/subevent/FloatingContainer';
 import NewReviewButton from '@/components/pages/subevent/NewReviewButton';
-import { generateSubeventPageMeta } from '@/utils/seo';
-import NewReviewWrapper from '@/components/pages/subevent/Review/NewReviewWrapper';
+import NewReviewWrapper from '@/components/pages/review/NewReviewWrapper';
 
 const SubEvent: React.FC = (props) => {
   const { data, meta }: any = props;
   const eventInfo = data;
-  console.log(eventInfo);
   const router = useRouter();
   const slug = (router.query.slug as string[]) || [];
   const event_title = slug[0];

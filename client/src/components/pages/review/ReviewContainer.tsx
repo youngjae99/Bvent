@@ -5,18 +5,24 @@ import axios from 'axios';
 import Review from './Review';
 
 type Props = {
-  subevent_id: string;
+  event_id?: string;
+  subevent_id?: string;
 };
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const ReviewContainer = (props: Props) => {
-  const { subevent_id } = props;
+  const { event_id, subevent_id } = props;
 
-  const { data } = useSWR(
-    `/api/review?subevent_id=${subevent_id}`,
-    fetcher,
-  );
+  let url = '';
+  if (event_id) {
+    url = `/api/review?event_id=${event_id}`;
+  }
+  if (subevent_id) {
+    url = `/api/review?subevent_id=${subevent_id}`;
+  }
+
+  const { data } = useSWR(url, fetcher);
   const review = data ? data : {};
   const reviewCnt = review ? Object.keys(review).length : 0;
 

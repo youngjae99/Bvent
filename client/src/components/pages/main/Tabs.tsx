@@ -30,8 +30,6 @@ const Tabs = () => {
 
   console.log(events);
 
-  // SwiperCore.use([Navigation]);
-
   return (
     <Tab.Group>
       <Tab.List className="text-white">
@@ -105,8 +103,8 @@ const Tabs = () => {
           <div className="flex flex-row gap-2">
             <Swiper
               modules={[Navigation, Pagination, Scrollbar, A11y]}
-              spaceBetween={50}
-              slidesPerView={2}
+              spaceBetween={100}
+              slidesPerView={3}
               pagination={{ clickable: true }}
               scrollbar={{ draggable: true }}
               navigation={{

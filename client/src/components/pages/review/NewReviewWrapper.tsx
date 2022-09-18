@@ -11,7 +11,8 @@ import ReviewAPI from '@/api/review';
 
 type Props = {
   event_name: string;
-  subevent_id: string;
+  event_id?: number;
+  subevent_id?: string;
   onClose: () => void;
 };
 
@@ -53,7 +54,7 @@ const SignintoWritePlaceholder = ({ onClose }: any) => {
 
 const NewReviewWrapper = (props: Props) => {
   const { active, account, connector, chainId } = useWeb3React();
-  const { event_name, subevent_id, onClose } = props;
+  const { event_name, event_id, subevent_id, onClose } = props;
   const user = useRecoilValue(userState);
   const [review, setReview] = useState<string>('');
 
@@ -65,22 +66,43 @@ const NewReviewWrapper = (props: Props) => {
       return;
     }
 
-    const loginRes = await ReviewAPI.writeReview({
-      review_content: review,
-      event_name: event_name,
-      subevent_id: subevent_id,
-    })
-      .then((res) => {
-        console.log(res);
-        onClose();
+    if (event_id) {
+      const loginRes = await ReviewAPI.writeEventReview({
+        review_content: review,
+        event_name: event_name,
+        event_id: event_id,
       })
-      .catch((error) => {
-        console.log(error.response);
-        if (error.response.status === 403) {
-          alert('로그인이 필요합니다.');
-        }
-      });
-    console.log(loginRes); // TODO(aaron): remove this
+        .then((res) => {
+          console.log(res);
+          onClose();
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status === 403) {
+            alert('로그인이 필요합니다.');
+          }
+        });
+      console.log(loginRes); // TODO(aaron): remove this
+    }
+
+    if (subevent_id) {
+      const loginRes = await ReviewAPI.writeSubeventReview({
+        review_content: review,
+        event_name: event_name,
+        subevent_id: subevent_id,
+      })
+        .then((res) => {
+          console.log(res);
+          onClose();
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status === 403) {
+            alert('로그인이 필요합니다.');
+          }
+        });
+      console.log(loginRes); // TODO(aaron): remove this
+    }
   };
 
   if (!active) {
