@@ -1,15 +1,12 @@
 import clientApi from './axios';
 
-export const getCookie = (cookieName) => {
-  if (document.cookie) {
-    const array = document.cookie.split(escape(cookieName) + '=');
-    if (array.length >= 2) {
-      const arraySub = array[1].split(';');
-      return unescape(arraySub[0]);
-    }
-  }
-  return '';
-};
+function getCookie(name) {
+  const matches = document.cookie.match(new RegExp(
+    // eslint-disable-next-line no-useless-escape
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : '';
+}
 
 const UserAPI = {
   getMyInfo: async () => {

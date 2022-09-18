@@ -6,7 +6,7 @@ import { withCoalescedInvoke } from 'next/dist/lib/coalesced-function';
 
 type Props = {
   userAddress: string;
-  timestamp?: string;
+  timestamp?: number;
   isMyProfile?: boolean;
 };
 
@@ -21,7 +21,6 @@ const UserInfoWrapper = (props: Props) => {
   const { userAddress, timestamp, isMyProfile } = props;
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
   const { username, bio, profile_pic } = userInfo;
-  console.log(userInfo);
 
   useEffect(() => {
     const fetch = async () => {
