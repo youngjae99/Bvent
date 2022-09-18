@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import axios from 'axios';
@@ -129,15 +130,21 @@ export const Sidebar = (props: Props) => {
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
-                                <div className="body rounded-lg border border-gray p-4">
-                                  Upcoming
-                                </div>
-                                <div className="body rounded-lg border border-gray p-4">
-                                  Current
-                                </div>
-                                <div className="body rounded-lg border border-gray p-4">
-                                  Past
-                                </div>
+                                <Link href="/upcoming">
+                                  <div className="body rounded-lg border border-gray p-4">
+                                    Upcoming
+                                  </div>
+                                </Link>
+                                <Link href="/current">
+                                  <div className="body rounded-lg border border-gray p-4">
+                                    Current
+                                  </div>
+                                </Link>
+                                <Link href="/past">
+                                  <div className="body rounded-lg border border-gray p-4">
+                                    Past
+                                  </div>
+                                </Link>
                               </Disclosure.Panel>
                             </div>
                           )}
