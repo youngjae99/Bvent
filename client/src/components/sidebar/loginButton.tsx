@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useWallet } from '@/hook/useWallet';
 import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
+import { ComputerDesktopIcon } from '@heroicons/react/24/outline';
 
 const SignInWrapper = ({ onClick, active, children }: any) => {
   if (active) {
@@ -41,40 +42,30 @@ export const LoginButton = () => {
   const { active, account, connector, chainId } = useWeb3React();
 
   useEffect(() => {
-    console.log(active, account);
-  }, [active]);
+    console.log("activate changed", active, account);
 
-  const handleLogin = async () => {
-    await connectMetamaskWallet();
-    const address = '0x163B3Bd064023B017bB6d06295591554D380b5C8';
-    console.log(account);
-    // if(!account){
-    //   return;
-    // }
-
-    // const frm = new FormData();
-    // frm.append('username', account);
-    // frm.append('password', '990326');
-    // frm.append('loginType', 'wallet');
-    const loginRes = await axios
+    const postLogin = async () => {
+      const loginRes = await axios
       .post(
         `/api/auth/login`,
         {
-          username: address,
-          password: '990326',
+          username: account,
+          password: '',
           loginType: 'wallet',
         },
         { withCredentials: true },
       )
-      .then((res) => {
-        // return res.data;
-        console.log("succes", res.data);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-    console.log(loginRes);
-    // sessionStorage.setItem('session', loginRes.idToken); // TODO(aaron): change to cookie
+      console.log(loginRes);
+    }
+
+    if(account){
+      postLogin();
+    }
+  }, [active]);
+
+  const handleLogin = async () => {
+    await connectMetamaskWallet();
+    console.log(account);
   };
 
   if (active) {
