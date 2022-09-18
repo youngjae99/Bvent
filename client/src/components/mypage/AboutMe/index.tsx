@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import styled from 'styled-components';
 
@@ -8,6 +8,7 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
 import UserAPI from '@/api/user';
+import { useRouter } from 'next/router';
 
 // interface Props {
 //     onPress: any;
@@ -94,7 +95,8 @@ interface AboutMeProps {
 
 export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
   const { active, account, connector, chainId } = useWeb3React();
-  const [editMode, setEditMode] = useState(false);
+  const router = useRouter();
+  const [editMode, setEditMode] = useState(router.query.edit);
   const usernameRef = useRef<HTMLInputElement>(null);
   const bioRef = useRef<HTMLInputElement>(null);
   const [userInfo, setUserInfo] = useState({
@@ -102,6 +104,10 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
     username,
     totalAmount,
   });
+
+  useEffect(() => {
+    setEditMode(router.query.edit);
+  }, [router.query]);
 
   return (
     <StyledWrapper className="divide-white divide-y">

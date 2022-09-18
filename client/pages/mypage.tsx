@@ -70,7 +70,7 @@ export async function getServerSideProps(context) {
     const {
       username,
       bio = 'Bventer',
-      totalAmount,
+      totalAmount = 0,
     } = await UserAPI.getMyInfo(true, parsedCookie);
     
     return { props: { username, bio, totalAmount } };

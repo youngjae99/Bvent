@@ -10,6 +10,7 @@ import { useWeb3React } from '@web3-react/core';
 import Profile from '../Profile';
 import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
+import { useRouter } from 'next/router';
 
 type Props = any;
 
@@ -22,7 +23,9 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
       } `}
     >
       <div className="flex w-full items-center justify-end">
-        <div className="body text-right text-gray-400 m-0 w-full">{children}</div>
+        <div className="body text-right text-gray-400 m-0 w-full">
+          {children}
+        </div>
       </div>
     </li>
   </a>
@@ -33,6 +36,8 @@ export const Sidebar = (props: Props) => {
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
   const { active, account, connector, chainId } = useWeb3React();
   const [menu, setMenu] = useState();
+  const router = useRouter();
+  console.log(account);
 
   useEffect(() => {
     console.log(active, account);
@@ -40,30 +45,27 @@ export const Sidebar = (props: Props) => {
 
   const handleLogin = async () => {
     await connectMetamaskWallet();
-    const address = '0x163B3Bd064023B017bB6d06295591554D380b5C8';
-    console.log(account);
 
-    const frm = new FormData();
-    frm.append('username', address);
-    frm.append('password', '990326');
-    frm.append('loginType', 'wallet');
-    const loginRes = await axios
-      .post(`/api/auth/login`, {
-        username: address,
-        password: '990326',
-        loginType: 'wallet',
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => {
-        console.log(error.response);
+    try {
+      await axios.post(`/api/auth/login`, {
+        username: account,
       });
-  };
+    } catch (error) {
+      await axios.post(`/api/auth/register`, {
+        username: account,
+        address: account,
+      });
+      try {
+        await axios.post(`/api/auth/login`, {
+          username: account,
+        });
 
-  // const handleOpenMenu = () => {
-  //   setMenu((prev) => !prev);
-  // };
+        router.push('/mypage?edit=true', '/mypage');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -121,13 +123,21 @@ export const Sidebar = (props: Props) => {
                               <Disclosure.Button className="w-full flex justify-end gap-2 items-center">
                                 <span>Events</span>
                                 <ChevronRightIcon
-                                  className={`${open ? 'rotate-90 transform' : ''} h-4`}
+                                  className={`${
+                                    open ? 'rotate-90 transform' : ''
+                                  } h-4`}
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
-                                <div className="body rounded-lg border border-gray p-4">Upcoming</div>
-                                <div className="body rounded-lg border border-gray p-4">Current</div>
-                                <div className="body rounded-lg border border-gray p-4">Past</div>
+                                <div className="body rounded-lg border border-gray p-4">
+                                  Upcoming
+                                </div>
+                                <div className="body rounded-lg border border-gray p-4">
+                                  Current
+                                </div>
+                                <div className="body rounded-lg border border-gray p-4">
+                                  Past
+                                </div>
                               </Disclosure.Panel>
                             </div>
                           )}
