@@ -17,14 +17,15 @@ const EventCard = (props: Props) => {
     <Link href={`/event/${event?.event_title}`}>
       <div
         style={{
-          width: '180px',
+          width: '230px',
           height: '200px',
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
           borderRadius: '10px',
         }}
       >
-        <Image src={getImageURI(event?.event_img)} width={180} height={135} />
-        <p className="flex justify-center text-primary cursor-pointer">
+        <Image src={getImageURI(event?.event_img)} width={230} height={130} style={{borderRadius:"10px 10px 0 0"}}/>
+        <div className="ml-2">
+          <p className="flex justify-start text-primary cursor-pointer">
           {event?.event_title}
         </p>
         <p>
@@ -33,6 +34,8 @@ const EventCard = (props: Props) => {
             event?.event_end_time,
           )}
         </p>
+        </div>
+        
       </div>
     </Link>
   );
