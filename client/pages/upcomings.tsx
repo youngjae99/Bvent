@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Layout from '@/components/Layout';
-import EventDetailCard from '@/components/eventpage/DetailedCard';
+import EventDetailCard from '@/components/pages/event/DetailedCard';
 import Selector from '@/components/Dropdown';
-import SearchBar from '@/components/eventpage/searchBar';
+import SearchBar from '@/components/pages/event/searchBar';
 
 const Upcoming: React.FC = () => {
   const [events, setEvents] = useState([]);
@@ -13,7 +13,7 @@ const Upcoming: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('https://bvent-seoul.web.app/tags/future');
+      const res = await axios.get('/api/tags/future');
       console.log(res);
       setEvents(res.data);
     };

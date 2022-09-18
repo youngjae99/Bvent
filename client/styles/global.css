@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  body{
+  body {
     font-family: 'Source Sans Pro', sans-serif;
+    background: #000000ce;
   }
 
   h1 {
@@ -13,5 +14,8 @@
     line-height: 1.2;
     margin-bottom: 0.5rem;
     color: white;
+  }
+  .swiper {
+    width: 100%;
   }
 }

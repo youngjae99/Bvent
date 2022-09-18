@@ -40,7 +40,7 @@ export const Sidebar = (props: Props) => {
 
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setShow}>
+      <Dialog as="div" className="relative z-10 max-w-mobile mx-auto" onClose={setShow}>
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-500"
@@ -50,12 +50,12 @@ export const Sidebar = (props: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="mx-auto fixed inset-0 bg-gray-500 bg-opacity-75 max-w-mobile transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-hidden">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div className="fixed inset-0 overflow-hidden mx-auto max-w-mobile">
+          <div className="absolute inset-0 overflow-hidden mx-auto max-w-mobile w-full">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"

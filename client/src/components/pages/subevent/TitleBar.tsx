@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { BiArrowBack, BiShareAlt } from 'react-icons/bi';
+// import { BiArrowBack, BiShareAlt } from 'react-icons/bi';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 const TitleBarWrapper = styled.div`
   color: white;
@@ -26,11 +27,11 @@ const TitleBar = (props: Props) => {
   return (
     <TitleBarWrapper>
       <Link href={backUrl}>
-        <BiArrowBack style={{ cursor: 'pointer' }} />
+        <ChevronLeftIcon style={{ width:'28px', cursor: 'pointer' }}/>
       </Link>
       <p>{title}</p>
       <a href="/">
-        <BiShareAlt style={{ cursor: 'pointer', visibility: 'hidden' }} />
+        <ChevronLeftIcon style={{ cursor: 'pointer', visibility: 'hidden'}}/>
       </a>
     </TitleBarWrapper>
   );

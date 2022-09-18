@@ -2,7 +2,7 @@ import React from 'react';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/Layout';
-import TitleBar from '@/components/eventpage/Subevent/TitleBar';
+import TitleBar from '@/components/pages/subevent/TitleBar';
 import { AboutMe } from '@/components/mypage/AboutMe';
 import Button from '@/components/Button';
 
