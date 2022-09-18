@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const clientApi = axios.create({
-    baseURL: '/api',
+export const clientApi = axios.create({
+  baseURL: '/api',
 });
 
-export default clientApi;
+export const serverApi = axios.create({
+  baseURL: 'https://api.bventdao.xyz',
+});

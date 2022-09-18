@@ -1,4 +1,4 @@
-import clientApi from './axios';
+import { clientApi } from './axios';
 
 export const getCookie = (cookieName) => {
   if (document.cookie) {
@@ -16,7 +16,7 @@ const ReviewAPI = {
     const { data } = await clientApi.get(`/review?subevent_id=${subevent_id}`);
     return data;
   },
-  getRecentReviews: async ({cnt}) => {
+  getRecentReviews: async ({ cnt }) => {
     const { data } = await clientApi.get(`/review?recent=${cnt}&subevent_id=0`);
     return data;
   },
@@ -63,7 +63,7 @@ const ReviewAPI = {
       `/like`,
       {
         review_id: review_id,
-        like_type: "like",
+        like_type: 'like',
       },
       {
         headers: {
@@ -79,7 +79,7 @@ const ReviewAPI = {
       `/like`,
       {
         review_id: review_id,
-        like_type: "dislike",
+        like_type: 'dislike',
       },
       {
         headers: {

@@ -1,4 +1,4 @@
-import clientApi from './axios';
+import { serverApi, clientApi } from './axios';
 
 function getCookie(name) {
   const matches = document.cookie.match(
@@ -11,7 +11,16 @@ function getCookie(name) {
 }
 
 const UserAPI = {
-  getMyInfo: async () => {
+  getMyInfo: async (isServer, parsedToken) => {
+    if (isServer) {
+      console.log(parsedToken);
+      const { data } = await serverApi.get('/user/myself', {
+        headers: {
+          Authorization: parsedToken,
+        },
+      });
+      return data;
+    }
     const token = getCookie('idToken');
     const { data } = await clientApi.get('/user/myself', {
       headers: {
@@ -26,13 +35,19 @@ const UserAPI = {
   },
   updateMyInfo: async ({ username, bio }) => {
     const token = getCookie('idToken');
-    const { data } = await clientApi.post('/user/myself/update_info', {
-      bio,
-      username,
-      headers: {
-        Authorization: token,
+    const { data } = await clientApi.post(
+      '/user/myself/update_info',
+      {
+        bio,
+        username,
+        location: '',
       },
-    });
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
     return data;
   },
 };

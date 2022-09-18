@@ -7,7 +7,6 @@ import { formatAccount } from '@/utils/wallet';
 import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
-import axios from 'axios';
 import UserAPI from '@/api/user';
 
 // interface Props {
@@ -47,8 +46,8 @@ type FieldSetProps = {
   description: string;
 };
 
-const Input = ({ placeholder, limit }: any, ref) => {
-  const [value, setValue] = useState('');
+const Input = ({ placeholder, limit, initial }: any, ref) => {
+  const [value, setValue] = useState(initial);
 
   return (
     <div
@@ -87,24 +86,35 @@ const Input = ({ placeholder, limit }: any, ref) => {
 
 const ForwardRefInput = forwardRef(Input);
 
-export const AboutMe = () => {
+interface AboutMeProps {
+  bio: string;
+  username: string;
+  totalAmount: number;
+}
+
+export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
   const { active, account, connector, chainId } = useWeb3React();
   const [editMode, setEditMode] = useState(false);
-  const usernameRef = useRef(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   const bioRef = useRef<HTMLInputElement>(null);
-
-  // axios.get('/api/user/myself', {})
+  const [userInfo, setUserInfo] = useState({
+    bio,
+    username,
+    totalAmount,
+  });
 
   return (
     <StyledWrapper className="divide-white divide-y">
-      <div className="flex justify-between pl-3 items-end">
+      <div className="flex justify-between pl-3 items-end max-w-full">
         <Profile.Primary>
           <Profile.Primary.Image editMode />
           <Profile.Primary.Info>
             <div className="title2 text-white">
-              {formatAccount(account) || 'Sign In'}
+              {`${userInfo.username.slice(0, 10)}` || 'Sign In'}
             </div>
-            <div className="caption text-gray">Sign in with your wallet</div>
+            <div className="caption text-gray">
+              {userInfo.bio || 'Sign in with your wallet'}
+            </div>
           </Profile.Primary.Info>
         </Profile.Primary>
         <Button
@@ -112,10 +122,18 @@ export const AboutMe = () => {
           onClick={async () => {
             try {
               if (editMode && bioRef.current) {
+                const _username = (usernameRef?.current || {}).value || '';
+                const _bio = bioRef.current.value || '';
+
                 await UserAPI.updateMyInfo({
-                  username: "",
-                  bio: bioRef.current.value
+                  username: _username,
+                  bio: _bio,
                 });
+                setUserInfo((prev) => ({
+                  ...prev,
+                  bio: _bio,
+                  username: _username,
+                }));
               }
             } catch (error) {
               console.error(error);
@@ -134,8 +152,13 @@ export const AboutMe = () => {
               ref={usernameRef}
               placeholder="Username"
               limit={50}
+              initial={userInfo.username}
             />
-            <ForwardRefInput ref={bioRef} placeholder="Bio" />
+            <ForwardRefInput
+              ref={bioRef}
+              placeholder="Bio"
+              initial={userInfo.bio}
+            />
           </>
         ) : (
           <>
@@ -158,7 +181,7 @@ export const AboutMe = () => {
               </Disclosure>
             </div>
             <div className="py-5 px-4 border border-gray rounded-2xl">
-              Total Rewards
+              Total Rewards {totalAmount}
             </div>
           </>
         )}
@@ -166,3 +189,5 @@ export const AboutMe = () => {
     </StyledWrapper>
   );
 };
+
+export default AboutMe;
