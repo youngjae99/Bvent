@@ -43,7 +43,7 @@ const UserInfoWrapper = (props: Props) => {
             {timestamp && parseReviewTime(timestamp)}
           </p>
         </div>
-        <p className="text-white text-opacity-70 text-md text-left">
+        <p className="text-white text-opacity-70 text-sm text-left">
           {bio || 'Bventer'}
         </p>
         <div className="flex flex-row justify-start gap-2">

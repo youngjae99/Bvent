@@ -40,7 +40,7 @@ const Current: React.FC = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <h1>Ongoing Events</h1>
+        <h1>Current Events</h1>
         <SearchBar/>
       </div>
       <div className="border-t-2 border-gray-500 my-5 text-white pt-2 flex justify-end">
