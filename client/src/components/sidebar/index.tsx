@@ -45,14 +45,8 @@ export const Sidebar = (props: Props) => {
 
   const [show, setShow] = useRecoilState(sidebarShowState);
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
-  const { active, account, connector, chainId } = useWeb3React();
-  const [menu, setMenu] = useState();
+  const { account } = useWeb3React();
   const router = useRouter();
-  console.log(account);
-
-  useEffect(() => {
-    console.log(active, account);
-  }, [active]);
 
   const handleLogin = async () => {
     await connectMetamaskWallet();
@@ -92,6 +86,7 @@ export const Sidebar = (props: Props) => {
     setUserInfoState({
       isSignIn: false,
     });
+    disconnectWallet();
     document.cookie = 'idToken=; Max-Age=-99999999;';
   };
 
@@ -104,7 +99,7 @@ export const Sidebar = (props: Props) => {
         <div className="absolute inset-0 overflow-hidden w-full">
           <div className="absolute overflow-hidden inset-y-0 right-0 max-w-mobile w-full h-full">
             <Transition.Child
-              className="absolute right-0 w-96 max-w-mobile h-full"
+              className="absolute right-0 w-96 max-w-full h-full"
               enter="transition ease-in-out duration-300 transform"
               enterFrom="translate-x-3/4"
               enterTo="translate-x-0"
