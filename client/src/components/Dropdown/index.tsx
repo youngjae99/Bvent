@@ -51,7 +51,7 @@ const Selector = (props: SelectorProps) => {
       )}
       <div className="flex flex-row gap-1 leading-none">
         {label}
-        {!opened ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        {!opened ? <ChevronDownIcon className="w-4"/> : <ChevronUpIcon className="w-4"/>}
       </div>
     </div>
   );

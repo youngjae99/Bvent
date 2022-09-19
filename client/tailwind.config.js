@@ -22,7 +22,7 @@ module.exports = {
           dark: '#0baeba',
         },
         tertiary: '#1DF2DD',
-        glass1: 'rgba(42,48,60,0.3)',
+        glass1: 'rgba(255,255,255,0.1)',
         darkgray: '#232222',
         gray: '#b6b6b6',
         aqua: '#0edae9',

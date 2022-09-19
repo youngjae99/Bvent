@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { convertTime, offset } from '@/utils/parseTime';
+import { getTimezoneTime, IANAZone } from '@/utils/parseTime';
 import { useRecoilState } from 'recoil';
 import { timezoneState } from '@/recoil/atoms/timezone';
+import { Cog6ToothIcon } from '@heroicons/react/24/outline';
 
 const TimezoneBox = () => {
   const [timezone, setTimezone] = useRecoilState(timezoneState);
@@ -12,8 +13,8 @@ const TimezoneBox = () => {
       <Menu>
         {({ open }) => (
           <>
-            <Menu.Button className="flex items-center justify-end w-full bg-gray h-14 p-5 rounded-lg text-white">
-              Time Zone Setting
+            <Menu.Button className="flex items-center justify-end w-full bg-white bg-opacity-10 hover:bg-opacity-20 h-14 p-5 rounded-xl text-white cursor-pointer">
+              Time Zone Setting <Cog6ToothIcon className="w-5 ml-2" />
             </Menu.Button>
             <Transition
               show={open}
@@ -26,22 +27,22 @@ const TimezoneBox = () => {
             >
               <Menu.Items
                 static
-                className="absolute bottom-0 w-full divide-white divide-y"
+                className="absolute bottom-0 mb-16 w-full divide-black divide-y"
               >
-                {Object.entries(offset).map(([_timezone, _offset]) => (
+                {Object.entries(IANAZone).map(([_timezone, iana]) => (
                   <Menu.Item key={_timezone}>
                     <div
                       onClick={() => {
                         setTimezone(_timezone);
                       }}
-                      className="flex justify-between bg-gray text-white w-full py-4 pl-4 pr-9 first:rounded-t-xl last:rounded-b-xl"
+                      className="flex justify-between bg-white bg-opacity-10 hover:bg-opacity-20 text-white w-full py-4 pl-4 pr-9 first:rounded-t-xl last:rounded-b-xl cursor-pointer"
                     >
                       <span
                         className={`${timezone === _timezone && 'text-pink'}`}
                       >
-                        {_timezone}
+                        {iana}
                       </span>
-                      <span>{convertTime(new Date(), _timezone)}</span>
+                      <span>{getTimezoneTime(iana)}</span>
                     </div>
                   </Menu.Item>
                 ))}

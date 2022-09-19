@@ -1,4 +1,4 @@
-type Timezone = 'KST' | 'UST' | 'IST' | 'ACST' | 'UTC';
+export type Timezone = 'KST' | 'UST' | 'IST' | 'ACST' | 'UTC';
 
 const TIME_TABLE = {
   KST: 9,
