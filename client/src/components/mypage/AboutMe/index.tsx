@@ -94,7 +94,7 @@ export const AboutMe = () => {
   const {
     bio = 'Bventer',
     username,
-    totalAmount,
+    total_coin = 0,
     profilePic,
     isSignIn,
   } = userInfoState;
@@ -164,6 +164,10 @@ export const AboutMe = () => {
           </>
         ) : (
           <>
+            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body">
+              <span>Total Rewards</span>
+              <span className="text-pink headline">{total_coin}</span>
+            </div>
             <div className="py-5 px-4 border border-gray rounded-2xl">
               <Disclosure>
                 {({ open }) => (
@@ -181,9 +185,6 @@ export const AboutMe = () => {
                   </div>
                 )}
               </Disclosure>
-            </div>
-            <div className="py-5 px-4 border border-gray rounded-2xl">
-              Total Rewards {totalAmount}
             </div>
           </>
         )}
