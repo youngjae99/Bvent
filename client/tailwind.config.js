@@ -23,8 +23,15 @@ module.exports = {
         },
         tertiary: '#1DF2DD',
         glass1: 'rgba(255,255,255,0.1)',
-        darkgray: '#232222',
-        gray: '#b6b6b6',
+        darkgray: {
+          light: '#373636',
+          DEFAULT: '#232222',
+        },
+        gray: {
+          light: '#e4e4e4',
+          DEFAULT: '#b6b6b6',
+          dark: '#929292',
+        },
         aqua: '#0edae9',
         pink: '#EE5390',
         magenta: '#E032E6',
