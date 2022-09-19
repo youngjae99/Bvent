@@ -7,19 +7,14 @@ export const Footer: React.FC = () => {
       className="text-center py-5"
       style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
     >
-      <a
-        href="https://github.com/pankod"
-        target="_blank"
-        className="block mb-3"
-        rel="noreferrer"
-      >
-        <Image
-          src="/images/logo/symbol-type-logo.svg"
-          alt="BVENT_LOGO"
-          width="180"
-          height="40"
-        />
-      </a>
+      <Image
+        src="/images/logo/symbol-type-logo.svg"
+        alt="BVENT_LOGO"
+        width="180"
+        height="40"
+      />
+
+      <p className="my-3 text-gray">Join the Bvent community</p>
 
       <ul className="flex justify-center list-none p-0 m-0">
         <li className="mx-3">
@@ -31,8 +26,8 @@ export const Footer: React.FC = () => {
             <Image
               src="/icons/gitbook-icon.svg"
               alt="gitbook"
-              width="28"
-              height="29"
+              width="32"
+              height="32"
             />
           </a>
         </li>
@@ -45,8 +40,8 @@ export const Footer: React.FC = () => {
             <Image
               src="/icons/twitter-icon.svg"
               alt="twitter"
-              width="28"
-              height="28"
+              width="32"
+              height="32"
             />
           </a>
         </li>
@@ -56,7 +51,21 @@ export const Footer: React.FC = () => {
             <Image
               src="/icons/telegram-icon.svg"
               alt="telegram"
-              width="28"
+              width="32"
+              height="32"
+            />
+          </a>
+        </li>
+        <li className="mx-3">
+          <a
+            href="https://www.youtube.com/channel/UC8EOrS4nigMj6yfOZDcj6RQ"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image
+              src="/icons/youtube-icon.svg"
+              alt="telegram"
+              width="32"
               height="32"
             />
           </a>
