@@ -24,7 +24,6 @@ export const parseTime = (time: string) => {
 export const parseMainTabEventTime = (startTime: number, endTime: number) => {
   const parsedStartTime = DateTime.fromJSDate(new Date(startTime));
   const parsedEndTime = DateTime.fromJSDate(new Date(endTime));
-  console.log(parsedStartTime, parsedEndTime);
   return (
     parsedStartTime.toLocaleString() + ' ~ ' + parsedEndTime.toLocaleString()
   );
@@ -32,13 +31,11 @@ export const parseMainTabEventTime = (startTime: number, endTime: number) => {
 
 export const parseEventTime = (time: string, timeZone: string) => {
   const parsedTime = new Date(parseInt(time));
-  console.log(parsedTime);
   return parsedTime.toLocaleString('en-GB', { timeZone: timeZone });
 };
 
 export const parseReviewTime = (time: number) => {
   const parsedTime = new Date(time);
-  console.log();
 
   const diffInDays = parseInt(
     DateTime.now().diff(DateTime.fromJSDate(parsedTime), 'days').days.toFixed(),

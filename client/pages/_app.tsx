@@ -27,7 +27,6 @@ const initializeRecoilState =
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const queryClient = new QueryClient();
-  console.log(pageProps.userInfo);
 
   return (
     <StyledThemeProvider>

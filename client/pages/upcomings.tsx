@@ -9,12 +9,9 @@ import SearchBar from '@/components/pages/event/searchBar';
 const Upcoming: React.FC = () => {
   const [events, setEvents] = useState([]);
 
-  console.log(events);
-
   useEffect(() => {
     const getEventData = async () => {
       const res = await axios.get('/api/tags/future');
-      console.log(res);
       setEvents(res.data);
     };
     getEventData();
