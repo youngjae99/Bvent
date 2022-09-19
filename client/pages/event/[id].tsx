@@ -24,7 +24,7 @@ const Event: React.FC = (props) => {
 
   console.log(eventInfo);
 
-  if (subevents == null) {
+  if (subevents.length === 0) {
     return (
       <>
         <NextSeo

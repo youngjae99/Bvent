@@ -1,4 +1,4 @@
-import clientApi from './axios';
+import { clientApi } from './axios';
 
 export const getCookie = (cookieName) => {
   if (document.cookie) {
@@ -16,19 +16,18 @@ const ReviewAPI = {
     const { data } = await clientApi.get(`/review?subevent_id=${subevent_id}`);
     return data;
   },
-  getRecentReviews: async ({cnt}) => {
+  getRecentReviews: async ({ cnt }) => {
     const { data } = await clientApi.get(`/review?recent=${cnt}&subevent_id=0`);
     return data;
   },
 
-  writeEventReview: async ({ review_content, event_name, event_id }) => {
+  writeEventReview: async ({ review_content, event_id }) => {
     const token = getCookie('idToken');
     const { data } = await clientApi.post(
       `/review`,
       {
         review_content: review_content,
         event_id: event_id,
-        event_name: event_name, // FIXME(aaron): remove event_name later
         timestamp: Date.now(),
       },
       {
@@ -39,14 +38,13 @@ const ReviewAPI = {
     );
     return data;
   },
-  writeSubeventReview: async ({ review_content, event_name, subevent_id }) => {
+  writeSubeventReview: async ({ review_content, subevent_id }) => {
     const token = getCookie('idToken');
     const { data } = await clientApi.post(
       `/review`,
       {
         review_content: review_content,
         subevent_id: subevent_id,
-        event_name: event_name,
         timestamp: Date.now(),
       },
       {
@@ -63,7 +61,7 @@ const ReviewAPI = {
       `/like`,
       {
         review_id: review_id,
-        like_type: "like",
+        like_type: 'like',
       },
       {
         headers: {
@@ -79,7 +77,7 @@ const ReviewAPI = {
       `/like`,
       {
         review_id: review_id,
-        like_type: "dislike",
+        like_type: 'dislike',
       },
       {
         headers: {

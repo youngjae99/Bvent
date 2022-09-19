@@ -5,12 +5,15 @@ import Layout from '@/components/Layout';
 import TitleBar from '@/components/pages/subevent/TitleBar';
 import { AboutMe } from '@/components/mypage/AboutMe';
 import Button from '@/components/Button';
+import UserAPI from '@/api/user';
 
-const MyPage: React.FC = () => {
-  const saveSettings = () => {
-    alert('saved!');
-  };
+interface MyPageProps {
+  bio: string;
+  username: string;
+  totalAmount: number;
+}
 
+const MyPage = ({ bio, username, totalAmount }: MyPageProps) => {
   return (
     <Layout>
       <NextSeo
@@ -48,10 +51,34 @@ const MyPage: React.FC = () => {
         }}
       />
       <TitleBar title="My Page" backUrl={`/`} />
-      <AboutMe />
-      <Button onClick={saveSettings}>Save Settings</Button>
+      <AboutMe bio={bio} username={username} totalAmount={totalAmount} />
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  const cookie = context.req.headers.cookie;
+  console.log(context.req.headers);
+  const array = cookie.split(escape('idToken') + '=');
+  let parsedCookie = '';
+  if (array.length >= 2) {
+    const arraySub = array[1].split(';');
+    parsedCookie = unescape(arraySub[0]);
+  }
+
+  try {
+    const {
+      username,
+      bio = 'Bventer',
+      totalAmount = 0,
+    } = await UserAPI.getMyInfo(true, parsedCookie);
+    
+    return { props: { username, bio, totalAmount } };
+  } catch (error) {
+    return {
+      props: {},
+    };
+  }
+}
 
 export default MyPage;

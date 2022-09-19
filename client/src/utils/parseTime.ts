@@ -1,12 +1,19 @@
 import { DateTime } from 'luxon';
 import { type } from 'os';
 
-const offset = {
+export const offset = {
   KST: 9,
   EDT: '-4',
   PDT: -7,
   IST: +5.5,
 };
+
+export const IANAZone = {
+  KST: 'Asia/Seoul',
+  EDT: 'America/New_York',
+  PDT: 'America/Los_Angeles',
+  IST: 'Asia/Kolkata',
+}
 
 const ONE_HOUR = 60 * 60 * 1000;
 const ONE_DAY = 24 * ONE_HOUR;
@@ -100,6 +107,14 @@ export const convertTime = (time, timezone): any => {
   }
   return hour + ':' + minute;
 };
+
+
+export const getTimezoneTime = (timezone) => {
+  const now = DateTime.now();
+  console.log("now", now);
+  return now.setZone(timezone).toLocaleString(DateTime.DATETIME_SHORT);
+}
+
 
 export const getLocalTime = (time): any => {
   const parsedTime = new Date(parseInt(time));

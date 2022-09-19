@@ -16,7 +16,7 @@ const EventDetailCard = (props: Props) => {
   return (
     <Link href={`/event/${event?.event_title}`}>
       <div className="flex flex-col items-start w-full px-4 py-2 text-white bg-gray-900 rounded-lg hover:bg-gray-800">
-        <p className="text-2xl font-semibold" style={{ color: '#F0194D' }}>
+        <p className="text-2xl text-primary font-semibold">
           {event?.event_title}
         </p>
         <div className="flex flex-row gap-2 flex-1 w-full">
@@ -26,9 +26,6 @@ const EventDetailCard = (props: Props) => {
             <p>{getLocalTime(event.event_start_time)}</p>
             <br />
             <p>{event?.event_type}</p>
-            <div className="flex flex-row justify-end w-full">
-              <img src="/icons/copy-icon.svg" />
-            </div>
           </div>
         </div>
       </div>

@@ -1,171 +1,165 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import axios from 'axios';
+import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
-import { LoginButton } from './loginButton';
-import { TimeBox } from './timeBox';
+import Profile from '../Profile';
+import { formatAccount } from '@/utils/wallet';
+import TimezoneBox from './TimezoneBox';
+import { useRouter } from 'next/router';
 
 type Props = any;
 
-const MenuItem = ({ href, selected, children }: any) => (
-  <a href={href}>
-    <li className="text-white py-4 hover:bg-gray-200 rounded-xl transition-all">
-      <div className="flex items-center">
-        {selected ? (
-          <p className="text-indigo-500 ml-3 text-lg">{children}</p>
-        ) : (
-          <p className="text-gray-400 ml-3 text-lg">{children}</p>
-        )}
+const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
+  <a className="block mt-1 first:mt-0 cursor-pointer outline-none" href={href}>
+    <li
+      onClick={onClick}
+      className={`border-pink border-solid text-white py-4 px-4 rounded-xl ${
+        selected ? 'border' : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
+      }`}
+    >
+      <div className="flex w-full items-center justify-end">
+        <div className="body text-right text-gray-400 m-0 w-full">
+          {children}
+        </div>
       </div>
     </li>
   </a>
 );
 
 export const Sidebar = (props: Props) => {
-  const { connectMetamaskWallet } = useWallet();
-  const { active, account, connector, chainId } = useWeb3React();
   const [show, setShow] = useRecoilState(sidebarShowState);
-  const [product, setProduct] = useState(false);
-  const [deliverables, setDeliverables] = useState(false);
-  const [profile, setProfile] = useState(false);
+  const { connectMetamaskWallet, disconnectWallet } = useWallet();
+  const { active, account, connector, chainId } = useWeb3React();
+  const [menu, setMenu] = useState();
+  const router = useRouter();
+  console.log(account);
 
-  const onClickMetaMask = () => {
-    console.log('pressed!');
-    connectMetamaskWallet();
+  useEffect(() => {
+    console.log(active, account);
+  }, [active]);
+
+  const handleLogin = async () => {
+    await connectMetamaskWallet();
+
+    try {
+      await axios.post(`/api/auth/login`, {
+        username: account,
+      });
+    } catch (error) {
+      await axios.post(`/api/auth/register`, {
+        username: account,
+        address: account,
+      });
+      try {
+        await axios.post(`/api/auth/login`, {
+          username: account,
+        });
+
+        router.push('/mypage?edit=true', '/mypage');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog as="div" className="relative z-10 max-w-mobile mx-auto" onClose={setShow}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-in-out duration-500"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in-out duration-500"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="mx-auto fixed inset-0 bg-gray-500 bg-opacity-75 max-w-mobile transition-opacity" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 overflow-hidden mx-auto max-w-mobile">
-          <div className="absolute inset-0 overflow-hidden mx-auto max-w-mobile w-full">
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex max-w-full pl-10">
-              <Transition.Child
-                as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
-              >
-                <Dialog.Panel className="pointer-events-auto relative w-screen max-w-xs">
-                  {/* <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-500"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  ></Transition.Child> */}
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
-                    <div className="absolute top-0 right-0 -ml-8 flex pt-4 pr-4 sm:-ml-10 sm:pr-4">
-                      <button
-                        type="button"
-                        className="rounded-md text-gray-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => setShow(false)}
-                      >
-                        <span className="sr-only">Close panel</span>
-                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
-                    </div>
-                    <div className="px-4 sm:px-6">
-                      {/* <Dialog.Title className="text-lg font-medium text-gray-900">
-                        Panel title
-                      </Dialog.Title> */}
-                    </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6 flex flex-col h-full">
-                      <ul className="f-m-m flex-1">
-                        <MenuItem href="/" selected>
-                          Home
-                        </MenuItem>
-                        <MenuItem href="/now">Ongoing Events</MenuItem>
-                        <MenuItem href="/past">Past Events</MenuItem>
-                        <MenuItem href="/upcomings">Upcoming Events</MenuItem>
-                        <MenuItem href="/mypage">My Page</MenuItem>
-                      </ul>
-                      <LoginButton />
-                    </div>
+      <Dialog
+        className="fixed z-10 max-w-mobile w-full mx-auto inset-x-0 top-0 bottom-6 overflow-hidden"
+        onClose={setShow}
+      >
+        <div className="absolute inset-0 overflow-hidden w-full">
+          <div className="absolute overflow-hidden inset-y-0 right-0 max-w-mobile w-full h-full">
+            <Transition.Child
+              className="absolute right-0 w-96 max-w-mobile h-full"
+              enter="transition ease-in-out duration-300 transform"
+              enterFrom="translate-x-3/4"
+              enterTo="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leaveFrom="translate-x-0 opacity-100"
+              leaveTo="translate-x-full opacity-0"
+            >
+              <Dialog.Panel as={Fragment}>
+                <div className="flex h-full flex-col px-3.5 py-5 erflow-y-scroll bg-darkgray shadow-xl rounded-l-2xl">
+                  <div>
+                    <img
+                      className="cursor-pointer"
+                      src="/icons/close.svg"
+                      width={12}
+                      height={12}
+                      onClick={() => setShow(!show)}
+                    />
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                  <div className="relative mt-12 flex-1 px-2 flex flex-col h-full">
+                    <Profile.Primary>
+                      <Profile.Primary.Image />
+                      <Profile.Primary.Info>
+                        <div className="title2 text-white">
+                          {formatAccount(account) || 'Sign In'}
+                        </div>
+                        <div className="caption text-gray">
+                          Sign in with your wallet
+                        </div>
+                      </Profile.Primary.Info>
+                    </Profile.Primary>
+                    <div className="headline text-white flex gap-1 px-2 mt-5">
+                      <span>Total Rewards</span>
+                      <span className="text-pink">{7}</span>
+                    </div>
+                    <ul className="f-m-m flex-1 mt-5">
+                      <MenuItem href="/" selected>
+                        Home
+                      </MenuItem>
+                      <MenuItem onClick={handleLogin}>Connect Wallet</MenuItem>
+                      <MenuItem>
+                        <Disclosure>
+                          {({ open }) => (
+                            <div className="grid gap-5">
+                              <Disclosure.Button className="w-full flex justify-end gap-2 items-center">
+                                <span>Events</span>
+                                <ChevronRightIcon
+                                  className={`${
+                                    open ? 'rotate-90 transform' : ''
+                                  } h-4`}
+                                />
+                              </Disclosure.Button>
+                              <Disclosure.Panel className="w-full flex justify-end gap-2.5">
+                                <Link href="/upcoming">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                    Upcoming
+                                  </div>
+                                </Link>
+                                <Link href="/current">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                    Current
+                                  </div>
+                                </Link>
+                                <Link href="/past">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                    Past
+                                  </div>
+                                </Link>
+                              </Disclosure.Panel>
+                            </div>
+                          )}
+                        </Disclosure>
+                      </MenuItem>
+                      <MenuItem href="/mypage">My page</MenuItem>
+                    </ul>
+                    <TimezoneBox />
+                  </div>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </div>
       </Dialog>
     </Transition.Root>
-
-    // <div
-    //   className={
-    //     show
-    //       ? 'w-full h-full fixed z-40  transform  translate-x-0 '
-    //       : '   w-full h-full fixed z-40  transform -translate-x-full'
-    //   }
-    // >
-    //   <div
-    //     className="bg-gray-800 opacity-50 inset-0 fixed w-full h-full"
-    //     onClick={() => setShow(!show)}
-    //   />
-    //   <div className="w-64 z-20 absolute right-0 top-0 bg-gray-900 text-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
-    //     <div className="flex flex-col justify-between h-full">
-    //       <div className="px-6 pt-4">
-    //         <div className="flex items-center justify-end">
-    //           <div
-    //             id="cross"
-    //             className=" text-white cursor-pointer"
-    //             onClick={() => setShow(!show)}
-    //           >
-    //             <svg
-    //               xmlns="http://www.w3.org/2000/svg"
-    //               className="icon icon-tabler icon-tabler-x"
-    //               width={24}
-    //               height={24}
-    //               viewBox="0 0 24 24"
-    //               strokeWidth={1}
-    //               stroke="currentColor"
-    //               fill="none"
-    //               strokeLinecap="round"
-    //               strokeLinejoin="round"
-    //             >
-    //               <path stroke="none" d="M0 0h24v24H0z" />
-    //               <line x1={18} y1={6} x2={6} y2={18} />
-    //               <line x1={6} y1={6} x2={18} y2={18} />
-    //             </svg>
-    //           </div>
-    //         </div>
-    //         <ul className="f-m-m">
-    //           <MenuItem href="/" selected>
-    //             Home
-    //           </MenuItem>
-    //           <MenuItem href="/now">Ongoing Events</MenuItem>
-    //           <MenuItem href="/past">Past Events</MenuItem>
-    //           <MenuItem href="/upcomings">Upcoming Events</MenuItem>
-    //           <MenuItem href="/mypage">My Page</MenuItem>
-    //           <LoginButton />
-    //         </ul>
-    //       </div>
-    //       <div className="w-full">
-    //         <TimeBox />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
