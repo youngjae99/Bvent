@@ -73,7 +73,7 @@ const Image = ({
                     <div
                       onClick={async () => {
                         try {
-                          await UserAPI.updateProfilePic();
+                          await UserAPI.updateProfilePic({});
                           const userInfo = await UserAPI.getMyInfo();
                           setUserInfoState({
                             ...userInfo,

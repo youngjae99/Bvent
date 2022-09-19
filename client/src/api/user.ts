@@ -49,7 +49,7 @@ const UserAPI = {
     );
     return data;
   },
-  updateProfilePic: async ({ file }) => {
+  updateProfilePic: async ({ file }: any) => {
     const token = getCookie('idToken');
     const formData = new FormData();
     formData.append('profile_pic', file);
