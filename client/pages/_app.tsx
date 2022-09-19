@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const cookie = ctx.req?.headers.cookie;
+  const cookie = ctx?.req?.headers?.cookie;
   let parsedCookie = '';
 
   if (cookie) {
