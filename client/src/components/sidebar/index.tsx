@@ -22,7 +22,9 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
     <li
       onClick={onClick}
       className={`border-pink border-solid text-white py-4 px-4 rounded-xl ${
-        selected ? 'border' : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
+        selected
+          ? 'border'
+          : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
       }`}
     >
       <div className="flex w-full items-center justify-end">
@@ -39,7 +41,7 @@ export const Sidebar = (props: Props) => {
   const {
     bio = 'Bventer',
     username,
-    totalAmount,
+    totalAmount = 0,
     profilePic,
     isSignIn,
   } = userInfoState;
@@ -133,7 +135,9 @@ export const Sidebar = (props: Props) => {
                     </Profile.Primary>
                     <div className="headline text-white flex gap-1 px-2 mt-5">
                       <span>Total Rewards</span>
-                      <span className="text-pink">{7}</span>
+                      <span className="text-pink">
+                        {isSignIn ? totalAmount : 0}
+                      </span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
                       <MenuItem href="/" selected>
