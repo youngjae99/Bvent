@@ -7,6 +7,7 @@ interface User {
   total_coin?: number;
   profilePic?: string;
   isSignIn: boolean;
+  address?: string;
 }
 
 export const userState = atom<User>({
