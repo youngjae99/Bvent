@@ -88,36 +88,37 @@ const Image = ({
                       Delete Profile Photo
                     </div>
                   </Menu.Item>
-                  <input
-                    hidden
-                    type="file"
-                    accept=".png,.jpg,.jpeg,.webp,.svg"
-                    ref={ref}
-                    onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-                      try {
-                        if (e.target?.files?.[0]) {
-                          await UserAPI.updateProfilePic({
-                            file: e.target.files[0],
-                          });
-                          const userInfo = await UserAPI.getMyInfo();
-                          setUserInfoState({
-                            ...userInfo,
-                            isSignIn: true,
-                          });
-                        }
-                      } catch (error) {
-                        console.error(error);
-                      } finally {
-                        e.target.value = '';
-                      }
-                    }}
-                  />
                 </Menu.Items>
               </Transition>
             </>
           )}
         </Menu>
       )}
+      <input
+        hidden
+        type="file"
+        accept=".png,.jpg,.jpeg,.webp,.svg"
+        ref={ref}
+        onChange={async (e: ChangeEvent<HTMLInputElement>) => {
+          console.log(e);
+          try {
+            if (e.target?.files?.[0]) {
+              await UserAPI.updateProfilePic({
+                file: e.target.files[0],
+              });
+              const userInfo = await UserAPI.getMyInfo();
+              setUserInfoState({
+                ...userInfo,
+                isSignIn: true,
+              });
+            }
+          } catch (error) {
+            console.error(error);
+          } finally {
+            e.target.value = '';
+          }
+        }}
+      />
     </div>
   );
 };
