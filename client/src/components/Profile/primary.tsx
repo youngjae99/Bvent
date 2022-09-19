@@ -43,12 +43,12 @@ const Image = ({
               >
                 <Menu.Items
                   static
-                  className="absolute bottom-22 left-8 w-52 divide-white divide-y"
+                  className="absolute bottom-22 left-8 w-52 divide-black divide-y cursor-pointer"
                 >
                   <Menu.Item>
                     <div
                       // onClick={() => {}}
-                      className="flex justify-between bg-gray text-white w-full py-4 px-3 first:rounded-t-xl last:rounded-b-xl"
+                      className="flex justify-between bg-darkgray hover:bg-darkgray-light text-white w-full py-4 px-3 first:rounded-t-xl last:rounded-b-xl"
                     >
                       Add Profile Photo
                     </div>
@@ -56,7 +56,7 @@ const Image = ({
                   <Menu.Item>
                     <div
                       // onClick={() => {}}
-                      className="flex justify-between bg-gray text-white w-full py-4 px-3 pr-9 first:rounded-t-xl last:rounded-b-xl"
+                      className="flex justify-between bg-darkgray hover:bg-darkgray-light text-white w-full py-4 px-3 pr-9 first:rounded-t-xl last:rounded-b-xl"
                     >
                       Delete Profile Photo
                     </div>
