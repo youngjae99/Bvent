@@ -100,7 +100,6 @@ const Image = ({
         accept=".png,.jpg,.jpeg,.webp,.svg"
         ref={ref}
         onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-          console.log(e);
           try {
             if (e.target?.files?.[0]) {
               await UserAPI.updateProfilePic({
