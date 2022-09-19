@@ -10,7 +10,7 @@ import { getItem } from '../utils/localStorage';
 import { injectedConnector, walletConnectConnector } from './connector';
 import axios from 'axios';
 import UserAPI from '@/api/user';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '@/recoil/atoms/user';
 import { useRouter } from 'next/router';
 
@@ -21,20 +21,22 @@ const WalletProvider = ({ children }: any) => {
     activate: activateNetwork,
     account,
   } = useWeb3React();
-  const setUserInfoState = useSetRecoilState(userState);
+  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const { address } = userInfoState;
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
 
-  const prevAccount = useRef(account);
+  const prevAccount = useRef<string | null | undefined>(address);
 
   useEffect(() => {
     async function detectAccountChanged() {
-      if (prevAccount.current !== account) {
+      if (networkActive && address !== account?.toLocaleLowerCase()) {
         try {
           await axios.post(`/api/auth/login`, {
             username: account,
           });
           const userInfo = await UserAPI.getMyInfo();
+          prevAccount.current = account;
           setUserInfoState({
             ...userInfo,
             isSignIn: true,
@@ -49,6 +51,7 @@ const WalletProvider = ({ children }: any) => {
               username: account,
             });
             const userInfo = await UserAPI.getMyInfo();
+            prevAccount.current = account;
             setUserInfoState({
               ...userInfo,
               isSignIn: true,
