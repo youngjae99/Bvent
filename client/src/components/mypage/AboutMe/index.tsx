@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 import { userState } from '@/recoil/atoms/user';
 import { useRecoilState } from 'recoil';
 
-
 const StyledWrapper = styled.div`
   color: white;
   background-color: var(--colors-background);
@@ -158,8 +157,11 @@ export const AboutMe = () => {
           </>
         ) : (
           <>
-            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body">
-              <span>Total Rewards</span>
+            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body items-center">
+              <span className="flex gap-3 items-center">
+                <img src="/icons/coin.svg" />
+                <span>Total Rewards</span>
+              </span>
               <span className="text-pink headline">{total_coin}</span>
             </div>
             <div className="py-5 px-4 border border-gray rounded-2xl">
@@ -179,6 +181,18 @@ export const AboutMe = () => {
                   </div>
                 )}
               </Disclosure>
+            </div>
+            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body items-center">
+              <span>Review History</span>
+              <img
+                className="cursor-pointer"
+                onClick={() => {
+                  window.open(`https://evm.evmos.dev/address/${account}`);
+                }}
+                src="/icons/link.svg"
+                width={12}
+                height={12}
+              />
             </div>
           </>
         )}
