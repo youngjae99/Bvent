@@ -4,8 +4,8 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import { Tab } from '@headlessui/react';
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Scrollbar } from 'swiper';
+import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -17,9 +17,9 @@ import EventCard from './EventCard';
 
 const Tabs = () => {
   const [events, setEvents] = useRecoilState(eventState);
-  const navPrevButton = React.useRef(null);
-  const navNextButton = React.useRef(null);
-  const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null);
+  const navPrevButton = useRef(null);
+  const navNextButton = useRef(null);
+  const [swiperSetting, setSwiperSetting] = useState<SwiperProps | null>(null);
 
   SwiperCore.use([Navigation, Scrollbar]);
 
