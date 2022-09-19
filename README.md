@@ -1,4 +1,6 @@
-<img width="104" alt="bvent_logo" src="https://user-images.githubusercontent.com/6705096/184066137-d42a9f7f-08c5-4f7c-85ad-969c0c2842a1.png">
+
+<img src = "https://user-images.githubusercontent.com/6705096/190978603-048d24d1-2307-4024-9449-f74d61f79851.png" width="300">
+
 
 ## Bvent
 
@@ -30,7 +32,7 @@ but there are apparent problems that must be solved in order to improve user exp
 
 # Tech Stack
 ### Frontend 
-@youngjae99
+@youngjae99 @leafcis
 - NEXT.js
 - recoil
 - web3-react & ethers
@@ -45,4 +47,3 @@ but there are apparent problems that must be solved in order to improve user exp
 - Google Firebase Realtime Database
 - Google Firebase Hosting
 - Google Cloud Functions
-- Postman w/ ❤️
