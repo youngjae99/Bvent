@@ -96,7 +96,7 @@ interface AboutMeProps {
 export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
-  const [editMode, setEditMode] = useState(router.query.edit);
+  const [editMode, setEditMode] = useState<boolean>(!!router.query.edit);
   const usernameRef = useRef<HTMLInputElement>(null);
   const bioRef = useRef<HTMLInputElement>(null);
   const [userInfo, setUserInfo] = useState({
@@ -106,7 +106,7 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
   });
 
   useEffect(() => {
-    setEditMode(router.query.edit);
+    setEditMode(!!router.query.edit);
   }, [router.query]);
 
   return (
@@ -116,7 +116,7 @@ export const AboutMe = ({ bio, username, totalAmount }: AboutMeProps) => {
           <Profile.Primary.Image editMode />
           <Profile.Primary.Info>
             <div className="title2 text-white">
-              {`${userInfo.username.slice(0, 10)}` || 'Sign In'}
+              {`${userInfo.username?.slice(0, 10)}` || 'Sign In'}
             </div>
             <div className="caption text-gray">
               {userInfo.bio || 'Sign in with your wallet'}
