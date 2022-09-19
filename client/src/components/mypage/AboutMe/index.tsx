@@ -12,12 +12,6 @@ import { useRouter } from 'next/router';
 import { userState } from '@/recoil/atoms/user';
 import { useRecoilState } from 'recoil';
 
-// interface Props {
-//     onPress: any;
-//     src: any;
-//     width: string;
-//     height: string;
-//   }
 
 const StyledWrapper = styled.div`
   color: white;
