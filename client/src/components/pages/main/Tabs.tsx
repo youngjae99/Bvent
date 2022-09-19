@@ -28,8 +28,6 @@ const Tabs = () => {
     getEventData();
   }, []);
 
-  console.log(events);
-
   return (
     <Tab.Group>
       <Tab.List className="text-white">

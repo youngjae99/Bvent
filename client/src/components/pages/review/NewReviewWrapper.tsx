@@ -59,8 +59,6 @@ const NewReviewWrapper = (props: Props) => {
   const [review, setReview] = useState<string>('');
 
   const submitReview = async () => {
-    console.log(review);
-
     if (review.length === 0) {
       alert('Write more than 0 characters');
       return;
@@ -72,11 +70,9 @@ const NewReviewWrapper = (props: Props) => {
         event_id: event_id,
       })
         .then((res) => {
-          console.log(res);
           onClose();
         })
         .catch((error) => {
-          console.log(error.response);
           if (error.response.status === 403) {
             alert('로그인이 필요합니다.');
           }

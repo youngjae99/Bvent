@@ -59,7 +59,7 @@ const DropdownWrapper = (props: any) => {
   );
 };
 
-const TimelineSubevent = (props: Props) => {
+const SubeventCard = (props: Props) => {
   const { subevent } = props;
   const [showDropdown, setShowDropdown] = useState(false);
   const [userDate, setUserDate] = useState('');
@@ -68,7 +68,7 @@ const TimelineSubevent = (props: Props) => {
   const [timezone] = useRecoilState(timezoneState);
 
   const isOngoing = true;
-  
+
   useEffect(() => {
     setEventTime(parseTime(subevent.subevent_time));
     setUserTime(convertTime(subevent.subevent_time, timezone));
@@ -83,14 +83,14 @@ const TimelineSubevent = (props: Props) => {
       </TimeWrapper>
       <div className="mb-3 flex-1 rounded-lg hover:bg-gray-900">
         <Link href={`/event/${subevent?.event_title}/${subevent?.subevent_id}`}>
-          <EventTitle>{subevent?.subevent_title}</EventTitle>
+          <EventTitle>{subevent?.subevent_info}</EventTitle>
         </Link>
         <div className="flex flex-row justify-between mt-2">
           <div className="flex flex-row gap-2 leading-4">
             <UserCircleIcon className="w-5" />
             {subevent?.subevent_presenter.substring(0, 20)}
           </div>
-          {/* <div
+          <div
             className="text-secondary cursor-pointer"
             onClick={() => setShowDropdown((prev) => !prev)}
           >
@@ -99,14 +99,14 @@ const TimelineSubevent = (props: Props) => {
             ) : (
               <ChevronDownIcon className="w-5" />
             )}
-          </div> */}
+          </div>
         </div>
-        {/* {showDropdown && (
+        {showDropdown && (
           <DropdownWrapper>subevent topic is shown here</DropdownWrapper>
-        )} */}
+        )}
       </div>
     </CardWrapper>
   );
 };
 
-export default TimelineSubevent;
+export default SubeventCard;

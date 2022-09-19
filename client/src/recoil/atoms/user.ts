@@ -1,13 +1,17 @@
-import { atom } from "recoil";
-import { Atoms } from "@/recoil/constants";
+import { atom } from 'recoil';
+import { Atoms } from '@/recoil/constants';
 
-export const userState = atom({
-    key: Atoms.User,
-    default: {
-        username: "TEST_USERNAME",
-        profilePic: "",
-        walletAddress: "0x123456789",
-        location: "SEOUL",
-        coin: 0,
-    },
+interface User {
+  bio?: string;
+  username?: string;
+  totalAmount?: string;
+  profilePic?: string;
+  isSignIn: boolean;
+}
+
+export const userState = atom<User>({
+  key: Atoms.User,
+  default: {
+    isSignIn: false,
+  },
 });

@@ -18,12 +18,9 @@ const Current: React.FC = () => {
   const [events, setEvents] = useState<eventType>(defaultEvent);
   const [useFilter, setUseFilter] = useState(false);
 
-  console.log(events);
-
   useEffect(() => {
     const getEventData = async () => {
       const res = await axios.get('/api/tags/current');
-      console.log(res);
       setEvents(res.data);
     };
     getEventData();

@@ -4,16 +4,8 @@ import { NextSeo } from 'next-seo';
 import Layout from '@/components/Layout';
 import TitleBar from '@/components/pages/subevent/TitleBar';
 import { AboutMe } from '@/components/mypage/AboutMe';
-import Button from '@/components/Button';
-import UserAPI from '@/api/user';
 
-interface MyPageProps {
-  bio: string;
-  username: string;
-  totalAmount: number;
-}
-
-const MyPage = ({ bio, username, totalAmount }: MyPageProps) => {
+const MyPage = () => {
   return (
     <Layout>
       <NextSeo
@@ -51,34 +43,9 @@ const MyPage = ({ bio, username, totalAmount }: MyPageProps) => {
         }}
       />
       <TitleBar title="My Page" backUrl={`/`} />
-      <AboutMe bio={bio} username={username} totalAmount={totalAmount} />
+      <AboutMe />
     </Layout>
   );
 };
-
-export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie;
-  console.log(context.req.headers);
-  const array = cookie.split(escape('idToken') + '=');
-  let parsedCookie = '';
-  if (array.length >= 2) {
-    const arraySub = array[1].split(';');
-    parsedCookie = unescape(arraySub[0]);
-  }
-
-  try {
-    const {
-      username,
-      bio = 'Bventer',
-      totalAmount = 0,
-    } = await UserAPI.getMyInfo(true, parsedCookie);
-    
-    return { props: { username, bio, totalAmount } };
-  } catch (error) {
-    return {
-      props: {},
-    };
-  }
-}
 
 export default MyPage;

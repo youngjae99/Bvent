@@ -7,11 +7,11 @@ import { setItem } from '@/utils/localStorage';
 import { LocalStorageKey } from '@/constants/localStorage';
 
 // import { SUPPORT_CHAIN } from '@/utils/contractInit';
-export const SUPPORT_CHAIN = 1;
+export const SUPPORT_CHAIN = 9001;
 import { isMobileDevice } from '@/utils/isMobileDevice';
 
 const injectedConnector = new InjectedConnector({
-  supportedChainIds: [9000, 9001],//[1, 3, 4, 5, 42],
+  supportedChainIds: [9000, 9001], //[1, 3, 4, 5, 42],
 });
 
 declare global {
