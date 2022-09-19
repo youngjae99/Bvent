@@ -56,132 +56,80 @@ const Tabs = () => {
 
   return (
     <StyledRoot>
-    <Tab.Group>
-      <Tab.List className="text-white">
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={
-                selected
-                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
-                  : 'border border-white text-white mr-2 p-3 rounded-lg'
-              }
-            >
-              Upcoming
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={
-                selected
-                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
-                  : 'border border-white text-white mr-2 p-3 rounded-lg'
-              }
-            >
-              Current
-            </button>
-          )}
-        </Tab>
-        <Tab as={Fragment}>
-          {({ selected }) => (
-            <button
-              className={
-                selected
-                  ? 'border border-primary text-white mr-2 p-3 rounded-lg'
-                  : 'border border-white text-white mr-2 p-3 rounded-lg'
-              }
-            >
-              Past
-            </button>
-          )}
-        </Tab>
-      </Tab.List>
-      <Tab.Panels className="text-white mt-10">
-        <button
-          ref={navPrevButton}
-          className="absolute z-10 left-2"
-          style={{ height: '200px' }}
-        >
-          <img
-            src="/icons/swiper-prev-icon.svg"
-            alt="prevButton"
-            height="32"
-            width="32"
-          />
-        </button>
-        <button
-          ref={navNextButton}
-          className="absolute z-10 right-2"
-          style={{ height: '200px' }}
-        >
-          <img
-            src="/icons/swiper-next-icon.svg"
-            alt="nextButton"
-            height="32"
-            width="32"
-          />
-        </button>
-        <Tab.Panel>
-          <div className="flex flex-col items-end gap-2">
-            {swiperSetting && (
-              <Swiper {...swiperSetting}>
-                {events &&
-                  Object.keys(events)
-                    .filter((key) => events[key].event_tag === 'future')
-                    .map((key) => (
-                      <SwiperSlide key={key}>
-                        <EventCard key={key} event={events[key]} />
-                      </SwiperSlide>
-                    ))}
-              </Swiper>
-            )}
-            <a href="/upcoming" className="text-white hover:text-primary">
-              See more
-            </a>
-          </div>
-        </Tab.Panel>
-        <Tab.Panel>
-          <div className="flex flex-col items-end gap-2">
-            {swiperSetting && (
-              <Swiper {...swiperSetting}>
-                {events &&
-                  Object.keys(events)
-                    .filter((key) => events[key].event_tag === 'current')
-                    .map((key) => (
-                      <SwiperSlide key={key}>
-                        <EventCard key={key} event={events[key]} />
-                      </SwiperSlide>
-                    ))}
-                {
-                  // FIXME(aaron) : show this when there are no current events. should be a component
-                  Object.keys(events).filter(
-                    (key) => events[key].event_tag === 'current',
-                  ).length === 0 && (
-                    <div
-                      className="flex justify-center items-center bg-darkgray rounded-lg"
-                      style={{ height: '200px' }}
-                    >
-                      No ongoing events
-                    </div>
-                  )
+      <Tab.Group>
+        <Tab.List className="text-white">
+          <Tab as={Fragment}>
+            {({ selected }) => (
+              <button
+                className={
+                  selected
+                    ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                    : 'border border-white text-white mr-2 p-3 rounded-lg'
                 }
-              </Swiper>
+              >
+                Upcoming
+              </button>
             )}
-            <a href="/current" className="text-white hover:text-primary">
-              See more
-            </a>
-          </div>
-        </Tab.Panel>
-        <Tab.Panel>
-          <div className="flex flex-col items-end gap-2">
-            <div className="contents">
+          </Tab>
+          <Tab as={Fragment}>
+            {({ selected }) => (
+              <button
+                className={
+                  selected
+                    ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                    : 'border border-white text-white mr-2 p-3 rounded-lg'
+                }
+              >
+                Current
+              </button>
+            )}
+          </Tab>
+          <Tab as={Fragment}>
+            {({ selected }) => (
+              <button
+                className={
+                  selected
+                    ? 'border border-primary text-white mr-2 p-3 rounded-lg'
+                    : 'border border-white text-white mr-2 p-3 rounded-lg'
+                }
+              >
+                Past
+              </button>
+            )}
+          </Tab>
+        </Tab.List>
+        <Tab.Panels className="text-white mt-10">
+          <button
+            ref={navPrevButton}
+            className="absolute z-10 left-2"
+            style={{ height: '200px' }}
+          >
+            <img
+              src="/icons/swiper-prev-icon.svg"
+              alt="prevButton"
+              height="32"
+              width="32"
+            />
+          </button>
+          <button
+            ref={navNextButton}
+            className="absolute z-10 right-2"
+            style={{ height: '200px' }}
+          >
+            <img
+              src="/icons/swiper-next-icon.svg"
+              alt="nextButton"
+              height="32"
+              width="32"
+            />
+          </button>
+          <Tab.Panel>
+            <div className="flex flex-col items-end gap-2">
               {swiperSetting && (
                 <Swiper {...swiperSetting}>
                   {events &&
                     Object.keys(events)
-                      .filter((key) => events[key].event_tag === 'past')
+                      .filter((key) => events[key].event_tag === 'future')
                       .map((key) => (
                         <SwiperSlide key={key}>
                           <EventCard key={key} event={events[key]} />
@@ -189,14 +137,66 @@ const Tabs = () => {
                       ))}
                 </Swiper>
               )}
+              <a href="/upcoming" className="text-white hover:text-primary">
+                See more
+              </a>
             </div>
-            <a href="/past" className="text-white hover:text-primary">
-              See more
-            </a>
-          </div>
-        </Tab.Panel>
-      </Tab.Panels>
-    </Tab.Group>
+          </Tab.Panel>
+          <Tab.Panel>
+            <div className="flex flex-col items-end gap-2">
+              {swiperSetting && (
+                <Swiper {...swiperSetting}>
+                  {events &&
+                    Object.keys(events)
+                      .filter((key) => events[key].event_tag === 'current')
+                      .map((key) => (
+                        <SwiperSlide key={key}>
+                          <EventCard key={key} event={events[key]} />
+                        </SwiperSlide>
+                      ))}
+                  {
+                    // FIXME(aaron) : show this when there are no current events. should be a component
+                    Object.keys(events).filter(
+                      (key) => events[key].event_tag === 'current',
+                    ).length === 0 && (
+                      <div
+                        className="flex justify-center items-center bg-darkgray rounded-lg"
+                        style={{ height: '200px' }}
+                      >
+                        No ongoing events
+                      </div>
+                    )
+                  }
+                </Swiper>
+              )}
+              <a href="/current" className="text-white hover:text-primary">
+                See more
+              </a>
+            </div>
+          </Tab.Panel>
+          <Tab.Panel>
+            <div className="flex flex-col items-end gap-2">
+              <div className="contents">
+                {swiperSetting && (
+                  <Swiper {...swiperSetting}>
+                    {events &&
+                      Object.keys(events)
+                        .filter((key) => events[key].event_tag === 'past')
+                        .map((key) => (
+                          <SwiperSlide key={key}>
+                            <EventCard key={key} event={events[key]} />
+                          </SwiperSlide>
+                        ))}
+                  </Swiper>
+                )}
+              </div>
+              <a href="/past" className="text-white hover:text-primary">
+                See more
+              </a>
+            </div>
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
     </StyledRoot>
   );
 };
@@ -219,6 +219,5 @@ const StyledRoot = styled.div`
     }
   }
 `;
-
 
 export default Tabs;

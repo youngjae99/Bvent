@@ -16,10 +16,10 @@ const EventCard = (props: Props) => {
   return (
     <Link href={`/event/${event?.event_title}`}>
       <div
+        className="bg-white bg-opacity-10 hover:bg-opacity-20"
         style={{
           width: '230px',
           height: '200px',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
           borderRadius: '10px',
           cursor: 'pointer',
         }}
