@@ -14,7 +14,7 @@ const defaultEvent = {
   event_start_time: '',
 };
 
-const Now: React.FC = () => {
+const Current: React.FC = () => {
   const [events, setEvents] = useState<eventType>(defaultEvent);
   const [useFilter, setUseFilter] = useState(false);
 
@@ -77,4 +77,4 @@ const Now: React.FC = () => {
   );
 };
 
-export default Now;
+export default Current;

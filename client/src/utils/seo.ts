@@ -29,8 +29,8 @@ export const generateEventPageMeta = (eventInfo) => {
 
 export const generateSubeventPageMeta = (eventInfo) => {
   return generateMeta({
-    title: eventInfo.event_title + ' - ' + eventInfo.subevent_info,
-    description: eventInfo.subevent_info,
+    title: eventInfo.event_title + ' - ' + eventInfo.subevent_title,
+    description: eventInfo.subevent_title,
     image_url: eventInfo.subevent_img,
   });
 };

@@ -101,12 +101,12 @@ export const AboutMe = () => {
 
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
-  const [editMode, setEditMode] = useState(router.query.edit === 'true');
+  const [editMode, setEditMode] = useState<boolean>(!!router.query.edit);
   const usernameRef = useRef<HTMLInputElement>(null);
   const bioRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setEditMode(router.query.edit === 'true');
+    setEditMode(!!router.query.edit);
   }, [router.query]);
 
   return (

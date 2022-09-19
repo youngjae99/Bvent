@@ -38,7 +38,7 @@ const Past: React.FC = () => {
         <h1>Past Events</h1>
         <SearchBar/>
       </div>
-      <div className="border-t-2 border-gray-500 my-5 text-white pt-2 flex justify-end">
+      <div className="border-t-2 border-glass1 my-5 text-white pt-2 flex justify-end">
         <Selector
           label="Any Year"
           options={['All', '2021', '2022']}

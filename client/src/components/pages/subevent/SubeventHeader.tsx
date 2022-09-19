@@ -63,7 +63,7 @@ export const SubeventHeader = (props: Props) => {
       />
       <StyledInfoWrapper className="text-white bg-black flex flex-col sticky top-16">
         <p className="text-secondary text-2xl">
-          {eventInfo?.subevent_info.slice(0, 60)}
+          {eventInfo?.subevent_title.slice(0, 60)}
         </p>
         <TimeWrapper startTime={eventInfo?.subevent_time} />
         <SpeakerWrapper speaker={eventInfo?.subevent_presenter} />
