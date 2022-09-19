@@ -96,7 +96,7 @@ export const Sidebar = (props: Props) => {
   return (
     <Transition.Root show={show} as={Fragment}>
       <Dialog
-        className="fixed z-10 max-w-mobile w-full mx-auto inset-x-0 top-0 bottom-6 overflow-hidden"
+        className="fixed z-10 max-w-mobile w-full mx-auto inset-x-0 top-0 bottom-0 overflow-hidden"
         onClose={setShow}
       >
         <div className="absolute inset-0 overflow-hidden w-full">
@@ -159,21 +159,21 @@ export const Sidebar = (props: Props) => {
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
-                                <Link href="/upcoming">
+                                <a href="/upcoming">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Upcoming
                                   </div>
-                                </Link>
-                                <Link href="/current">
+                                </a>
+                                <a href="/current">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Current
                                   </div>
-                                </Link>
-                                <Link href="/past">
+                                </a>
+                                <a href="/past">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Past
                                   </div>
-                                </Link>
+                                </a>
                               </Disclosure.Panel>
                             </div>
                           )}
