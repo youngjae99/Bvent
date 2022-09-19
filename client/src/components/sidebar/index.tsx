@@ -41,7 +41,7 @@ export const Sidebar = (props: Props) => {
   const {
     bio = 'Bventer',
     username,
-    totalAmount = 0,
+    total_coin = 0,
     profilePic,
     isSignIn,
   } = userInfoState;
@@ -135,9 +135,7 @@ export const Sidebar = (props: Props) => {
                     </Profile.Primary>
                     <div className="headline text-white flex gap-1 px-2 mt-5">
                       <span>Total Rewards</span>
-                      <span className="text-pink">
-                        {isSignIn ? totalAmount : 0}
-                      </span>
+                      <span className="text-pink">{isSignIn ? total_coin : 0}</span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
                       <MenuItem href="/" selected>

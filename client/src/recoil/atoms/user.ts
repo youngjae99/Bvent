@@ -4,7 +4,7 @@ import { Atoms } from '@/recoil/constants';
 interface User {
   bio?: string;
   username?: string;
-  totalAmount?: string;
+  total_coin?: number;
   profilePic?: string;
   isSignIn: boolean;
 }
