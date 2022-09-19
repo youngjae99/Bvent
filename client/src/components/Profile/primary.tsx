@@ -1,5 +1,8 @@
+import UserAPI from '@/api/user';
+import { userState } from '@/recoil/atoms/user';
 import { Menu, Transition } from '@headlessui/react';
-import React, { ReactNode } from 'react';
+import React, { ChangeEvent, ReactNode, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 
 interface PrimaryProps {
   children: ReactNode;
@@ -22,9 +25,18 @@ const Image = ({
   src = '/icons/default-profile-icon.svg',
   editMode,
 }: ImageProps) => {
+  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const ref = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  const image =
+    src === '/icons/default-profile-icon.svg'
+      ? '/icons/default-profile-icon.svg'
+      : `${src}&random=${Math.floor(Math.random() * 1000)}`;
+
   return (
     <div className="relative">
-      <img className="rounded-full" src={src} width={52} height={52} />
+      <img className="rounded-full" src={image} width={52} height={52} />
       {editMode && (
         <Menu>
           {({ open }) => (
@@ -43,24 +55,63 @@ const Image = ({
               >
                 <Menu.Items
                   static
-                  className="absolute bottom-22 left-8 w-52 divide-black divide-y cursor-pointer"
+                  className="absolute bottom-22 left-8 w-52 divide-black divide-y"
                 >
                   <Menu.Item>
                     <div
-                      // onClick={() => {}}
-                      className="flex justify-between bg-darkgray hover:bg-darkgray-light text-white w-full py-4 px-3 first:rounded-t-xl last:rounded-b-xl"
+                      onClick={async () => {
+                        if (ref.current) {
+                          ref.current.click();
+                        }
+                      }}
+                      className="cursor-pointer flex justify-between bg-darkgray text-white w-full py-4 px-3 first:rounded-t-xl last:rounded-b-xl hover:text-pink"
                     >
                       Add Profile Photo
                     </div>
                   </Menu.Item>
                   <Menu.Item>
                     <div
-                      // onClick={() => {}}
-                      className="flex justify-between bg-darkgray hover:bg-darkgray-light text-white w-full py-4 px-3 pr-9 first:rounded-t-xl last:rounded-b-xl"
+                      onClick={async () => {
+                        try {
+                          await UserAPI.updateProfilePic();
+                          const userInfo = await UserAPI.getMyInfo();
+                          setUserInfoState({
+                            ...userInfo,
+                            isSignIn: true,
+                          });
+                        } catch (error) {
+                          console.error(error);
+                        }
+                      }}
+                      className="cursor-pointer flex justify-between bg-darkgray text-white w-full py-4 px-3 pr-9 first:rounded-t-xl last:rounded-b-xl hover:text-pink"
                     >
                       Delete Profile Photo
                     </div>
                   </Menu.Item>
+                  <input
+                    hidden
+                    type="file"
+                    accept=".png,.jpg,.jpeg,.webp,.svg"
+                    ref={ref}
+                    onChange={async (e: ChangeEvent<HTMLInputElement>) => {
+                      try {
+                        if (e.target?.files?.[0]) {
+                          await UserAPI.updateProfilePic({
+                            file: e.target.files[0],
+                          });
+                          const userInfo = await UserAPI.getMyInfo();
+                          setUserInfoState({
+                            ...userInfo,
+                            isSignIn: true,
+                          });
+                        }
+                      } catch (error) {
+                        console.error(error);
+                      } finally {
+                        e.target.value = '';
+                      }
+                    }}
+                  />
                 </Menu.Items>
               </Transition>
             </>

@@ -42,7 +42,7 @@ export const Sidebar = (props: Props) => {
     bio = 'Bventer',
     username,
     total_coin = 0,
-    profilePic,
+    profile_pic,
     isSignIn,
   } = userInfoState;
 
@@ -123,7 +123,7 @@ export const Sidebar = (props: Props) => {
                   </div>
                   <div className="relative mt-12 flex-1 px-2 flex flex-col h-full">
                     <Profile.Primary>
-                      <Profile.Primary.Image />
+                      <Profile.Primary.Image src={profile_pic} />
                       <Profile.Primary.Info>
                         <div className="title2 text-white">
                           {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
@@ -135,7 +135,9 @@ export const Sidebar = (props: Props) => {
                     </Profile.Primary>
                     <div className="headline text-white flex gap-1 px-2 mt-5">
                       <span>Total Rewards</span>
-                      <span className="text-pink">{isSignIn ? total_coin : 0}</span>
+                      <span className="text-pink">
+                        {isSignIn ? total_coin : 0}
+                      </span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
                       <MenuItem href="/" selected>
