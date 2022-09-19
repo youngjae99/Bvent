@@ -12,6 +12,8 @@ import Profile from '../Profile';
 import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
 import { useRouter } from 'next/router';
+import { userState } from '@/recoil/atoms/user';
+import UserAPI from '@/api/user';
 
 type Props = any;
 
@@ -33,16 +35,19 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
 );
 
 export const Sidebar = (props: Props) => {
+  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const {
+    bio = 'Bventer',
+    username,
+    totalAmount,
+    profilePic,
+    isSignIn,
+  } = userInfoState;
+
   const [show, setShow] = useRecoilState(sidebarShowState);
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
-  const { active, account, connector, chainId } = useWeb3React();
-  const [menu, setMenu] = useState();
+  const { account } = useWeb3React();
   const router = useRouter();
-  console.log(account);
-
-  useEffect(() => {
-    console.log(active, account);
-  }, [active]);
 
   const handleLogin = async () => {
     await connectMetamaskWallet();
@@ -50,6 +55,11 @@ export const Sidebar = (props: Props) => {
     try {
       await axios.post(`/api/auth/login`, {
         username: account,
+      });
+      const userInfo = await UserAPI.getMyInfo();
+      setUserInfoState({
+        ...userInfo,
+        isSignIn: true,
       });
     } catch (error) {
       await axios.post(`/api/auth/register`, {
@@ -60,12 +70,25 @@ export const Sidebar = (props: Props) => {
         await axios.post(`/api/auth/login`, {
           username: account,
         });
+        const userInfo = await UserAPI.getMyInfo();
+        setUserInfoState({
+          ...userInfo,
+          isSignIn: true,
+        });
 
         router.push('/mypage?edit=true', '/mypage');
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const handleLogout = async () => {
+    setUserInfoState({
+      isSignIn: false,
+    });
+    disconnectWallet();
+    document.cookie = 'idToken=; Max-Age=-99999999;';
   };
 
   return (
@@ -77,7 +100,7 @@ export const Sidebar = (props: Props) => {
         <div className="absolute inset-0 overflow-hidden w-full">
           <div className="absolute overflow-hidden inset-y-0 right-0 max-w-mobile w-full h-full">
             <Transition.Child
-              className="absolute right-0 w-96 max-w-mobile h-full"
+              className="absolute right-0 w-96 max-w-full h-full"
               enter="transition ease-in-out duration-300 transform"
               enterFrom="translate-x-3/4"
               enterTo="translate-x-0"
@@ -101,10 +124,10 @@ export const Sidebar = (props: Props) => {
                       <Profile.Primary.Image />
                       <Profile.Primary.Info>
                         <div className="title2 text-white">
-                          {formatAccount(account) || 'Sign In'}
+                          {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
                         </div>
                         <div className="caption text-gray">
-                          Sign in with your wallet
+                          {isSignIn ? bio : 'Sign in with your wallet'}
                         </div>
                       </Profile.Primary.Info>
                     </Profile.Primary>
@@ -116,7 +139,9 @@ export const Sidebar = (props: Props) => {
                       <MenuItem href="/" selected>
                         Home
                       </MenuItem>
-                      <MenuItem onClick={handleLogin}>Connect Wallet</MenuItem>
+                      <MenuItem onClick={isSignIn ? handleLogout : handleLogin}>
+                        {isSignIn ? 'Disconnect Wallet' : 'Connect Wallet'}
+                      </MenuItem>
                       <MenuItem>
                         <Disclosure>
                           {({ open }) => (

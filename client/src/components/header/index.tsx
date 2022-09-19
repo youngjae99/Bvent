@@ -10,7 +10,6 @@ import { NodeNextRequest } from 'next/dist/server/base-http/node';
 
 const MenuItem = ({ _timezone }: any) => {
   const [timezone, setTimezone] = useRecoilState(timezoneState);
-  console.log(_timezone);
 
   if (_timezone === timezone) {
     return <p className="text-red-600 cursor-pointer">{_timezone}</p>;

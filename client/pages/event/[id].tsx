@@ -22,8 +22,6 @@ const Event: React.FC = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const event_id = eventInfo.event_id;
 
-  console.log(eventInfo);
-
   if (subevents.length === 0) {
     return (
       <>
@@ -98,7 +96,6 @@ export async function getServerSideProps(context) {
   const data = await res.data;
   const eventInfo = data.event_info;
   const subevents = data.subevents;
-  console.log(eventInfo, subevents);
   return { props: { eventInfo, subevents } };
 }
 

@@ -11,9 +11,8 @@ function getCookie(name) {
 }
 
 const UserAPI = {
-  getMyInfo: async (isServer, parsedToken) => {
+  getMyInfo: async (isServer?, parsedToken?) => {
     if (isServer) {
-      console.log(parsedToken);
       const { data } = await serverApi.get('/user/myself', {
         headers: {
           Authorization: parsedToken,
