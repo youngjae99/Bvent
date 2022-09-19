@@ -32,20 +32,19 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <StyledThemeProvider>
       <DefaultSeo {...SEO} />
       <Web3ReactProvider getLibrary={getLibrary}>
-        <WalletProvider>
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <RecoilRoot
-                initializeState={
-                  pageProps.userInfo &&
-                  initializeRecoilState(pageProps.userInfo)
-                }
-              >
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <RecoilRoot
+              initializeState={
+                pageProps.userInfo && initializeRecoilState(pageProps.userInfo)
+              }
+            >
+              <WalletProvider>
                 <Component {...pageProps} />
-              </RecoilRoot>
-            </Hydrate>
-          </QueryClientProvider>
-        </WalletProvider>
+              </WalletProvider>
+            </RecoilRoot>
+          </Hydrate>
+        </QueryClientProvider>
       </Web3ReactProvider>
     </StyledThemeProvider>
   );
