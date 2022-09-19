@@ -22,7 +22,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <button
         disabled={true}
-        className={`disabled py-2 px-4 rounded-lg bg-gray-400 font-bold text-outline-none ring-opacity-75 text-white text-lg cursor-default`}
+        className={`disabled py-2 px-4 rounded-lg bg-gray-400 font-bold outline-none ring-opacity-75 text-white text-lg cursor-default`}
         {...rest}
       >
         {children}

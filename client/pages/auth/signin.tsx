@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@/components/Layout';
-import { LoginButton } from '@/components/sidebar/loginButton';
+import { LoginButton } from '@/components/pages/auth/LoginButton';
 
 const Signin: React.FC = () => {
 
