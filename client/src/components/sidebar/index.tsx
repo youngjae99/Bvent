@@ -16,12 +16,12 @@ import { useRouter } from 'next/router';
 type Props = any;
 
 const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
-  <a className="block mt-1 first:mt-0 cursor-pointer" href={href}>
+  <a className="block mt-1 first:mt-0 cursor-pointer outline-none" href={href}>
     <li
       onClick={onClick}
-      className={`border-pink border-solid text-white py-4 px-4 rounded-xl transition-bg ${
-        selected ? 'border' : 'border-0'
-      } `}
+      className={`border-pink border-solid text-white py-4 px-4 rounded-xl ${
+        selected ? 'border' : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
+      }`}
     >
       <div className="flex w-full items-center justify-end">
         <div className="body text-right text-gray-400 m-0 w-full">
@@ -131,17 +131,17 @@ export const Sidebar = (props: Props) => {
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
                                 <Link href="/upcoming">
-                                  <div className="body rounded-lg border border-gray p-4">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Upcoming
                                   </div>
                                 </Link>
                                 <Link href="/current">
-                                  <div className="body rounded-lg border border-gray p-4">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Current
                                   </div>
                                 </Link>
                                 <Link href="/past">
-                                  <div className="body rounded-lg border border-gray p-4">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Past
                                   </div>
                                 </Link>
