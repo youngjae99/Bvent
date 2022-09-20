@@ -11,7 +11,7 @@ const Upcoming: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('/api/tags/future');
+      const res = await axios.get('/api/events?tags=upcoming');
       setEvents(res.data);
     };
     getEventData();
