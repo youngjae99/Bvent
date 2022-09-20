@@ -72,9 +72,9 @@ export const Main: React.FC = () => {
           </GradientText>
           {events &&
             Object.keys(events)
-              .filter((key) => events[key].event_tag === 'future')
+              .filter((key) => events[key].event_tag === 'upcoming')
               .map((key) => <EventCard key={key} event={events[key]} />)}
-          <a href="/future" className="text-white text-right">
+          <a href="/upcoming" className="text-white text-right">
             see more
           </a>
         </div>

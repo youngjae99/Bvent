@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
   if (outlined) {
     return (
       <button
-        className={`py-2 px-4 rounded-lg border border-primary hover:bg-primary-dark outline-none ring-opacity-75 text-white text-lg ${className} transition-color duration-300`}
+        className={`py-2 px-4 rounded-lg border border-primary hover:bg-primary-dark outline-none focus:outline-none ring-opacity-75 text-white text-lg ${className} transition-color duration-300`}
         {...rest}
       >
         {children}
