@@ -18,7 +18,7 @@ import UserAPI from '@/api/user';
 type Props = any;
 
 const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
-  <a className="block mt-1 first:mt-0 cursor-pointer outline-none" href={href}>
+  <div className="block mt-1 first:mt-0 cursor-pointer outline-none">
     <li
       onClick={onClick}
       className={`border-pink border-solid text-white py-4 px-4 rounded-xl ${
@@ -27,13 +27,23 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
           : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
       }`}
     >
-      <div className="flex w-full items-center justify-end">
-        <div className="body text-right text-gray-400 m-0 w-full">
-          {children}
+      {href ? (
+        <Link href={href}>
+          <div className="flex w-full items-center justify-end">
+            <div className="body text-right text-gray-400 m-0 w-full">
+              {children}
+            </div>
+          </div>
+        </Link>
+      ) : (
+        <div className="flex w-full items-center justify-end">
+          <div className="body text-right text-gray-400 m-0 w-full">
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </li>
-  </a>
+  </div>
 );
 
 export const Sidebar = (props: Props) => {
@@ -54,20 +64,7 @@ export const Sidebar = (props: Props) => {
   const handleLogin = async () => {
     await connectMetamaskWallet();
 
-    try {
-      await axios.post(`/api/auth/login`, {
-        username: account,
-      });
-      const userInfo = await UserAPI.getMyInfo();
-      setUserInfoState({
-        ...userInfo,
-        isSignIn: true,
-      });
-    } catch (error) {
-      await axios.post(`/api/auth/register`, {
-        username: account,
-        address: account,
-      });
+    if (account) {
       try {
         await axios.post(`/api/auth/login`, {
           username: account,
@@ -77,10 +74,25 @@ export const Sidebar = (props: Props) => {
           ...userInfo,
           isSignIn: true,
         });
-
-        router.push('/mypage?edit=true', '/mypage');
       } catch (error) {
-        console.log(error);
+        await axios.post(`/api/auth/register`, {
+          username: account,
+          address: account,
+        });
+        try {
+          await axios.post(`/api/auth/login`, {
+            username: account,
+          });
+          const userInfo = await UserAPI.getMyInfo();
+          setUserInfoState({
+            ...userInfo,
+            isSignIn: true,
+          });
+
+          router.push('/mypage?edit=true', '/mypage');
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -140,7 +152,7 @@ export const Sidebar = (props: Props) => {
                       </span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
-                      <MenuItem href="/" selected>
+                      <MenuItem href="/" selected onClick={() => setShow(!show)}>
                         Home
                       </MenuItem>
                       <MenuItem onClick={isSignIn ? handleLogout : handleLogin}>
@@ -150,7 +162,7 @@ export const Sidebar = (props: Props) => {
                         <Disclosure>
                           {({ open }) => (
                             <div className="grid gap-5">
-                              <Disclosure.Button className="w-full flex justify-end gap-2 items-center">
+                              <Disclosure.Button className="w-full flex justify-end gap-2 items-center focus:outline-none">
                                 <span>Events</span>
                                 <ChevronRightIcon
                                   className={`${
@@ -159,27 +171,27 @@ export const Sidebar = (props: Props) => {
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
-                                <a href="/upcoming">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                <Link href="/upcoming">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Upcoming
                                   </div>
-                                </a>
-                                <a href="/current">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                </Link>
+                                <Link href="/current">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Current
                                   </div>
-                                </a>
-                                <a href="/past">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                </Link>
+                                <Link href="/past">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Past
                                   </div>
-                                </a>
+                                </Link>
                               </Disclosure.Panel>
                             </div>
                           )}
                         </Disclosure>
                       </MenuItem>
-                      <MenuItem href="/mypage">My page</MenuItem>
+                      <MenuItem href="/mypage" onClick={() => setShow(!show)}>My page</MenuItem>
                     </ul>
                     <TimezoneBox />
                   </div>

@@ -29,7 +29,7 @@ const Image = ({
   const ref = useRef<HTMLInputElement>(null);
 
   const image =
-    src === '/icons/default-profile-icon.svg'
+    typeof src !== 'string' || src === '/icons/default-profile-icon.svg'
       ? '/icons/default-profile-icon.svg'
       : `${src}&random=${Math.floor(Math.random() * 1000)}`;
 

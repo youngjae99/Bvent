@@ -6,7 +6,6 @@ import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-
 const SignInWrapper = ({ onClick, active, children }: any) => {
   if (active) {
     return (
@@ -42,31 +41,28 @@ export const LoginButton = () => {
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
 
-
-  useEffect(() => {
-    console.log(active, account);
-  }, [active]);
-
   const handleLogin = async () => {
     await connectMetamaskWallet();
 
-    try {
-      await axios.post(`/api/auth/login`, {
-        username: account,
-      });
-    } catch (error) {
-      await axios.post(`/api/auth/register`, {
-        username: account,
-        address: account,
-      });
+    if (account) {
       try {
         await axios.post(`/api/auth/login`, {
           username: account,
         });
-
-        router.push('/mypage?edit=true', '/mypage');
       } catch (error) {
-        console.log(error);
+        await axios.post(`/api/auth/register`, {
+          username: account,
+          address: account,
+        });
+        try {
+          await axios.post(`/api/auth/login`, {
+            username: account,
+          });
+
+          router.push('/mypage?edit=true', '/mypage');
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -78,6 +74,8 @@ export const LoginButton = () => {
       </SignInWrapper>
     );
   } else {
-    return <SignInWrapper onClick={handleLogin}>Sign In with Metamask</SignInWrapper>;
+    return (
+      <SignInWrapper onClick={handleLogin}>Sign In with Metamask</SignInWrapper>
+    );
   }
 };
