@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import axios from 'axios';
 import Review from './Review';
@@ -12,7 +12,6 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const ReviewContainer = (props: Props) => {
   const { event_id, subevent_id } = props;
-
   let url = '';
   if (event_id) {
     url = `/api/review?event_id=${event_id}`;
@@ -20,10 +19,13 @@ const ReviewContainer = (props: Props) => {
   if (subevent_id) {
     url = `/api/review?subevent_id=${subevent_id}`;
   }
-
-  const { data } = useSWR(url, fetcher);
-  const review = data ? data : {};
+  const { data } = useSWR(url, fetcher, { refreshInterval: 1000 });
+  const [review, setReview] = useState({});
   const reviewCnt = review ? Object.keys(review).length : 0;
+
+  useEffect(() => {
+    setReview(data);
+  }, [data]);
 
   console.log(review);
 
@@ -33,7 +35,7 @@ const ReviewContainer = (props: Props) => {
         <p>{reviewCnt} reviews</p>
       </div>
       <ul>
-        {review ? (
+        {Object.keys(review).length > 0 ? (
           Object.keys(review)
             .sort((a, b) => review[b].timestamp - review[a].timestamp)
             .map((key) => {
@@ -41,7 +43,7 @@ const ReviewContainer = (props: Props) => {
               return <Review key={key} review_id={key} {..._review} />;
             })
         ) : (
-          <>No review</>
+          <div className="text-center">No review</div>
         )}
       </ul>
     </div>

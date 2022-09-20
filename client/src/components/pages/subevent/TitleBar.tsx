@@ -9,6 +9,7 @@ const TitleBarWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 0;
+  padding-right: 28px;
 
   font-size: 1.5rem;
   font-weight: 600;
