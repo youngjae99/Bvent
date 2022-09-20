@@ -15,7 +15,6 @@ import UserAPI from '@/api/user';
 const MyPage = () => {
   const [userInfoState, setUserInfoState] = useRecoilState(userState);
   const { account } = useWeb3React();
-  const { connectMetamaskWallet } = useWallet();
   const router = useRouter();
   const { isSignIn } = userInfoState;
 
@@ -23,7 +22,6 @@ const MyPage = () => {
     async function handleLogin() {
       if (!isSignIn) {
         router.replace('/');
-        await connectMetamaskWallet();
 
         try {
           await axios.post(`/api/auth/login`, {

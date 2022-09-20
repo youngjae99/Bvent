@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import EventDetailCard from '@/components/pages/event/DetailedCard';
 import Selector from '@/components/Dropdown';
 import SearchBar from '@/components/pages/event/searchBar';
+import EventAPI from '@/api/event';
 
 type eventType = {
   event_start_time: string;
@@ -20,8 +21,8 @@ const Current: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('/api/tags/current');
-      setEvents(res.data);
+      const eventList = await EventAPI.getWithTags('current');
+      setEvents(eventList);
     };
     getEventData();
   }, []);

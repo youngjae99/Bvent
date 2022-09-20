@@ -129,7 +129,7 @@ const Tabs = () => {
                 <Swiper {...swiperSetting}>
                   {events &&
                     Object.keys(events)
-                      .filter((key) => events[key].event_tag === 'future')
+                      .filter((key) => events[key].event_tag === 'upcoming')
                       .map((key) => (
                         <SwiperSlide key={key}>
                           <EventCard key={key} event={events[key]} />

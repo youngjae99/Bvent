@@ -28,6 +28,8 @@ const WalletProvider = ({ children }: any) => {
 
   const prevAccount = useRef<string | null | undefined>(address);
 
+  console.log(networkActive);
+
   useEffect(() => {
     async function detectAccountChanged() {
       if (networkActive && address !== account?.toLocaleLowerCase()) {
@@ -60,12 +62,19 @@ const WalletProvider = ({ children }: any) => {
             router.push('/mypage?edit=true', '/mypage');
           } catch (error) {
             console.log(error);
+            setUserInfoState({
+              isSignIn: false,
+            });
           }
         }
       }
     }
     detectAccountChanged();
   }, [account]);
+
+  useEffect(() => {
+    console.log(activateNetwork, account);
+  }, [activateNetwork]);
 
   useEffect(() => {
     const connectorName = getItem(LocalStorageKey.CONNECTOR_NAME);
@@ -80,6 +89,12 @@ const WalletProvider = ({ children }: any) => {
       injectedConnector
         .isAuthorized()
         .then((isAuthorized) => {
+          if (!networkActive && !networkError) {
+            document.cookie = 'idToken=; Max-Age=-99999999;';
+            setUserInfoState({
+              isSignIn: false,
+            });
+          }
           if (isAuthorized && !networkActive && !networkError) {
             activateNetwork(injectedConnector);
           }
