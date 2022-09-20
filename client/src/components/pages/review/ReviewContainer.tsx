@@ -35,7 +35,7 @@ const ReviewContainer = (props: Props) => {
         <p>{reviewCnt} reviews</p>
       </div>
       <ul>
-        {Object.keys(review).length > 0 ? (
+        {review && Object.keys(review).length > 0 ? (
           Object.keys(review)
             .sort((a, b) => review[b].timestamp - review[a].timestamp)
             .map((key) => {
