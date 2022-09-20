@@ -5,8 +5,9 @@ interface User {
   bio?: string;
   username?: string;
   total_coin?: number;
-  profilePic?: string;
+  profile_pic?: string;
   isSignIn: boolean;
+  address?: string;
 }
 
 export const userState = atom<User>({

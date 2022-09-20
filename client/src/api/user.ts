@@ -49,5 +49,20 @@ const UserAPI = {
     );
     return data;
   },
+  updateProfilePic: async ({ file }: any) => {
+    const token = getCookie('idToken');
+    const formData = new FormData();
+    formData.append('profile_pic', file);
+    const { data } = await clientApi.post(
+      '/user/myself/profile_pic',
+      formData,
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    return data;
+  },
 };
 export default UserAPI;
