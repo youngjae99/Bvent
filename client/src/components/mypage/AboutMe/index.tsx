@@ -88,7 +88,7 @@ export const AboutMe = () => {
     bio = 'Bventer',
     username,
     total_coin = 0,
-    profilePic,
+    profile_pic,
     isSignIn,
   } = userInfoState;
 
@@ -106,7 +106,7 @@ export const AboutMe = () => {
     <StyledWrapper className="divide-white divide-y">
       <div className="flex justify-between pl-3 items-end max-w-full">
         <Profile.Primary>
-          <Profile.Primary.Image editMode />
+          <Profile.Primary.Image editMode src={profile_pic}/>
           <Profile.Primary.Info>
             <div className="title2 text-white">
               {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
