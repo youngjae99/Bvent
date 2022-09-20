@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /mypage
+
+# Host
+Host: https://www.bventday.xyz
+
+# Sitemaps
+Sitemap: https://www.bventday.xyz/sitemap.xml
