@@ -154,7 +154,9 @@ const Review = (props: any) => {
     <div className="flex flex-col mb-3">
       <UserInfoWrapper userAddress={walletAddress} timestamp={timestamp} />
       <div className="ml-12">
-        <p style={{ whiteSpace: 'pre-line', wordBreak: "break-all" }}>{review_content}</p>
+        <p style={{ whiteSpace: 'pre-line', wordBreak: 'break-all' }}>
+          {review_content}
+        </p>
       </div>
       {!hideUpDown && <UpDownWrapper review_id={review_id} likes={likes} />}
     </div>
