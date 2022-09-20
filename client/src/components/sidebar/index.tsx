@@ -18,7 +18,7 @@ import UserAPI from '@/api/user';
 type Props = any;
 
 const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
-  <a className="block mt-1 first:mt-0 cursor-pointer outline-none" href={href}>
+  <div className="block mt-1 first:mt-0 cursor-pointer outline-none">
     <li
       onClick={onClick}
       className={`border-pink border-solid text-white py-4 px-4 rounded-xl ${
@@ -27,13 +27,23 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
           : 'border-0 hover:bg-white hover:bg-opacity-10 transition-all'
       }`}
     >
-      <div className="flex w-full items-center justify-end">
-        <div className="body text-right text-gray-400 m-0 w-full">
-          {children}
+      {href ? (
+        <Link href={href}>
+          <div className="flex w-full items-center justify-end">
+            <div className="body text-right text-gray-400 m-0 w-full">
+              {children}
+            </div>
+          </div>
+        </Link>
+      ) : (
+        <div className="flex w-full items-center justify-end">
+          <div className="body text-right text-gray-400 m-0 w-full">
+            {children}
+          </div>
         </div>
-      </div>
+      )}
     </li>
-  </a>
+  </div>
 );
 
 export const Sidebar = (props: Props) => {
@@ -54,20 +64,7 @@ export const Sidebar = (props: Props) => {
   const handleLogin = async () => {
     await connectMetamaskWallet();
 
-    try {
-      await axios.post(`/api/auth/login`, {
-        username: account,
-      });
-      const userInfo = await UserAPI.getMyInfo();
-      setUserInfoState({
-        ...userInfo,
-        isSignIn: true,
-      });
-    } catch (error) {
-      await axios.post(`/api/auth/register`, {
-        username: account,
-        address: account,
-      });
+    if (account) {
       try {
         await axios.post(`/api/auth/login`, {
           username: account,
@@ -77,10 +74,25 @@ export const Sidebar = (props: Props) => {
           ...userInfo,
           isSignIn: true,
         });
-
-        router.push('/mypage?edit=true', '/mypage');
       } catch (error) {
-        console.log(error);
+        await axios.post(`/api/auth/register`, {
+          username: account,
+          address: account,
+        });
+        try {
+          await axios.post(`/api/auth/login`, {
+            username: account,
+          });
+          const userInfo = await UserAPI.getMyInfo();
+          setUserInfoState({
+            ...userInfo,
+            isSignIn: true,
+          });
+
+          router.push('/mypage?edit=true', '/mypage');
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -159,21 +171,21 @@ export const Sidebar = (props: Props) => {
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
-                                <a href="/upcoming">
+                                <Link href="/upcoming">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Upcoming
                                   </div>
-                                </a>
-                                <a href="/current">
+                                </Link>
+                                <Link href="/current">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Current
                                   </div>
-                                </a>
-                                <a href="/past">
+                                </Link>
+                                <Link href="/past">
                                   <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
                                     Past
                                   </div>
-                                </a>
+                                </Link>
                               </Disclosure.Panel>
                             </div>
                           )}
