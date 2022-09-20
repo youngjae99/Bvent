@@ -152,7 +152,7 @@ export const Sidebar = (props: Props) => {
                       </span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
-                      <MenuItem href="/" selected>
+                      <MenuItem href="/" selected onClick={() => setShow(!show)}>
                         Home
                       </MenuItem>
                       <MenuItem onClick={isSignIn ? handleLogout : handleLogin}>
@@ -162,7 +162,7 @@ export const Sidebar = (props: Props) => {
                         <Disclosure>
                           {({ open }) => (
                             <div className="grid gap-5">
-                              <Disclosure.Button className="w-full flex justify-end gap-2 items-center">
+                              <Disclosure.Button className="w-full flex justify-end gap-2 items-center focus:outline-none">
                                 <span>Events</span>
                                 <ChevronRightIcon
                                   className={`${
@@ -172,17 +172,17 @@ export const Sidebar = (props: Props) => {
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
                                 <Link href="/upcoming">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Upcoming
                                   </div>
                                 </Link>
                                 <Link href="/current">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Current
                                   </div>
                                 </Link>
                                 <Link href="/past">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary">
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
                                     Past
                                   </div>
                                 </Link>
@@ -191,7 +191,7 @@ export const Sidebar = (props: Props) => {
                           )}
                         </Disclosure>
                       </MenuItem>
-                      <MenuItem href="/mypage">My page</MenuItem>
+                      <MenuItem href="/mypage" onClick={() => setShow(!show)}>My page</MenuItem>
                     </ul>
                     <TimezoneBox />
                   </div>
