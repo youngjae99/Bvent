@@ -2,7 +2,7 @@ import UserAPI from '@/api/user';
 import { userState } from '@/recoil/atoms/user';
 import { Menu, Transition } from '@headlessui/react';
 import React, { ChangeEvent, ReactNode, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 interface PrimaryProps {
   children: ReactNode;
@@ -25,9 +25,8 @@ const Image = ({
   src = '/icons/default-profile-icon.svg',
   editMode,
 }: ImageProps) => {
-  const [userInfoState, setUserInfoState] = useRecoilState(userState);
+  const setUserInfoState = useSetRecoilState(userState);
   const ref = useRef<HTMLInputElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
 
   const image =
     src === '/icons/default-profile-icon.svg'
