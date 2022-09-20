@@ -49,8 +49,9 @@ export const useWallet = () => {
 
   const disconnectWallet = () => {
     try {
-      deactivate();
+      document.cookie = 'idToken=; Max-Age=-99999999;';
       setItem(LocalStorageKey.CONNECTOR_NAME, 'null');
+      deactivate();
     } catch (e) {
       // do nothing
     }
