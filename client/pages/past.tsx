@@ -6,6 +6,7 @@ import EventDetailCard from '@/components/pages/event/DetailedCard';
 import Selector from '@/components/Dropdown';
 import {Event as EventType} from '@/types/event';
 import SearchBar from '@/components/pages/event/searchBar';
+import EventAPI from '@/api/event';
 
 const defaultValue = [];
 
@@ -15,8 +16,8 @@ const Past: React.FC = () => {
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('/api/tags/past');
-      setEvents(res.data);
+      const eventList = await EventAPI.getWithTags('past');
+      setEvents(eventList);
     };
     getEventData();
   }, []);

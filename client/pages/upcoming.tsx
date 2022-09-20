@@ -5,14 +5,15 @@ import Layout from '@/components/Layout';
 import EventDetailCard from '@/components/pages/event/DetailedCard';
 import Selector from '@/components/Dropdown';
 import SearchBar from '@/components/pages/event/searchBar';
+import EventAPI from '@/api/event';
 
 const Upcoming: React.FC = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const getEventData = async () => {
-      const res = await axios.get('/api/tags/future');
-      setEvents(res.data);
+      const eventList = await EventAPI.getWithTags('upcoming');
+      setEvents(eventList);
     };
     getEventData();
   }, []);

@@ -1,4 +1,4 @@
-import { clientApi }  from './axios';
+import { clientApi } from './axios';
 
 const EventAPI = {
   getAll: async () => {
@@ -7,6 +7,10 @@ const EventAPI = {
   },
   getByTitle: async ({ eventTitle }) => {
     const { data } = await clientApi.get(`/events/${eventTitle}`);
+    return data;
+  },
+  getWithTags: async (tags: string) => {
+    const { data } = await clientApi.get(`/events?tags=${tags}`);
     return data;
   },
   getEventByTitle: async (eventTitle: string) => {
