@@ -8,7 +8,7 @@ import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
-import Profile from '../Profile';
+import Profile from '@/components/Profile';
 import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
 import { useRouter } from 'next/router';
