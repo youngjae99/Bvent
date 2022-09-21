@@ -42,25 +42,24 @@ def register():
     # forgot to set the MIME type to 'application/json'
     #print ('data from client:', request)
     params = request.get_json()
-    username = params["username"]
+    #username = params["username"]
     address  = params["address"]
-    password = ""
-    try:
-      password = "wallet"
-      username += default_domain
-      user = auth.create_user_with_email_and_password(username, password)
-      from helper import sanitize
-      sanitized_username = sanitize(username).lower()
-      initial_data = {
-        "username": "bventer",
-        "address": sanitized_username,
-        "profile_pic": 0,
-        "coins": 0,
-        "like_left": 5
-      }
-      db.child("users").child(sanitized_username).set(initial_data)
-    except:
-      return jsonify({'error': 'Incorrect username or password'}), 400
+    password = "wallet"
+    wallet_domain = address + default_domain
+    user = auth.create_user_with_email_and_password(wallet_domain, password)
+
+    from helper import sanitize
+    initial_data = {
+      "username": "bventer",
+      "address": address,
+      "profile_pic": 0,
+      "total_coin": 0,
+      "likes_left": 5
+    }
+    is_previous = db.child("users").child(address.lower()).get().val()
+    if is_previous is not None:
+      return jsonify({"status": "error: address {} already exists".format(address)}), 403
+    db.child("users").child(address.lower()).set(initial_data)
     return jsonify(user)
 
 @bp.route("/login", methods=("GET", "POST"))
@@ -80,9 +79,8 @@ def login():
     print(request.data)
     params = json.loads(request.data, strict=False)
     username = params["username"]
-    password = ""
+    password = "wallet"
     try:
-      password = "wallet"
       username += default_domain
       user = auth.sign_in_with_email_and_password(username, password)
       session["idToken"] = user["idToken"]

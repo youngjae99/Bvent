@@ -83,7 +83,7 @@ def get_or_post_review():
       event_id = params["event_id"]
       event_info = db.child("events").order_by_child("event_id").equal_to(event_id).get().val()
       event_info = list(json.loads(json.dumps(event_info)).keys())
-      print(event_info, event_id, type(event_id))
+      #print(event_info, event_id, type(event_id))
       event_title = event_info[0]
 
     if is_json_key_present(params, "event_id"):
@@ -94,21 +94,16 @@ def get_or_post_review():
     #print (subevent_id, event_id)
     
     from helper import sanitize
-    sanitized_username = sanitize(user_address)
-    sepUsername = sanitized_username.split(' ')
-    if (sepUsername[1] != "my" or sepUsername[2] != "wallet"):
-      return {
-        "status": "error",
-        "message": "User must have a 'wallet'.",
-      }, 400
+    s_username = sanitize(user_address).split(' ')[0].lower()
 
+    print(s_username, db.child("users").child(s_username).get().val())
     data = {
       "review_content" : review_content,
       "event_title" : event_title,
       "subevent_id" : subevent_id,
       "event_id": event_id,
       "timestamp" : timestamp,
-      "username" : db.child("users").child(sanitized_username).get().val()["username"],  
+      "username" : db.child("users").child(s_username).get().val()["username"],  
       "walletAddress" : user_address.split('@')[0],  
       "txHash" : "updating"
     }
@@ -117,7 +112,7 @@ def get_or_post_review():
       res = db.child("reviews").push(data) #creates a unique key for the user 
       review_id = res["name"]
       #keep track of which user wrote which comment
-      db.child("users").child(sanitized_username).child("reviews").child(review_id).set(timestamp)
+      db.child("users").child(s_username).child("reviews").child(review_id).set(timestamp)
 
       #queue up token in incomplete 
     except:
@@ -140,7 +135,7 @@ def get_or_post_review():
       queue_data = {
         "review_id": review_id,
         "reward_type": reward_type,
-        "wallet_address": sepUsername[0],
+        "wallet_address": s_username,
         "event_title": event_title,
         "subevent_id": subevent_id
       }

@@ -26,12 +26,25 @@
     <h1>Token Queue Admin Page </h1>
     <label for="admin_pw">Admin PW:</label><br>
     <input type="text" id = "admin_pw"><br><br>
+    <button id = "btn_reset_user_like_left" onclick="resetUserLikeLeft(this)"> 
+      Reset <b>all</b> user's likes_left (do this every day)
+     </button><br>
     <h3>Review Data</h3>
     <div id="reviewData">
 
     </div>
     <br>
-    <br>
+    <div>
+      <b>Note:</b> Click the button under review_id for info on review.<br>
+      <br>
+      Color legend: 
+      <ul>
+        <li>Gray: Not clicked Yet</li>
+        <li>Red: Recommened Deny (review len not sufficent)</li>
+        <li>Yellow: Wait needed (review len sufficent, but no likes)</li>
+        <li>Green: Recommend Approval (review len sufficent, likes exist)</li>
+      </ul>
+    </div><br>
 
     <table id ="myTable">
       <thead>
@@ -71,13 +84,51 @@
     if (mode === "production") {
       base_url = "https://api.bventdao.xyz"
     }
-    
+
+    function resetUserLikeLeft(e) {
+      admin_pw = document.getElementById("admin_pw").value
+      $.ajax({
+        url: `${base_url}/user/reset_user_likes_left` + `?admin_pw=${admin_pw}`,
+        success: function (data) {
+          alert(JSON.stringify(data))
+          console.log(data)
+        },
+        error: function (data) {
+          alert(data)
+        },
+        type: "UPDATE",          
+        xhrFields: {
+          withCredentials: true
+        },
+      });
+    }
+
     function getReview(e) {
       $.ajax({
         url: `${base_url}/review/` + e.id,
         success: function (data) {
-          alert(JSON.stringify(data))
-          console.log(data)
+          review_str = JSON.stringify(data)
+          has_like = "no"
+          has_review_len = "no"
+          final_color = "red"
+
+          review_json = JSON.parse(review_str)
+          console.log(review_json)
+
+          if (review_json.hasOwnProperty('review_content')) {
+            review_len = review_json['review_content'].length
+            if (review_len >= 5) {
+              has_review_len = `yes, it is ${review_len} char long`
+              final_color = "yellow"
+            }
+          } 
+          if (review_json.hasOwnProperty('likes') && final_color == "yellow") {
+            e.style.backgroundColor = "blue"
+          } 
+          
+          e.style.backgroundColor = final_color
+          alert(`Review Has Like: ${has_like}\nReview is 5 char+: ${has_review_len}`)
+
           $('#reviewData').text(JSON.stringify(data));
         },
         error: function (data) {

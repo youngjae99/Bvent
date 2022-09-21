@@ -19,17 +19,20 @@ bp = Blueprint("event", __name__, url_prefix="/events")
 def get_events_slash():
   """
   Show all events 
-  """
-  if request.method == "GET":
-    print("tags", request.args.get('tags'))
-    if (request.args.get('tags') is not None):
-      
+  """    
+  if (request.args.get('tags') is not None):
+    try:
       tags = request.args.get('tags')
-      reviews = db.child("eventtags").child(tags).get()
-      return reviews.val(), 200
+      
+      reviews = db.child("eventtags").child(tags).get().val()
+      if reviews is None:
+        reviews = {}
+      return reviews, 200
+    except: #tag doesn't exist
+      return {}, 200
+  else:
     reviews = db.child("events").get()
     return reviews.val(), 200
-
 @bp.route("/<event_title>", methods=["GET"])
 
 def event_info(event_title):

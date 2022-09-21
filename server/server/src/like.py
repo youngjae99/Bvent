@@ -42,6 +42,8 @@ def get_or_post_review():
   like_type = params['like_type']
   review_info = db.child("reviews").child(review_id).get().val()
   subevent_id = review_info['subevent_id']
+  if subevent_id == "-1":
+    return "needs to be a subevent: like not authroized", 403
   like_value = 1
   if (like_type != "like" and like_type != "dislike"):
     return "invalid method, need to be like or dislike", 404
@@ -50,10 +52,9 @@ def get_or_post_review():
   if (like_type == "dislike"):
     like_value = -1
   
-  print()
   #1. Check if user owns this review OR user already liked review
   #checking is owner. if is_owner is not None, then owner, v.v.
-  s_username = sanitize(user_address)
+  s_username = sanitize(user_address).split(' ')[0]
   is_owner = db.child("users").child(s_username).child("reviews").child(review_id).get().val()
   if (is_owner is not None):
     return {"status": "You are the owner"}, 200
@@ -95,15 +96,19 @@ def get_or_post_review():
 
     #after updating comment token pool, provide reward
     wallet_address = s_username.split()[0]
-    print("reward commenter", wallet_address)
+    # print("reward commenter", wallet_address)
     pool = db.child("subevents").child(subevent_id).child("commenter_reward").get().val()
+    #print(db.child("subevents").child(subevent_id).get().val(), subevent_id, pool)
     reward_amount = float(pool) * portion
     reward = reward_amount
     pool = float(pool) - reward_amount
     db.child("subevents").child(subevent_id).update({"commenter_reward": pool})  
+
     thread = Thread(target=t_receive_tx_and_update, 
-                    args=(db, reward_amount, wallet_address, review_id,))
+                    args=(db, "like", reward_amount, wallet_address, review_id))
     thread.daemon = True
     thread.start()
+
+    #update total_coin of user
 
   return {"status": "like complete!", "reward": reward}, 200

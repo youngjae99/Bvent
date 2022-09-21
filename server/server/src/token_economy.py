@@ -35,7 +35,7 @@ def remove_queue_item(queue_id):
 @bp.route("/provide_reward", methods=["POST"])
 def provide_reward():
   params = request.get_json()
-  print("params", params)
+  #print("params", params)
   admin_pw = params["admin_pw"]
   queue_id = params["queue_id"]
   if (admin_pw != token_economy_admin_pw):
@@ -59,27 +59,27 @@ def reward(queue_id):
     pool = db.child("subevents").child(subevent_id).child("reviewer_reward").get().val()
     #print("pool", pool)
     reward_amount = float(pool) * portion
-    pool = pool - reward_amount
+    pool = float(pool) - reward_amount
     db.child("subevents").child(subevent_id).update({"reviewer_reward": pool})  
     thread = Thread(target=t_receive_tx_and_update, 
-                    args=(db, reward_amount, wallet_address, review_id,))
+                    args=(db, reward_type, reward_amount, wallet_address, review_id,))
     thread.daemon = True
     thread.start()
     return reward_amount
   elif reward_type == "researcher":
-    print("reward researcher", wallet_address, review_id)
+    #print("reward researcher", wallet_address, review_id)
     pool = db.child("subevents").child(subevent_id).child("researcher_reward").get().val()
     reward_amount = float(pool) * portion
-    pool = pool - reward_amount
+    pool = float(pool) - reward_amount
     db.child("subevents").child(subevent_id).update({"researcher_reward": pool})
     thread = Thread(target=t_receive_tx_and_update, 
-                    args=(db, reward_amount, wallet_address, review_id,))
+                    args=(db, reward_type, reward_amount, wallet_address, review_id,))
     thread.daemon = True
     thread.start()
     return reward_amount
   else:
     print("reward_type", reward_type)
-    return - 1
+    return -1
 
 @bp.route("", methods=["GET"])
 def get_token_economy_admin_page():

@@ -38,16 +38,6 @@ def index():
         return f'Logged in as {session["userToken"]}', 200
     return 'You are not logged in', 200
 
-@app.route("/events", methods=["GET"])
-@cross_origin()
-def get_events():
-  """
-  Show all events 
-  """
-  if request.method == "GET":
-    reviews = db.child("events").get()
-    return reviews.val(), 200
-
 @app.after_request
 def creds(response):
     response.headers['Access-Control-Allow-Credentials'] = 'true'

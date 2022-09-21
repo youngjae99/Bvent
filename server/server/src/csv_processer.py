@@ -44,8 +44,8 @@ def process_events():
       "event_img" : line[5],
       "event_tag" : line[6]
     }  
-    db.child("events").child(sanitized_title).set(event_data) #creates a unique key for the user 
-    db.child("eventtags").child(line[6]).child(sanitized_title).set(event_data)
+    db.child("events").child(sanitized_title).update(event_data) #creates a unique key for the user 
+    db.child("eventtags").child(line[6]).child(sanitized_title).update(event_data)
   csv1.close()
 
 def process_event_review():
@@ -89,7 +89,7 @@ def process_event_review():
       "subevent_time" : new_time
     }
   
-    db.child("subevents").child(line[0]).set(subevent_data) #creates a unique key for the user 
+    db.child("subevents").child(line[0]).update(subevent_data) #creates a unique key for the user 
   csv2.close()
 
 def check_js2py():
@@ -116,6 +116,6 @@ def check_js2py():
       print("empty line")
 
 if __name__ == "__main__":
-  #process_events()
-  process_event_review()
+  process_events()
+  #process_event_review()
     
