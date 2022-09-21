@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import axios from 'axios';
-import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { useWallet } from '@/hook/useWallet';
@@ -164,25 +164,25 @@ export const Sidebar = (props: Props) => {
                             <div className="grid gap-5">
                               <Disclosure.Button className="w-full flex justify-end gap-2 items-center focus:outline-none">
                                 <span>Events</span>
-                                <ChevronRightIcon
+                                <ChevronDownIcon
                                   className={`${
-                                    open ? 'rotate-90 transform' : ''
+                                    open ? 'rotate-180 transform' : ''
                                   } h-4`}
                                 />
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
                                 <Link href="/upcoming">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary hover:text-white transition-all" onClick={() => setShow(!show)}>
                                     Upcoming
                                   </div>
                                 </Link>
                                 <Link href="/current">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary hover:text-white transition-all" onClick={() => setShow(!show)}>
                                     Current
                                   </div>
                                 </Link>
                                 <Link href="/past">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary hover:text-white transition-all" onClick={() => setShow(!show)}>
                                     Past
                                   </div>
                                 </Link>

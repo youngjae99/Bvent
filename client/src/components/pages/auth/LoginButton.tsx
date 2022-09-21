@@ -5,6 +5,7 @@ import { useWallet } from '@/hook/useWallet';
 import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import UserAPI from '@/api/user';
 
 const SignInWrapper = ({ onClick, active, children }: any) => {
   if (active) {
@@ -14,7 +15,7 @@ const SignInWrapper = ({ onClick, active, children }: any) => {
         onClick={onClick}
       >
         <div className="flex items-center">
-          <p className="ml-3 text-lg">{children}</p>
+          <p className="mx-3 text-lg">{children}</p>
         </div>
       </div>
     );
@@ -25,7 +26,7 @@ const SignInWrapper = ({ onClick, active, children }: any) => {
         onClick={onClick}
       >
         <div className="flex items-center">
-          <p className="ml-3 text-lg">{children}</p>
+          <p className="mx-3 text-lg">{children}</p>
         </div>
       </div>
     );
@@ -36,7 +37,8 @@ const AccountWrapper = styled.div`
   font-size: 1.2rem;
 `;
 
-export const LoginButton = () => {
+export const LoginButton = (props: any) => {
+  const { onSuccess } = props;
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
   const { active, account, connector, chainId } = useWeb3React();
   const router = useRouter();
@@ -49,6 +51,9 @@ export const LoginButton = () => {
         await axios.post(`/api/auth/login`, {
           username: account,
         });
+        const userInfo = await UserAPI.getMyInfo();
+        onSuccess();
+        console.log("success", userInfo);
       } catch (error) {
         await axios.post(`/api/auth/register`, {
           username: account,
@@ -58,7 +63,7 @@ export const LoginButton = () => {
           await axios.post(`/api/auth/login`, {
             username: account,
           });
-
+          const userInfo = await UserAPI.getMyInfo();
           router.push('/mypage?edit=true', '/mypage');
         } catch (error) {
           console.log(error);

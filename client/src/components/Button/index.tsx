@@ -9,6 +9,7 @@ interface ButtonProps extends IButton {
   className?: string;
   outlined?: boolean;
   disabled?: boolean;
+  bgColor?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,13 +17,14 @@ const Button: React.FC<ButtonProps> = ({
   children,
   outlined,
   disabled,
+  bgColor,
   ...rest
 }: ButtonProps) => {
   if (disabled) {
     return (
       <button
         disabled={true}
-        className={`disabled py-2 px-4 rounded-lg bg-gray-400 font-bold outline-none ring-opacity-75 text-white text-lg cursor-default`}
+        className={`disabled py-2 px-4 rounded-lg bg-gray-400 outline-none ring-opacity-75 text-white text-lg cursor-default`}
         {...rest}
       >
         {children}
@@ -41,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
   }
   return (
     <button
-      className={`py-2 px-4 rounded-lg bg-primary font-bold hover:bg-primary-dark outline-none ring-opacity-75 text-white text-lg ${className} transition-color duration-300`}
+      className={`py-2 px-4 rounded-lg bg-${bgColor ? bgColor : 'primary'} hover:bg-${bgColor ? bgColor : 'primary'}-dark outline-none ring-opacity-75 text-white text-lg ${className} transition-color duration-300`}
       {...rest}
     >
       {children}

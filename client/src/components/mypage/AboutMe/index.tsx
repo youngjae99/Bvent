@@ -5,7 +5,11 @@ import styled from 'styled-components';
 import Profile from '@/components/Profile';
 import { formatAccount } from '@/utils/wallet';
 import { Disclosure } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  CircleStackIcon,
+  WalletIcon,
+} from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
 import UserAPI from '@/api/user';
 import { useRouter } from 'next/router';
@@ -18,6 +22,17 @@ const StyledWrapper = styled.div`
   display: grid;
   gap: 20px;
 `;
+
+const StyledInfoWrapper = ({ children }: any) => {
+  return (
+    <div
+      className="py-5 pl-4 pr-5 rounded-2xl flex justify-between body items-center"
+      style={{ border: '1px solid rgba(84, 84, 88, 0.65)' }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const RequiredBox = styled.div`
   width: fit-content;
@@ -48,26 +63,26 @@ const Input = ({ placeholder, limit, initial }: any, ref) => {
   return (
     <div
       className={`${
-        value ? 'border-pink' : 'border-gray'
-      } pt-5 pb-2 px-4 border rounded-2xl transition-border relative h-14`}
+        value ? 'border-none' : 'border-primary'
+      } pt-8 pb-4 px-4 h-18 border rounded-2xl transition-border relative bg-darkgray`}
       onClick={() => {
         ref.current.focus();
       }}
     >
       <div
-        className={`border-pink absolute top-4 left-4 origin-top-left transform transition-all ${
-          value && 'scale-75 -translate-y-2 text-pink'
+        className={`border-pink absolute top-8 left-4 origin-top-left transform transition-all ${
+          value && 'scale-75 -translate-y-6 text-xl text-primary peer-focus:text-pink'
         }`}
       >
         {placeholder}
       </div>
-      {limit && (
-        <div className="border-gray absolute top-4 right-4 transform scale-75 -translate-y-2">
+      {limit && value && (
+        <div className="border-gray absolute top-4 right-4 transform scale-75 -translate-y-2 text-gray">
           {value.length}/{limit}
         </div>
       )}
       <input
-        className="w-full"
+        className="peer w-full text-xl"
         ref={ref}
         onChange={(e) => {
           if (e.target.value.length <= 50) {
@@ -103,10 +118,10 @@ export const AboutMe = () => {
   }, [router.query]);
 
   return (
-    <StyledWrapper className="divide-white divide-y">
+    <StyledWrapper className="divide-gray divide-y">
       <div className="flex justify-between pl-3 items-end max-w-full">
         <Profile.Primary>
-          <Profile.Primary.Image editMode src={profile_pic}/>
+          <Profile.Primary.Image editMode src={profile_pic} />
           <Profile.Primary.Info>
             <div className="title2 text-white">
               {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}
@@ -117,7 +132,8 @@ export const AboutMe = () => {
           </Profile.Primary.Info>
         </Profile.Primary>
         <Button
-          className="h-11"
+          // className="h-11"
+          bgColor={editMode ? 'primary' : 'darkgray'}
           onClick={async () => {
             try {
               if (editMode && bioRef.current) {
@@ -157,21 +173,24 @@ export const AboutMe = () => {
           </>
         ) : (
           <>
-            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body items-center">
+            <StyledInfoWrapper>
               <span className="flex gap-3 items-center">
-                <img src="/icons/coin.svg" />
+                <CircleStackIcon className="w-5 h-5" />
                 <span>Total Rewards</span>
               </span>
               <span className="text-pink headline">{total_coin}</span>
-            </div>
-            <div className="py-5 px-4 border border-gray rounded-2xl">
+            </StyledInfoWrapper>
+            <StyledInfoWrapper>
               <Disclosure>
                 {({ open }) => (
-                  <div className="grid gap-5">
+                  <div className="grid gap-5 w-full">
                     <Disclosure.Button className="w-full flex justify-between items-center">
-                      <span>My wallet</span>
-                      <ChevronRightIcon
-                        className={`${open ? 'rotate-90 transform' : ''} h-4`}
+                      <span className="flex gap-3 items-center">
+                        <WalletIcon className="w-5 h-5" />
+                        <span>My wallet</span>
+                      </span>
+                      <ChevronDownIcon
+                        className={`${open ? 'rotate-180 transform' : ''} h-4 transition-all`}
                       />
                     </Disclosure.Button>
                     <Disclosure.Panel className="w-full grid gap-1">
@@ -181,8 +200,8 @@ export const AboutMe = () => {
                   </div>
                 )}
               </Disclosure>
-            </div>
-            <div className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body items-center">
+            </StyledInfoWrapper>
+            <StyledInfoWrapper className="py-5 pl-4 pr-5 border border-gray rounded-2xl flex justify-between body items-center">
               <span>Review History</span>
               <img
                 className="cursor-pointer"
@@ -193,7 +212,7 @@ export const AboutMe = () => {
                 width={12}
                 height={12}
               />
-            </div>
+            </StyledInfoWrapper>
           </>
         )}
       </div>
