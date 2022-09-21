@@ -3,7 +3,7 @@ module.exports = {
   siteUrl: 'https://www.bventday.xyz',
   generateRobotsTxt: true, // (optional)
   sitemapSize: 7000,
-  exclude: ['/mypage'],
+  exclude: ['/mypage', '/server-sitemap.xml'],
   robotsTxtOptions: {
     policies: [
       {
@@ -12,5 +12,6 @@ module.exports = {
         disallow: ['/mypage'],
       },
     ],
+    additionalSitemaps: ['https://www.bventdao.xyz/server-sitemap.xml'],
   },
 };
