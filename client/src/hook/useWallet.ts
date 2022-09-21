@@ -75,7 +75,7 @@ export const useWallet = () => {
             params: [{ chainId: WALLET_SUPPORT_HEX }],
           })
           .catch(() => {
-            console.log('error');
+            console.error('error');
           });
       }
     }
