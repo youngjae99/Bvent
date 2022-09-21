@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://www.bventday.xyz',
+  siteUrl: 'https://www.bventdao.xyz',
   generateRobotsTxt: true, // (optional)
   sitemapSize: 7000,
   exclude: ['/mypage', '/server-sitemap.xml'],
