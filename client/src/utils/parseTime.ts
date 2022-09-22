@@ -122,8 +122,3 @@ export const getOriginTime = (time): any => {
   const parsedTime = new Date(parseInt(time));
   return parsedTime.toLocaleString();
 };
-
-// const changeTimezone = (date, ianatz):any => {
-//   const invdate = new Date(parseInt(time));
-//   return new Date(date.getTime())
-// }

@@ -11,6 +11,7 @@ export interface Event {
 
 export interface Subevent {
   event_title: string;
+  subevent_title: string;
   subevent_date: string;
   subevent_id: string;
   subevent_img: string;
