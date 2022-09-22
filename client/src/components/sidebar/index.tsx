@@ -1,23 +1,27 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import axios from 'axios';
-import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
 import { useWallet } from '@/hook/useWallet';
 import { useWeb3React } from '@web3-react/core';
 import Profile from '@/components/Profile';
-import { formatAccount } from '@/utils/wallet';
 import TimezoneBox from './TimezoneBox';
 import { useRouter } from 'next/router';
 import { userState } from '@/recoil/atoms/user';
 import UserAPI from '@/api/user';
 
-type Props = any;
+interface MenuItem {
+  href?: string;
+  onClick?: () => void;
+  selected?: boolean;
+  children: ReactNode;
+}
 
-const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
+const MenuItem = ({ href, onClick, selected = false, children }: MenuItem) => (
   <div className="block mt-1 first:mt-0 cursor-pointer outline-none">
     <li
       onClick={onClick}
@@ -46,7 +50,7 @@ const MenuItem = ({ href, onClick, selected, children, menu }: any) => (
   </div>
 );
 
-export const Sidebar = (props: Props) => {
+export const Sidebar: React.FC = () => {
   const [userInfoState, setUserInfoState] = useRecoilState(userState);
   const {
     bio = 'Bventer',
@@ -125,6 +129,7 @@ export const Sidebar = (props: Props) => {
               <Dialog.Panel as={Fragment}>
                 <div className="flex h-full flex-col px-3.5 py-5 erflow-y-scroll bg-darkgray shadow-xl rounded-l-2xl">
                   <div>
+                    {/* FIXME(aaron): change this icon to XMarkIcon */}
                     <img
                       className="cursor-pointer"
                       src="/icons/close.svg"
@@ -152,7 +157,11 @@ export const Sidebar = (props: Props) => {
                       </span>
                     </div>
                     <ul className="f-m-m flex-1 mt-5">
-                      <MenuItem href="/" selected onClick={() => setShow(!show)}>
+                      <MenuItem
+                        href="/"
+                        selected
+                        onClick={() => setShow(!show)}
+                      >
                         Home
                       </MenuItem>
                       <MenuItem onClick={isSignIn ? handleLogout : handleLogin}>
@@ -172,17 +181,26 @@ export const Sidebar = (props: Props) => {
                               </Disclosure.Button>
                               <Disclosure.Panel className="w-full flex justify-end gap-2.5">
                                 <Link href="/upcoming">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div
+                                    className="body rounded-lg border border-gray p-4 hover:bg-primary"
+                                    onClick={() => setShow(!show)}
+                                  >
                                     Upcoming
                                   </div>
                                 </Link>
                                 <Link href="/current">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div
+                                    className="body rounded-lg border border-gray p-4 hover:bg-primary"
+                                    onClick={() => setShow(!show)}
+                                  >
                                     Current
                                   </div>
                                 </Link>
                                 <Link href="/past">
-                                  <div className="body rounded-lg border border-gray p-4 hover:bg-primary" onClick={() => setShow(!show)}>
+                                  <div
+                                    className="body rounded-lg border border-gray p-4 hover:bg-primary"
+                                    onClick={() => setShow(!show)}
+                                  >
                                     Past
                                   </div>
                                 </Link>
@@ -191,7 +209,9 @@ export const Sidebar = (props: Props) => {
                           )}
                         </Disclosure>
                       </MenuItem>
-                      <MenuItem href="/mypage" onClick={() => setShow(!show)}>My page</MenuItem>
+                      <MenuItem href="/mypage" onClick={() => setShow(!show)}>
+                        My page
+                      </MenuItem>
                     </ul>
                     <TimezoneBox />
                   </div>

@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import axios from 'axios';
 
+import { useWeb3React } from '@web3-react/core';
 import Layout from '@/components/Layout';
 import TitleBar from '@/components/pages/subevent/TitleBar';
 import { AboutMe } from '@/components/mypage/AboutMe';
-import { useRecoilState } from 'recoil';
 import { userState } from '@/recoil/atoms/user';
-import { useWeb3React } from '@web3-react/core';
-import { useRouter } from 'next/router';
-import { useWallet } from '@/hook/useWallet';
-import axios from 'axios';
 import UserAPI from '@/api/user';
 
 const MyPage = () => {

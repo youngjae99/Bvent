@@ -1,32 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
 
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Logo from '@/components/logo';
 import { sidebarShowState } from '@/recoil/atoms/sidebar';
-import { timezoneState } from '@/recoil/atoms/timezone';
-import { NodeNextRequest } from 'next/dist/server/base-http/node';
 
-const MenuItem = ({ _timezone }: any) => {
-  const [timezone, setTimezone] = useRecoilState(timezoneState);
-
-  if (_timezone === timezone) {
-    return <p className="text-red-600 cursor-pointer">{_timezone}</p>;
-  }
-  return (
-    <p
-      className="text-white cursor-pointer"
-      onClick={() => setTimezone(_timezone)}
-    >
-      {_timezone}
-    </p>
-  );
-};
 
 export const Header = () => {
   const [show, setShow] = useRecoilState(sidebarShowState);
-  const [profile, setProfile] = useState(false);
   return (
     <div className="text-center fixed top-0 max-w-mobile w-full z-10">
       <nav

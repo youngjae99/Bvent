@@ -2,7 +2,7 @@ export * from './common';
 export * from './dark';
 export * from './light';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from './dark';
@@ -23,7 +23,7 @@ export const useTheme = () => {
   };
 };
 
-export const StyledThemeProvider = ({ children }: any) => {
+export const StyledThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = React.useState('light');
 
   const toggle = () => {

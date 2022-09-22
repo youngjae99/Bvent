@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NextSeo } from 'next-seo';
@@ -12,9 +12,14 @@ import ReviewContainer from '@/components/pages/review/ReviewContainer';
 import FloatingContainer from '@/components/pages/subevent/FloatingContainer';
 import NewReviewButton from '@/components/pages/subevent/NewReviewButton';
 import NewReviewWrapper from '@/components/pages/review/NewReviewWrapper';
+import { Subevent as SubeventType } from '@/types/event';
 
-const SubEvent: React.FC = (props) => {
-  const { data, meta }: any = props;
+interface Props {
+  data: SubeventType;
+}
+
+const SubEvent: React.FC<Props> = (props: Props) => {
+  const { data } = props;
   const eventInfo = data;
   const router = useRouter();
   const slug = (router.query.slug as string[]) || [];
@@ -72,15 +77,13 @@ const SubEvent: React.FC = (props) => {
 
 export async function getServerSideProps(context) {
   const slug = (context.query.slug as string[]) || [];
-  // const event_title = slug[0];
   const subevent_id = slug[1];
 
   const res = await axios.get(
     `https://api.bventdao.xyz/subevent?subevent_id=${subevent_id}`,
   );
   const data = await res.data;
-  const meta = await generateSubeventPageMeta(res.data);
-  return { props: { data, meta } };
+  return { props: { data } };
 }
 
 export default SubEvent;

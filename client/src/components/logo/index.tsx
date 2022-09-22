@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 
 type LogoType = {
   width: number;
@@ -16,7 +15,7 @@ const Logo = (props: LogoType) => {
         alt="nextjs"
         width={width ? width : 100}
         height={height ? height : 100}
-        style={{marginTop:"6px"}} //FIXME(aaron): change logo margin bottom
+        style={{marginTop:"6px"}} //FIXME(aaron): change logo margin bottom if logo source changed
       />
     </a>
   );

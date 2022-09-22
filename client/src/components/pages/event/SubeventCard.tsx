@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import {
@@ -10,10 +10,11 @@ import { parseTime, parseDate } from '@/utils/parseTime';
 import { useRecoilState } from 'recoil';
 import { convertTime } from '@/utils/parseTime';
 import { timezoneState } from '@/recoil/atoms/timezone';
+import { Subevent } from '@/types/event';
 
-type Props = {
-  subevent: any;
-};
+interface SubeventCard {
+  subevent: Subevent;
+}
 
 const CardWrapper = styled.div`
   width: 100%;
@@ -22,7 +23,7 @@ const CardWrapper = styled.div`
   justify-content: start;
 `;
 
-const TimeWrapper = (props: any) => {
+const TimeWrapper = (props: { isOngoing: boolean; children: ReactNode }) => {
   if (props.isOngoing) {
     return (
       <div className="flex flex-row w-24 mr-2 text-primary">
@@ -36,7 +37,6 @@ const TimeWrapper = (props: any) => {
 const UserTime = styled.div`
   text-align: center;
   width: 3rem;
-  /* border-right: 1px dashed; */
 `;
 
 const EventTime = styled.div`
@@ -50,19 +50,19 @@ const EventTitle = styled.p`
   transition: 0.2s ease-in-out;
 `;
 
-const DropdownWrapper = (props: any) => {
+const DropdownWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex gap-2 pl-6 py-2">
       <img src="/icons/hashtag_icon.svg" />
-      {props.children}
+      {children}
     </div>
   );
 };
 
-const SubeventCard = (props: Props) => {
+const SubeventCard = (props: SubeventCard) => {
   const { subevent } = props;
   const [showDropdown, setShowDropdown] = useState(false);
-  const [userDate, setUserDate] = useState('');
+  const [, setUserDate] = useState('');
   const [userTime, setUserTime] = useState('');
   const [eventTime, setEventTime] = useState('');
   const [timezone] = useRecoilState(timezoneState);

@@ -1,5 +1,12 @@
-export const generateMeta = ({ title, description, image_url }: any) => {
-  //FIXME(youngjae): remove any
+import { Event, Subevent } from '@/types/event';
+
+interface EventSeo {
+  title: string;
+  description: string;
+  image_url: string;
+}
+
+export const generateMeta = ({ title, description, image_url }: EventSeo) => {
   return {
     title: title,
     description: description,
@@ -19,18 +26,18 @@ export const generateMeta = ({ title, description, image_url }: any) => {
   };
 };
 
-export const generateEventPageMeta = (eventInfo) => {
+export const generateEventPageMeta = (eventInfo: Event) => {
   return generateMeta({
     title: eventInfo.event_title,
     description: `checkout ${eventInfo.event_title} info on Bvent`,
-    image_url: eventInfo.event_img,
+    image_url: eventInfo.event_img || '',
   });
 };
 
-export const generateSubeventPageMeta = (eventInfo) => {
+export const generateSubeventPageMeta = (subeventInfo:Subevent) => {
   return generateMeta({
-    title: eventInfo.event_title + ' - ' + eventInfo.subevent_title,
-    description: eventInfo.subevent_title,
-    image_url: eventInfo.subevent_img,
+    title: subeventInfo.event_title + ' - ' + subeventInfo.subevent_title,
+    description: subeventInfo.subevent_title,
+    image_url: subeventInfo.subevent_img,
   });
 };

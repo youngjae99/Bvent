@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { getTimezoneTime, IANAZone } from '@/utils/parseTime';
 import { useRecoilState } from 'recoil';

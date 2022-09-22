@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import Image from 'next/image';
 import styled from 'styled-components';
 
 import { Tab } from '@headlessui/react';

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { parseReviewTime } from '@/utils/parseTime';
 import ProfileImage from './ProfileImage';
 import UserAPI from '@/api/user';
-import { withCoalescedInvoke } from 'next/dist/lib/coalesced-function';
 
 type Props = {
   userAddress: string;
@@ -17,7 +16,7 @@ const defaultUserInfo = {
 };
 
 const UserInfoWrapper = (props: Props) => {
-  const { userAddress, timestamp, isMyProfile } = props;
+  const { userAddress, timestamp } = props;
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
   const { username, bio = 'Bventer', profile_pic } = userInfo;
 
@@ -46,22 +45,7 @@ const UserInfoWrapper = (props: Props) => {
         <p className="text-white text-opacity-70 text-sm text-left">
           {bio || 'Bventer'}
         </p>
-        <div className="flex flex-row justify-start gap-2">
-          {/* <p className="text-gray-400">
-            {timestamp && parseEventTime(timestamp, 'UTC')}
-          </p> */}
-          {/* <a href={`https://ropsten.etherscan.io/tx/${txHash}`}>
-            <div className="flex flex-row gap-1 text-gray-300 hover:text-blue-400">
-              <img
-                src="/icons/ethereum-logo.svg"
-                width="10px"
-                height="10px"
-                alt="ethereum-logo"
-              />
-              {txHash?.slice(0, 10) + '...'}
-            </div>
-          </a> */}
-        </div>
+        <div className="flex flex-row justify-start gap-2"></div>
       </div>
     </div>
   );

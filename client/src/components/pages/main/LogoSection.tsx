@@ -1,5 +1,4 @@
 import React from 'react';
-import { GradientText } from '@/components/Text/GradientText';
 
 const LogoSection = () => {
   return (
