@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { useWeb3React } from '@web3-react/core';
 import { useWallet } from '@/hook/useWallet';
@@ -6,7 +6,7 @@ import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-const SignInWrapper = ({ onClick, active, children }: any) => {
+const SignInWrapper = ({ onClick, active, children }: {onClick: ()=>void, active?:boolean, children:ReactNode}) => {
   if (active) {
     return (
       <div
@@ -38,7 +38,7 @@ const AccountWrapper = styled.div`
 
 export const LoginButton = () => {
   const { connectMetamaskWallet, disconnectWallet } = useWallet();
-  const { active, account, connector, chainId } = useWeb3React();
+  const { active, account } = useWeb3React();
   const router = useRouter();
 
   const handleLogin = async () => {

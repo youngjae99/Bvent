@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Sidebar } from '@/components/sidebar';
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative min-h-screen max-w-mobile flex flex-col pt-2 bg-black mx-auto">
       <Header />

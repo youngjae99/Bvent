@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-type Props = {
-    children: React.ReactNode;
-}
 
-const FloatingContainer = (props: Props) => {
+const FloatingContainer = (props: { children: React.ReactNode }) => {
   return (
-    <div className="max-w-mobile mx-auto w-full bottom-0 fixed -ml-5 p-8 flex justify-end z-10">{props.children}</div>
-  )
-}
+    <div className="max-w-mobile mx-auto w-full bottom-0 fixed -ml-5 p-8 flex justify-end z-10">
+      {props.children}
+    </div>
+  );
+};
 
-export default FloatingContainer
+export default FloatingContainer;

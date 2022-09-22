@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon';
-import { type } from 'os';
 
 export const offset = {
   KST: 9,
@@ -13,13 +12,10 @@ export const IANAZone = {
   EDT: 'America/New_York',
   PDT: 'America/Los_Angeles',
   IST: 'Asia/Kolkata',
-}
+};
 
-const ONE_HOUR = 60 * 60 * 1000;
-const ONE_DAY = 24 * ONE_HOUR;
-
-export const parseTime = (time: string) => {
-  const parsedTime = new Date(parseInt(time));
+export const parseTime = (time: number) => {
+  const parsedTime = new Date(time);
   const hour = parsedTime.getHours();
   const minute = parsedTime.getMinutes();
   if (minute < 10) {
@@ -36,8 +32,8 @@ export const parseMainTabEventTime = (startTime: number, endTime: number) => {
   );
 };
 
-export const parseEventTime = (time: string, timeZone: string) => {
-  const parsedTime = new Date(parseInt(time));
+export const parseEventTime = (time: number, timeZone: string) => {
+  const parsedTime = new Date(time);
   return parsedTime.toLocaleString('en-GB', { timeZone: timeZone });
 };
 
@@ -79,19 +75,19 @@ export const parseReviewTime = (time: number) => {
   return `just now`;
 };
 
-export const parseDate = (time): any => {
+export const parseDate = (time): string => {
   const parsedTime = new Date(parseInt(time));
-  return parsedTime.getDate();
+  return parsedTime.getDate().toString();
 };
 
-export const calcTime = (timezone): any => {
+export const calcTime = (timezone): string => {
   const d = new Date();
   const utc = d.getTime() + d.getTimezoneOffset() * 60000;
   const nd = new Date(utc + 3600000 * offset[timezone]);
   return nd.toLocaleString();
 };
 
-export const convertTime = (time, timezone): any => {
+export const convertTime = (time, timezone): string => {
   // console.log(time, timezone);
   const d = new Date(time);
   const utc = d.getTime() + d.getTimezoneOffset() * 60000;
@@ -105,20 +101,18 @@ export const convertTime = (time, timezone): any => {
   return hour + ':' + minute;
 };
 
-
-export const getTimezoneTime = (timezone) => {
+export const getTimezoneTime = (timezone): string => {
   const now = DateTime.now();
-  console.log("now", now);
+  console.log('now', now);
   return now.setZone(timezone).toLocaleString(DateTime.DATETIME_SHORT);
-}
+};
 
-
-export const getLocalTime = (time): any => {
+export const getLocalTime = (time): string => {
   const parsedTime = new Date(parseInt(time));
   return parsedTime.toLocaleString();
 };
 
-export const getOriginTime = (time): any => {
+export const getOriginTime = (time): string => {
   const parsedTime = new Date(parseInt(time));
   return parsedTime.toLocaleString();
 };

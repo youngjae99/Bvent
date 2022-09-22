@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { parseEventTime } from '@/utils/parseTime';
 import { SubeventImage } from './SubeventImage';
 import { getImageURI } from '@/utils/getImageURI';
-import { LinkIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Subevent } from '@/types/event';
 
 type Props = {
-  eventInfo: any;
+  eventInfo: Subevent;
 };
 
 const StyledInfoWrapper = styled.div`
@@ -24,12 +25,17 @@ const StyledInfoWrapper = styled.div`
   border-radius: 10px;
 `;
 
-// FIXME(aaron): should add endTime
-const TimeWrapper = ({ startTime, endTime }: any) => {
+const TimeWrapper = ({
+  startTime,
+  endTime,
+}: {
+  startTime: number;
+  endTime?: number;
+}) => {
   return <p>{parseEventTime(startTime, 'UTC')}</p>;
 };
 
-const SpeakerWrapper = ({ speaker }: any) => {
+const SpeakerWrapper = ({ speaker }: { speaker: string }) => {
   return (
     <div className="flex flex-row items-center gap-2 leading-4 mt-1">
       <UserCircleIcon style={{ width: '20px' }} />
@@ -37,18 +43,6 @@ const SpeakerWrapper = ({ speaker }: any) => {
     </div>
   );
 };
-
-// const LinkWrapper = ({ subevent_src }: any) => {
-//   return (
-//     <a
-//       href={subevent_src}
-//       className="flex flex-row items-center gap-2 leading-4 mt-1"
-//     >
-//       <LinkIcon style={{ width: '20px' }} />
-//       {subevent_src.slice(0, 30)}
-//     </a>
-//   );
-// };
 
 export const SubeventHeader = (props: Props) => {
   const { eventInfo } = props;
@@ -67,7 +61,6 @@ export const SubeventHeader = (props: Props) => {
         </p>
         <TimeWrapper startTime={eventInfo?.subevent_time} />
         <SpeakerWrapper speaker={eventInfo?.subevent_presenter} />
-        {/* <LinkWrapper subevent_src={eventInfo?.subevent_src} /> */}
       </StyledInfoWrapper>
     </>
   );

@@ -14,15 +14,22 @@ import NewReviewWrapper from '@/components/pages/review/NewReviewWrapper';
 import TitleBar from '@/components/pages/event/TitleBar';
 import { EventHeader } from '@/components/pages/event/EventHeader';
 import TimeLineWrapper from '@/components/pages/event/timeline/TimeLineWrapper';
+import { Event as EventType, Subevent as SubeventType } from '@/types/event';
 
-const Event: React.FC = (props) => {
-  const { eventInfo, subevents }: any = props;
+interface Props {
+  eventInfo: EventType;
+  subevents: {
+    [key: string]: SubeventType;
+  };
+}
+
+const Event: React.FC<Props> = ({ eventInfo, subevents }: Props) => {
   const event_title = eventInfo.event_title;
   const metadata = generateEventPageMeta(eventInfo);
   const [isOpen, setIsOpen] = useState(false);
   const event_id = eventInfo.event_id;
 
-  if (subevents.length === 0) {
+  if (Object.keys(subevents).length === 0) {
     return (
       <>
         <NextSeo
@@ -69,7 +76,6 @@ const Event: React.FC = (props) => {
     );
   }
 
-
   // Timeline View (current event)
   return (
     <>
@@ -90,8 +96,8 @@ const Event: React.FC = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  const { id }: any = context.query;
-  const event_title = id as string;
+  const { id }: { id: string } = context.query;
+  const event_title = id;
   const res = await axios.get(`https://api.bventdao.xyz/events/${event_title}`);
   const data = await res.data;
   const eventInfo = data.event_info;

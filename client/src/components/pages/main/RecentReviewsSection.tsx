@@ -1,8 +1,13 @@
 import ReviewAPI from '@/api/review';
-import React, { useEffect, useState } from 'react';
-import Review from '../review/Review';
+import Review from '@/components/pages/review/Review';
+import { Review as ReviewInterface } from '@/types/reveiw';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-const ReveiwLinkWrapper = (props: any) => {
+const ReveiwLinkWrapper = (props: {
+  review: ReviewInterface;
+  key: string;
+  children: ReactNode;
+}) => {
   const { review, key, children } = props;
   if (review.subevent_id !== '-1') {
     return (

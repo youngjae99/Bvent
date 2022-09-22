@@ -22,8 +22,7 @@ declare global {
 }
 
 export const useWallet = () => {
-  const { activate, deactivate, active, account, connector, library, chainId } =
-    useWeb3React();
+  const { activate, deactivate, account, library, chainId } = useWeb3React();
   const [eth, setEth] = useState('0.0');
 
   const connectMetamaskWallet = async () => {
@@ -42,7 +41,6 @@ export const useWallet = () => {
       await activate(injectedConnector);
       setItem(LocalStorageKey.CONNECTOR_NAME, WalletConnectorName.METAMASK);
     } catch (e) {
-      const error = e;
       console.error(e);
     }
   };

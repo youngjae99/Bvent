@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { parseEventTime } from '@/utils/parseTime';
 import { EventImage } from './EventImage';
 import { getImageURI } from '@/utils/getImageURI';
-import { CalendarIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { CalendarIcon } from '@heroicons/react/24/outline';
+import { Event } from '@/types/event';
 
 type Props = {
-  eventInfo: any;
+  eventInfo: Event;
 };
 
 const StyledInfoWrapper = styled.div`
@@ -24,8 +25,13 @@ const StyledInfoWrapper = styled.div`
   border-radius: 10px;
 `;
 
+interface TimeWrapperProps {
+  startTime: number;
+  endTime?: number;
+}
+
 // FIXME(aaron): should add endTime
-const TimeWrapper = ({ startTime, endTime }: any) => {
+const TimeWrapper = ({ startTime, endTime }: TimeWrapperProps) => {
   return (
     <div className="flex flex-row items-center gap-2 leading-4 mt-1">
       <CalendarIcon style={{ width: '20px' }} />
@@ -33,27 +39,6 @@ const TimeWrapper = ({ startTime, endTime }: any) => {
     </div>
   );
 };
-
-// const SpeakerWrapper = ({ speaker }: any) => {
-//   return (
-//     <div className="flex flex-row items-center gap-2 leading-4 mt-1">
-//       <UserCircleIcon style={{ width: '20px' }} />
-//       {speaker}
-//     </div>
-//   );
-// };
-
-// const LinkWrapper = ({ subevent_src }: any) => {
-//   return (
-//     <a
-//       href={subevent_src}
-//       className="flex flex-row items-center gap-2 leading-4 mt-1"
-//     >
-//       <LinkIcon style={{ width: '20px' }} />
-//       {subevent_src.slice(0, 30)}
-//     </a>
-//   );
-// };
 
 export const EventHeader = (props: Props) => {
   const { eventInfo } = props;
@@ -72,8 +57,6 @@ export const EventHeader = (props: Props) => {
           {eventInfo?.event_title.slice(0, 60)}
         </p>
         <TimeWrapper startTime={eventInfo?.event_start_time} />
-        {/* <SpeakerWrapper speaker={eventInfo?.event_type} /> */}
-        {/* <LinkWrapper subevent_src={eventInfo?.subevent_src} /> */}
       </StyledInfoWrapper>
     </>
   );

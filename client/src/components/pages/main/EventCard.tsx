@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import styled from 'styled-components';
 import { getImageURI } from '@/utils/getImageURI';
 
-import { parseMainTabEventTime, parseTime } from '@/utils/parseTime';
+import { parseMainTabEventTime } from '@/utils/parseTime';
+import { Event } from '@/types/event';
 
 type Props = {
-  event: any;
+  event: Event;
 };
 
 const EventCard = (props: Props) => {

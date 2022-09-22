@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-// import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
-// import { CherveonDown, CherveonUp } from '@heroicons/react/outline';
+import React, { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 type SelectorProps = {
   label: string;
   options: string[];
-  handler?: any;
+  handler?: (number) => void;
 };
 
 const Selector = (props: SelectorProps) => {
   const [opened, setOpened] = useState(false);
   const { label, options, handler } = props;
-  const [selected, setSelected] = useState(0);
+  const [, setSelected] = useState(0);
 
   const changeSelected = (index: number) => {
     setSelected(index);
-    handler(index);
+    if (handler) {
+      handler(index);
+    }
   };
 
   return (
@@ -51,7 +51,11 @@ const Selector = (props: SelectorProps) => {
       )}
       <div className="flex flex-row gap-1 leading-none">
         {label}
-        {!opened ? <ChevronDownIcon className="w-4"/> : <ChevronUpIcon className="w-4"/>}
+        {!opened ? (
+          <ChevronDownIcon className="w-4" />
+        ) : (
+          <ChevronUpIcon className="w-4" />
+        )}
       </div>
     </div>
   );

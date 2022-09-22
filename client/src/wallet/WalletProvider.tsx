@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 
@@ -14,7 +14,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/recoil/atoms/user';
 import { useRouter } from 'next/router';
 
-const WalletProvider = ({ children }: any) => {
+const WalletProvider = ({ children }: { children: ReactNode }) => {
   const {
     active: networkActive,
     error: networkError,
@@ -24,7 +24,7 @@ const WalletProvider = ({ children }: any) => {
   const [userInfoState, setUserInfoState] = useRecoilState(userState);
   const { address } = userInfoState;
   const router = useRouter();
-  const [loaded, setLoaded] = useState(false);
+  const [, setLoaded] = useState(false);
 
   const prevAccount = useRef<string | null | undefined>(address);
 

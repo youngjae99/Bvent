@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWeb3React } from '@web3-react/core';
-import axios from 'axios';
 import styled from 'styled-components';
 import UserInfoWrapper from './UserInfoWrapper';
 import TextButton from '@/components/Button/TextButton';
-import { userState } from '@/recoil/atoms/user';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import ReviewAPI from '@/api/review';
 
 type Props = {
   event_name: string;
-  event_id?: number;
+  event_id?: string;
   subevent_id?: string;
   onClose: () => void;
 };
@@ -30,7 +27,7 @@ const TitleBarWrapper = styled.div`
   line-height: 1.5rem;
 `;
 
-const SignintoWritePlaceholder = ({ onClose }: any) => {
+const SignintoWritePlaceholder = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="fixed top-16 left-0 z-10 w-screen h-full flex flex-col items-center">
       <div className="w-full max-w-mobile h-full bg-black bg-opacity-100 text-white">
@@ -53,9 +50,8 @@ const SignintoWritePlaceholder = ({ onClose }: any) => {
 };
 
 const NewReviewWrapper = (props: Props) => {
-  const { active, account, connector, chainId } = useWeb3React();
-  const { event_name, event_id, subevent_id, onClose } = props;
-  const user = useRecoilValue(userState);
+  const { active, account } = useWeb3React();
+  const { event_id, subevent_id, onClose } = props;
   const [review, setReview] = useState<string>('');
 
   const submitReview = async () => {
@@ -65,11 +61,11 @@ const NewReviewWrapper = (props: Props) => {
     }
 
     if (event_id) {
-      const loginRes = await ReviewAPI.writeEventReview({
+      await ReviewAPI.writeEventReview({
         review_content: review,
         event_id: event_id,
       })
-        .then((res) => {
+        .then(() => {
           onClose();
         })
         .catch((error) => {
@@ -77,11 +73,10 @@ const NewReviewWrapper = (props: Props) => {
             alert('로그인이 필요합니다.');
           }
         });
-      console.log(loginRes); // TODO(aaron): remove this
     }
 
     if (subevent_id) {
-      const loginRes = await ReviewAPI.writeSubeventReview({
+      await ReviewAPI.writeSubeventReview({
         review_content: review,
         subevent_id: subevent_id,
       })
@@ -95,7 +90,6 @@ const NewReviewWrapper = (props: Props) => {
             alert('로그인이 필요합니다.');
           }
         });
-      console.log(loginRes); // TODO(aaron): remove this
     }
   };
 

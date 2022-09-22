@@ -1,16 +1,15 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { useWeb3React } from '@web3-react/core';
+import { Disclosure } from '@headlessui/react';
 
 import Profile from '@/components/Profile';
-import { formatAccount } from '@/utils/wallet';
-import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/Button';
 import UserAPI from '@/api/user';
-import { useRouter } from 'next/router';
 import { userState } from '@/recoil/atoms/user';
-import { useRecoilState } from 'recoil';
 
 const StyledWrapper = styled.div`
   color: white;
@@ -19,30 +18,36 @@ const StyledWrapper = styled.div`
   gap: 20px;
 `;
 
-const RequiredBox = styled.div`
-  width: fit-content;
-  height: 25px;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0 10px;
-  border-style: solid;
-  border-width: 0;
-  border-radius: 99px;
-  background-color: ${(props: { required: boolean }) =>
-    props.required ? 'hsla(0,0%,100%,.1)' : 'hsla(0,0%,100%,.1)'};
-  color: ${(props: { required: boolean }) =>
-    props.required ? '#64d2ff' : 'white'};
-  align-items: center;
-  vertical-align: baseline;
-`;
+// const RequiredBox = styled.div`
+//   width: fit-content;
+//   height: 25px;
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0 10px;
+//   border-style: solid;
+//   border-width: 0;
+//   border-radius: 99px;
+//   background-color: ${(props: { required: boolean }) =>
+//     props.required ? 'hsla(0,0%,100%,.1)' : 'hsla(0,0%,100%,.1)'};
+//   color: ${(props: { required: boolean }) =>
+//     props.required ? '#64d2ff' : 'white'};
+//   align-items: center;
+//   vertical-align: baseline;
+// `;
 
-type FieldSetProps = {
-  title: string;
-  required?: boolean;
-  description: string;
-};
+// type FieldSetProps = {
+//   title: string;
+//   required?: boolean;
+//   description: string;
+// };
 
-const Input = ({ placeholder, limit, initial }: any, ref) => {
+interface InputProps {
+  placeholder: string;
+  limit?: number;
+  initial: string | undefined;
+}
+
+const Input = ({ placeholder, limit, initial }: InputProps, ref) => {
   const [value, setValue] = useState(initial);
 
   return (
@@ -63,7 +68,7 @@ const Input = ({ placeholder, limit, initial }: any, ref) => {
       </div>
       {limit && (
         <div className="border-gray absolute top-4 right-4 transform scale-75 -translate-y-2">
-          {value.length}/{limit}
+          {value?.length}/{limit}
         </div>
       )}
       <input
@@ -92,7 +97,7 @@ export const AboutMe = () => {
     isSignIn,
   } = userInfoState;
 
-  const { active, account, connector, chainId } = useWeb3React();
+  const { account } = useWeb3React();
   const router = useRouter();
   const [editMode, setEditMode] = useState<boolean>(!!router.query.edit);
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -106,7 +111,7 @@ export const AboutMe = () => {
     <StyledWrapper className="divide-white divide-y">
       <div className="flex justify-between pl-3 items-end max-w-full">
         <Profile.Primary>
-          <Profile.Primary.Image editMode src={profile_pic}/>
+          <Profile.Primary.Image editMode src={profile_pic} />
           <Profile.Primary.Info>
             <div className="title2 text-white">
               {isSignIn ? `${username?.slice(0, 10)}` : 'Sign In'}

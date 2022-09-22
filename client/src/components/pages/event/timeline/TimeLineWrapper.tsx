@@ -3,9 +3,10 @@ import { useRecoilState } from 'recoil';
 import { timezoneState } from '@/recoil/atoms/timezone';
 
 import TimelineSubevent from './SubeventCard';
+import { Event } from '@/types/event';
 
-const TimeLineWrapper = (props: any) => {
-  const {eventInfo, subevents} = props;
+const TimeLineWrapper = (props: { eventInfo: Event; subevents: object }) => {
+  const { eventInfo, subevents } = props;
   const [timezone] = useRecoilState(timezoneState);
 
   return (
