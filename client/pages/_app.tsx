@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import { Hydrate } from 'react-query/hydration';
 import { ethers } from 'ethers';
-import { DefaultSeo } from 'next-seo';
-import SEO from '../next-seo.config';
 
 import { StyledThemeProvider } from '@/definitions/styled-components';
 import { Web3ReactProvider } from '@web3-react/core';
@@ -30,7 +28,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <StyledThemeProvider>
-      <DefaultSeo {...SEO} />
       <Web3ReactProvider getLibrary={getLibrary}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>

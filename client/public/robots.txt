@@ -4,8 +4,8 @@ Allow: /
 Disallow: /mypage
 
 # Host
-Host: https://www.bventday.xyz
+Host: https://www.bventdao.xyz
 
 # Sitemaps
-Sitemap: https://www.bventday.xyz/sitemap.xml
+Sitemap: https://www.bventdao.xyz/sitemap.xml
 Sitemap: https://www.bventdao.xyz/server-sitemap.xml
