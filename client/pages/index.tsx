@@ -1,6 +1,8 @@
 import React from 'react';
-
 import { useWeb3React } from '@web3-react/core';
+import { DefaultSeo } from 'next-seo';
+import SEO from '../next-seo.config';
+
 import Layout from '@/components/Layout';
 import Tabs from '@/components/pages/main/Tabs';
 import HeroSection from '@/components/pages/main/HeroSection';
@@ -12,6 +14,7 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
+      <DefaultSeo {...SEO} />
       {!active && <HeroSection />}
       <LogoSection />
       <div className="mb-10">
