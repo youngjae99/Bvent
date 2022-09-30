@@ -130,6 +130,11 @@ const Tabs = () => {
                   {events &&
                     Object.keys(events)
                       .filter((key) => events[key].event_tag === 'upcoming')
+                      .sort(
+                        (a, b) =>
+                          events[a].event_start_time -
+                          events[b].event_start_time,
+                      )
                       .map((key) => (
                         <SwiperSlide key={key}>
                           <EventCard key={key} event={events[key]} />
@@ -149,6 +154,11 @@ const Tabs = () => {
                   {events &&
                     Object.keys(events)
                       .filter((key) => events[key].event_tag === 'current')
+                      .sort(
+                        (a, b) =>
+                          events[a].event_start_time -
+                          events[b].event_start_time,
+                      )
                       .map((key) => (
                         <SwiperSlide key={key}>
                           <EventCard key={key} event={events[key]} />
@@ -182,6 +192,11 @@ const Tabs = () => {
                     {events &&
                       Object.keys(events)
                         .filter((key) => events[key].event_tag === 'past')
+                        .sort(
+                          (a, b) =>
+                            events[b].event_start_time -
+                            events[a].event_start_time,
+                        )
                         .map((key) => (
                           <SwiperSlide key={key}>
                             <EventCard key={key} event={events[key]} />
