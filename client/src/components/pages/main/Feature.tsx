@@ -1,8 +1,4 @@
 import React from 'react';
-import { NextSeo } from 'next-seo';
-
-import Layout from '@/components/Layout';
-import LogoSection from '@/components/pages/main/LogoSection';
 import styled from 'styled-components';
 import Description from '@/components/Feature/Description';
 

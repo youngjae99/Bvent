@@ -8,7 +8,7 @@ import Tabs from '@/components/pages/main/Tabs';
 import HeroSection from '@/components/pages/main/HeroSection';
 import LogoSection from '@/components/pages/main/LogoSection';
 import RecentReviewsSection from '@/components/pages/main/RecentReviewsSection';
-import Feature from '@/components/pages/main/feature';
+import Feature from '@/components/pages/main/Feature';
 
 const Home: React.FC = () => {
   const { active } = useWeb3React();
