@@ -36,6 +36,10 @@ class CustomDocument extends Document {
               href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap"
               rel="stylesheet"
             />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap"
+              rel="stylesheet"
+            ></link>
 
             {initialProps.styles}
             {sheet.getStyleElement()}
