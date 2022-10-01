@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Description from '@/components/Feature/Description';
 
 const Background = styled.div`
+  width: 100%;
   border-radius: 10px;
   background: radial-gradient(
         99.56% 53.84% at 97.41% 0%,
@@ -24,7 +25,7 @@ const Background = styled.div`
     rgba(255, 255, 255, 0.05);
 
   & .title {
-    font-family: "Raleway";
+    font-family: 'Raleway';
     font-weight: 500;
     font-size: 32px;
     line-height: 38px;
@@ -70,34 +71,30 @@ const description = [
 
 const Feature: React.FC = () => {
   return (
-    <Layout>
-      <NextSeo />
-      <LogoSection />
-      <Background>
-        <div className="text-white height-30 title">
-          <p>
-            How <span className="text-pink">Bvent</span>
-          </p>
-          <p>
-            <span className="text-aqua">Ecosystem</span> Work
-          </p>
-        </div>
-        <div className="flex justify-center ecosystem">
-          <img src="/images/ecosystem.svg" />
-        </div>
-        <div className="description divide-white/70 divide-y">
-          {description.map(({ src, type, title, description }) => (
-            <Description
-              key={type}
-              src={src}
-              type={type}
-              title={title}
-              description={description}
-            />
-          ))}
-        </div>
-      </Background>
-    </Layout>
+    <Background>
+      <div className="text-white height-30 title">
+        <p>
+          How <span className="text-pink">Bvent</span>
+        </p>
+        <p>
+          <span className="text-aqua">Ecosystem</span> Work
+        </p>
+      </div>
+      <div className="flex justify-center ecosystem">
+        <img src="/images/ecosystem.svg" />
+      </div>
+      <div className="description divide-white/70 divide-y">
+        {description.map(({ src, type, title, description }) => (
+          <Description
+            key={type}
+            src={src}
+            type={type}
+            title={title}
+            description={description}
+          />
+        ))}
+      </div>
+    </Background>
   );
 };
 
