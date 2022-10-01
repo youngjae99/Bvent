@@ -73,7 +73,7 @@ const Feature: React.FC = () => {
     <Layout>
       <NextSeo />
       <LogoSection />
-      <Background className="mt-11">
+      <Background>
         <div className="text-white height-30 title">
           <p>
             How <span className="text-pink">Bvent</span>
