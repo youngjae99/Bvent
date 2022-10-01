@@ -1,16 +1,13 @@
 import React from 'react';
-import { useWeb3React } from '@web3-react/core';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/Layout';
-import Tabs from '@/components/pages/main/Tabs';
-import HeroSection from '@/components/pages/main/HeroSection';
 import LogoSection from '@/components/pages/main/LogoSection';
-import RecentReviewsSection from '@/components/pages/main/RecentReviewsSection';
 import styled from 'styled-components';
 import Description from '@/components/Feature/Description';
 
 const Background = styled.div`
+  border-radius: 10px;
   background: radial-gradient(
         99.56% 53.84% at 97.41% 0%,
         rgba(14, 218, 233, 0.2) 0%,
