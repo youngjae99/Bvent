@@ -8,6 +8,7 @@ import Tabs from '@/components/pages/main/Tabs';
 import HeroSection from '@/components/pages/main/HeroSection';
 import LogoSection from '@/components/pages/main/LogoSection';
 import RecentReviewsSection from '@/components/pages/main/RecentReviewsSection';
+import Feature from '@/components/pages/main/Feature';
 
 const Home: React.FC = () => {
   const { active } = useWeb3React();
@@ -17,7 +18,8 @@ const Home: React.FC = () => {
       <DefaultSeo {...SEO} />
       {!active && <HeroSection />}
       <LogoSection />
-      <div className="mb-10">
+      <Feature />
+      <div className="mt-7 mb-10">
         <h1>Events</h1>
         <Tabs />
       </div>
