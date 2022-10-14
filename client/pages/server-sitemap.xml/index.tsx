@@ -16,14 +16,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
       const subeventsSitemap = Object.keys(subevents.data).map((id) => {
         return {
-          loc: `https://www.bventdao.xyz/event/${key}/${id}`,
+          loc: encodeURI(`https://www.bventdao.xyz/event/${key}/${id}`),
           lastmod: new Date().toISOString(),
         };
       });
 
       return [
         {
-          loc: `https://www.bventdao.xyz/event/${key}`,
+          loc: encodeURI(`https://www.bventdao.xyz/event/${key}`),
           lastmod: new Date().toISOString(),
         },
         ...subeventsSitemap,
